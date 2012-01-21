@@ -1,2 +1,2 @@
 killall node
-screen -S sudo node /rap/app.js
+screen -S sudo node NODE_PORT=3000 /rap/app.js
