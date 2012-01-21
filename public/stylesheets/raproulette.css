@@ -1,0 +1,26 @@
+html, body {
+    background-color:#111;
+    background-image:url(/images/bg.png);
+}
+
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#navbar-wrapper {
+    width:100%;
+    background-color:#222;
+    border-bottom:1px solid black;
+    box-shadow:#000 0px 2px 0px;
+    margin-bottom:20px;
+    padding: 5px 0;
+}
+
+#navbar {
+    width:960px;
+    margin:0 auto;
+}
