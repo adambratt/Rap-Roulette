@@ -1,0 +1,199 @@
+.error {
+	border: 1px #000 solid;
+	background: #fffebf;
+	color: #f00;
+	padding: 10px 10px 25px 10px;
+	margin: 5px;
+	width: 95%;
+	font-weight: bolder;
+	font-size: 90%;
+	font-family: Tahoma, Arial;
+}
+
+.error img {
+	display: inline;
+}
+
+.error ul {
+	margin-left: 50px;
+	/*font-size: 70%;*/
+	font-weight: normal;
+}
+
+.user-message {
+	border: 1px #000 solid;
+	background: #fffebf;
+	color: #0c0;
+	padding: 10px 10px 25px 10px;
+	margin: 5px;
+	width: 95%;
+	font-weight: bolder;
+	font-size: 90%;
+	font-family: Tahoma, Arial;
+}
+
+.user-message img {
+	display: inline;
+}
+
+.user-message ul {
+	margin-left: 50px;
+	/*font-size: 70%;*/
+	font-weight: normal;
+}
+
+/* Resets */
+* {
+	margin: 0;
+	padding: 0;
+}
+img,a,table,td,tr,div {
+	border: 0;
+	background: transparent;
+}
+:active{
+	outline: none;
+}
+
+p {
+	padding: .5em 0;
+	display: block;
+}
+
+.clear {
+	clear: both;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+a img {
+	border: none;
+}
+
+.inline {
+	display: inline;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.black {
+	color: #000;
+}
+
+.center {
+	text-align: center;
+}
+
+.title {
+	font-family: Tahoma, Arial;
+	font-size: 110%;
+	border-bottom: 1px solid #fff;
+	margin-bottom: 10px;
+}
+
+.form fieldset {
+	border: 0;
+	margin: 10px;
+	font-family: Tahoma, Arial;
+}
+
+.form legend {
+	color: #f55;
+	font-weight: bold;
+	font-size: 90%;
+}
+
+.field {
+	padding: 5px;
+	font-size: 90%;
+	clear: both;
+}
+
+.field label {
+	display: inline-block;
+ 	display: -moz-inline-stack;
+	width: 110px; 
+	text-align: right;
+	padding-right: 5px;
+	float: left;
+}
+
+.field-info {
+	padding: 5px 5px 0px 5px;
+	margin-left: 110px;
+	font-size: 80%;
+	color: #eee;
+}
+
+.cms_block_editable {
+	position: relative;
+}
+
+.cms_block_editable .edit-box {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: 3px;
+	background-color: #fff;
+	border: 1px solid #000;
+}
+
+.cms_block_editable .edit-box a {
+	color: #ff0000;
+	text-decoration: none;
+}
+
+.awesome, .awesome:visited {
+	background: #222 url(../images/icons/alert-overlay.png) repeat-x; 
+	display: inline-block; 
+	padding: 5px 10px 6px; 
+	color: #fff; 
+	text-decoration: none;
+	-moz-border-radius: 5px; 
+	-webkit-border-radius: 5px;
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+	border-bottom: 1px solid rgba(0,0,0,0.25);
+	position: relative;
+	cursor: pointer;
+}
+
+
+/* Sizes ---------- */
+.small.awesome {
+	font-size: 11px;
+}
+.medium.awesome {
+	font-size: 13px;
+}
+.large.awesome {
+	font-size: 14px;
+	padding: 8px 14px 9px;
+}
+
+/* Colors ---------- */
+.blue.awesome {
+	background-color: #1A78BB;
+}
+.red.awesome {
+	background-color: #e33100;
+}
+.magenta.awesome {
+	background-color: #a9014b;
+}
+.orange.awesome {
+	background-color: #ff5c00;
+}
+.yellow.awesome {
+	background-color: #ffb515;
+}
+

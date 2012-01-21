@@ -1,0 +1,24 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{* available variables: $menu an array of menu items $menu[]['name']
+['url']
+['children']=Array();
+$fullcont The main content area
+$scripts Array of javascript paths
+$page_title
+$custom_styles
+
+*}
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+
+		<title>{$page_title}</title>
+
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+
+		{include file='index_smarty.html'}
+
+	</head>
+	<body>
+		{$fullcont}
+	</body>
+</html>

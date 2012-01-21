@@ -1,0 +1,74 @@
+.choice, .options {
+	padding: 4px;
+	border: 1px solid #ccc;
+	background: #fffebf;
+	margin: 4px;	
+	margin-right: -4px;
+	/*width: 250px;*/
+}
+
+.title {
+	border: 1px solid #ccc;
+	background: #fffebf;
+	margin: 4px;
+	margin-left: -2px;	
+	height: 20px;
+	padding: 2px;
+	width: 250px;
+}
+
+.remove_me, .del_choice {
+	float: right;
+}
+
+a {
+	text-decoration: none;	
+}
+
+.red {
+	color: red;
+}
+
+.cat_menu{
+	overflow: scroll; 
+	height: 400px; 
+	overflow-x: hidden;
+	width: 300px;
+	border: 1px solid #000;
+	font-size: 100%;
+	text-align: left;
+}
+
+.cat_set{
+	float: left;
+	margin: 15px;
+	font-size: 130%;
+	text-align: center;
+}
+
+.cat_menu_popup{
+	border: 1px solid #999; 
+	background: #eee;
+}
+
+.cat_menu_popup ul {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.cat_menu_popup li {
+	width: 100px;
+	padding: 3px;
+	border-bottom: 1px solid #000;	
+	border-right: 1px solid #000;	
+}
+
+.cat_menu_popup a {
+	color: #000;
+	font-size: 80%;
+}
+
+.cat_menu_popup a:hover {
+	color: #888;
+}

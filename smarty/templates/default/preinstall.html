@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+{* available variables: $menu an array of menu items $menu[]['name']
+															['url']
+															['children']=Array();
+						$fullcont The main content area
+						$scripts Array of javascript paths
+						$page_title
+						$custom_styles 
+
+*}
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+
+<style>
+	{literal}
+#main {
+	width: 80%;
+	margin: auto;
+	margin-top: 50px;
+	background-color: white;
+	padding: 20px;
+	border: thin solid black;
+}
+body {
+	background-color: #BFD3FF;
+	padding: 0px;
+	margin: 0px;
+}
+
+#error {
+	padding: 10px;
+	background-color: #FFFAA1;
+	border: 2px solid red;
+}
+	{/literal}
+</style>
+
+</head>
+<body>
+	<div id='main'>
+		<h1>This site has been created</h1>
+		{if isset($error)}
+		<div id='error'>{$error}</div>
+		{else}
+		<p>You can now upload your design templates and edit your content.</p>
+		<div>{$fullcont}</div>
+		{/if}
+	</div>
+</body>
+</html>
