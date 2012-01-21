@@ -5,7 +5,7 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
+  , user = require('./lib/auth')
   , ejs = require('ejs')
   , ea = require('everyauth');
 
