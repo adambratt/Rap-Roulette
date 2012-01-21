@@ -1,0 +1,78 @@
+  
+<a href="/register">Register</a>
+<a href="/login">Login with Password</a>
+<a href="/auth/twitter"><img src="https://si0.twimg.com/images/dev/buttons/sign-in-with-twitter-l.png"></a>
+
+<br/><br/>
+
+
+  h2 Authenticated
+  - if (everyauth.facebook)
+    h3 Facebook User Data
+    p= JSON.stringify(everyauth.facebook.user)
+  - if (everyauth.azureacs)
+    h3 Azure ACS User Data
+    p= JSON.stringify(everyauth.azureacs.user)
+  - if (everyauth.twitter)
+    h3 Twitter User Data
+    p= JSON.stringify(everyauth.twitter.user)
+  - if (everyauth.github)
+    h3 GitHub User Data
+    p= JSON.stringify(everyauth.github.user)
+  - if (everyauth.instagram)
+    h3 Instagram User Data
+    p= JSON.stringify(everyauth.instagram.user)
+  - if (everyauth.foursquare)
+    h3 Foursquare User Data
+    p= JSON.stringify(everyauth.foursquare.user)
+  - if (everyauth.gowalla)
+    h3 Gowalla User Data
+    p= JSON.stringify(everyauth.gowalla.user)
+  - if (everyauth.linkedin)
+    h3 LinkedIn User Data
+    p= JSON.stringify(everyauth.linkedin.user)
+  - if (everyauth.google)
+    h3 Google User Data
+    p= JSON.stringify(everyauth.google.user)
+  - if (everyauth.angellist)
+    h3 AngelList User Data
+    p= JSON.stringify(everyauth.angellist.user)
+  - if (everyauth.yahoo)
+    h3 Yahoo User Data
+    p= JSON.stringify(everyauth.yahoo.user)
+  - if (everyauth.readability)
+    h3 Readability User Data
+    p= JSON.stringify(everyauth.readability.user)
+  - if (everyauth.dropbox)
+    h3 Dropbox User Data
+    p= JSON.stringify(everyauth.dropbox.user)
+  - if (everyauth.vimeo)
+    h3 Vimeo User Data
+    p= JSON.stringify(everyauth.vimeo.user)
+  - if (everyauth.justintv)
+    h3 Justin.tv User Data
+    p= JSON.stringify(everyauth.justintv.user)  
+  - if (everyauth['37signals'])
+    h3 37signals User Data
+    p= JSON.stringify(everyauth['37signals'].user)  
+  - if (everyauth.tumblr)
+    h3 Tumblr User Data
+    p= JSON.stringify(everyauth.tumblr.user)  
+  - if (everyauth.box)
+    h3 Box.net User Data
+    p= JSON.stringify(everyauth.box.user)
+  - if (everyauth.openid)
+    h3 Openid User Data
+    p= JSON.stringify(everyauth.openid.user)
+  - if (everyauth.dwolla)
+    h3 Dwolla User Data
+    p= JSON.stringify(everyauth.dwolla.user)
+  - if (everyauth.skyrock)
+    h3 Skyrock User Data
+    p= JSON.stringify(everyauth.skyrock.user)
+  - if (everyauth.evernote)
+    h3 Evernote User Data
+    p= JSON.stringify(everyauth.evernote.user)
+  
+  h3
+    a(href='/logout') Logout

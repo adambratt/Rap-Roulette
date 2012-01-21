@@ -5,7 +5,9 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , ejs = require('ejs');
+  , user = require('./routes/user')
+  , ejs = require('ejs')
+  , ea = require('everyauth');
 
 var app = module.exports = express.createServer();
 
@@ -18,6 +20,9 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(express.cookieParser()); 
+  app.use(express.session({ secret: 'htuayreve'}));
+  app.use(ea.middleware());
 });
 
 app.configure('development', function(){
@@ -28,9 +33,11 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+
 // Routes
 
 app.get('/', routes.index);
+app.get('/user', user.index);
 
 var port = process.env.NODE_PORT || 3000;
 app.listen(port);
