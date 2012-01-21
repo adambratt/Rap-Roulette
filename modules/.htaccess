@@ -1,8 +1,0 @@
-<FilesMatch "\.(css|png|jpg|gif)$">
-order deny,allow
-allow from all
-</FilesMatch>
-<FilesMatch "\.(php|html|dat)$">
-order deny,allow
-deny from all
-</FilesMatch>
