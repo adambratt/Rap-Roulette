@@ -65,6 +65,7 @@ app.get('/battle/:id', battle.view);
 app.get('/players', player.index);
 app.get('/players/list', player.list);
 app.get('/players/create', player.create);
+app.get('/players/myself', player.myself);
 app.get('/player/:id', player.view);
 
 

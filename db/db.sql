@@ -31,4 +31,4 @@ CREATE TABLE `users` (
   `screen_name` varchar(75) NOT NULL,
   `screen_id` varchar(75) NOT NULL,
   UNIQUE KEY `id` (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=407 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
