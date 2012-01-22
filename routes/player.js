@@ -33,6 +33,18 @@ exports.create = function(req, res){
 	res.end();
 };
 
+// myself
+
+exports.myself = function(req, res){
+		
+	player = Player.get_myself(null, req, function (err, dbUser) {
+		res.writeHead(200, {"Content-Type": "application/json"});
+		res.write(util.inspect(dbUser));
+		res.end();
+	});
+	
+
+};
 
 // view
 

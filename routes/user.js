@@ -21,8 +21,10 @@ exports.session = function (req, res) {
   //console.log(util.inspect(req.session.auth.facebook));
   //console.log(util.inspect(User.get(req,res)));
    
-  console.log('screen id: ' + req.session.auth.facebook);
+  //console.log('screen id: ' + req.session.auth.facebook);
   
+  console.log(req.session.service);
+ 
   res.partial('user/session', {
 	facebook: req.session.auth.facebook	
   });
@@ -32,9 +34,14 @@ exports.session = function (req, res) {
 // session logout
 
 exports.logout = function (req, res) {
-  var User = model.User;
-  User.delete_from_app(req, res);
+  //var User = model.User;
+  //User.delete_from_app(req, res);
   
+  var Player = model.Player;
+  Player.get_myself(null, req, function (err, player) {
+  	Player.drop(null, player.id, function () {});
+  });
+
   res.partial('user/logout', {});
 };
 
