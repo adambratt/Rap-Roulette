@@ -5,7 +5,8 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./lib/auth')
+  , user = require('./routes/user')
+  , auth = require('./lib/auth')
   , ejs = require('ejs')
   , ea = require('everyauth');
 
@@ -38,6 +39,7 @@ app.configure('production', function(){
 
 app.get('/', routes.index);
 app.get('/user', user.index);
+app.get('/user/session', user.session);
 
 var port = process.env.NODE_PORT || 3000;
 app.listen(port);
