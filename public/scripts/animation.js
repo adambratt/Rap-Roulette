@@ -2,10 +2,35 @@
 animations = new Array(); //stores interval # 
 original_positions = new Array(); //stores original position of avatar
 		
+var p1votes=0;
+var p2votes=0;
+var prevAverage=0.5;
+		
+		function player1_vote(){
+			p1votes+=1;
+			updateGraph();
+		
+		}
+		function player2_vote(){
+			p2votes+=1;
+			updateGraph();
+		
+		}
+		function updateGraph(){
+			var p1=(p1votes*3);
+			var p2=(p2votes*3);
+			
+			
+			$(".bar.left").animate({width: p1+"%"}, "fast");
+			
+			$(".bar.right").animate({width: p2+"%"}, "fast");
+		
+		}
 function startEnjoying(index) {
 	// Choose a random animation and start it
 	original_positions[index] = $("#avatar"+index).offset();
-	var i = Math.floor(Math.random()*2);
+	startJumping(index);
+	/*var i = Math.floor(Math.random()*2);
 	switch(i) {
 		case(0):
 			startDancing(index);
@@ -15,7 +40,7 @@ function startEnjoying(index) {
 			break;
 		default:
 			alert("NNOPE");
-		}
+		}*/
 }
 		
 		function stopEnjoying(index) {
@@ -29,7 +54,7 @@ function startEnjoying(index) {
 		function startDancing(index) {
 			// Make the avatar with the given id start dancing
 			dance(index); //"dance" means rotate
-			animations[index] = setInterval(function() {dance(index);}, 1000); //start interval for repeating the animation
+			animations[index] = setInterval(function() {dance(index);}, Math.floor(Math.random()*400)+800); //start interval for repeating the animation
 		}
 		
 		function dance(index) {
@@ -41,14 +66,14 @@ function startEnjoying(index) {
 		
 		function startJumping(index) {
 			// Start the avatar jumping
-			animations[index]=setInterval(function(){jump(index);}, 100);  //start interval for repeating the animation
+			animations[index]=setInterval(function(){jump(index);}, Math.floor(Math.random()*400)+100);  //start interval for repeating the animation
 		}
 
 		function jump(index) {
 			// Make the avatar jump up and down
-			var height = Math.floor(Math.random()*20)+30; //jumps to a random height each time
-			$("#avatar"+index).animate({"top": "-="+height+"px"}, "fast");
-			$("#avatar"+index).animate({"top": "+="+height+"px"}, "fast");
+			var height = Math.floor(Math.random()*20)+20; //jumps to a random height each time
+			$("#avatar"+index).animate({"top": "-="+height+"px"}, 250);
+			$("#avatar"+index).animate({"top": "+="+height+"px"}, 250);
 		}
 		
 		//spire moving functions
@@ -88,6 +113,14 @@ function startEnjoying(index) {
 			//ratio of 1 means all the way to the right,
 			//ratio of 0 means all the way to the left
 			
+			if((ratio-prevAverage)>0)
+				player2_vote();
+			else player1_vote();
+			
+			prevAverage=ratio;
+			
+				
+			
 			var angle=Math.asin(2*ratio-1); //will return a radian angle between -PI/2 to PI/2
 			
 			//convert to degrees
@@ -103,25 +136,29 @@ function startEnjoying(index) {
 			setMeter(0.5);
 		}
 		
-		function moveSpotlight(right) {
-			// Flip and flash spotlight
-			for (var i=0; i<3; i++) {
-				$(".spotlight").fadeTo(100,0);
-				$(".spotlight").fadeTo(100,1);
-			}
-			$(".spotlight").fadeTo(100,0);
-			if (right) {
-				$(".spotlight").rotate3Di(0, 1000);
-			} else {
-				$(".spotlight").rotate3Di(180, 1000);
-			}
+function moveSpotlight(right) {
+	// Flip and flash spotlight
+	for (var i=0; i<3; i++) {
+		$(".spotlight").fadeTo(100,0);
+		$(".spotlight").fadeTo(100,1);
+	}
+	$(".spotlight").fadeTo(100,0);
+	if (right) {
+		$(".spotlight").rotate3Di(0, 1000);
+	} else {
+		$(".spotlight").rotate3Di(180, 1000);
+	}
 			
 			
-			for (var i=0; i<3; i++) {
-				$(".spotlight").fadeTo(100,0);
-				$(".spotlight").fadeTo(100,1);
-			}
-		}
+	for (var i=0; i<3; i++) {
+		$(".spotlight").fadeTo(100,0);
+		$(".spotlight").fadeTo(100,1);
+	}
+}
+
+function turnSpotlightOff() {
+	$(".spotlight").fadeTo(100,0);
+}
 
 	function playSound(soundfile) {
 		document.getElementById("soundplayer").innerHTML=
@@ -136,20 +173,24 @@ function changeAnimation(index) {
 
 function populateRoom() {
 	for (var i=0; i<10; i++) {
-		var model = Math.floor(Math.random()*3)+1;
+		var model = Math.floor(Math.random()*9)+1;
 		var x = i*70;
 		if (i>=5) x += 210;
-		var y = Math.floor(Math.random()*100)-25;
+		var y = Math.floor(Math.random()*150)-25;
 		$(".crowd").append('<img id="avatar'+i+'"src="images/avatar'+model+'.png" style="z-index:'+(y+26)+';"></div>');
 		document.getElementById("avatar"+i).style.margin = y+"px 0 0 "+x+"px";
 		startEnjoying(i);
-		//setTimeout("changeAnimation("+i+")",Math.floor(Math.random()*30000)+5000);
+	}
+	
+	if (Math.random()<0.5) {
+		var i = Math.floor(Math.random()*10)+1;
+		$("#avatar"+i).attr("src", "images/avatarHomer.png");
 	}
 }
 
 function dropBling(left) {
 	$(".stage").prepend('<img id="bling" src="images/bling.png">');
-	$("#bling").css("z-index", "1");
+	$("#bling").css("z-index", "20");
 	$("#bling").css("position", "absolute");
 	$("#bling").css("top", "-500px");
 	if (left) $("#bling").css("left", "95px");
@@ -157,11 +198,21 @@ function dropBling(left) {
 	$("#bling").animate({"top": "+=650px"}, 1000);
 }
 
+function flash() {
+	$("body").css("background", "#fcec78");
+	setTimeout('$("body").css("background", "url(images/bg.png)")', 100);
+}
+
 function removeBling() {
 	$("#bling").remove();
+}
+
+function loser(left) {
+	$(".crowd").hide( "explode", {pieces: 16 }, 2000 );
 }
 
 // Do this on page load
 $(document).ready(function(){
 	populateRoom();
+	updateGraph();
 });
