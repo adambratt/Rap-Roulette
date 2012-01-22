@@ -154,11 +154,11 @@ a {
 }
 
 .video1 {
-    background-image:url(../images/video1.png);
+    background: black;
 }
 
 .video2 {
-    background-image:url(../images/video2.png);
+    background: black;
 }
 
 .songinfo {
