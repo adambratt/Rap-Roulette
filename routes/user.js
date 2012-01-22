@@ -1,9 +1,10 @@
 var model = require('../lib/model')
 	, express = require('express')
 	, ea = require('../node_modules/everyauth/index')
+	, util = require('util')
 ;
 
-// index route
+// login partial
 
 exports.index = function (req, res) {
   res.partial('user/home', {
@@ -11,22 +12,39 @@ exports.index = function (req, res) {
   });
 };
 
-// session route
+
+// session partial
 
 exports.session = function (req, res) {
+  var User = model.User; 
+	
+  console.log(util.inspect(req.session));
+	  
   res.partial('user/session', {
 	'req': req 
   });
 };
 
 
+// session logout
 
-// session info route
+exports.logout = function (req, res) {
+  var User = model.User; 
+
+  console.log(util.inspect(ea));
+  
+  res.partial('user/session', {
+	'req': req 
+  });
+};
+
+
+// test create a user
 
 exports.test_create = function (req, res) {
   
   var User = model.User; 
-  user = User.create({ service: 'facebook', screen_name: 'jpitts' },
+  User.create({ service: 'facebook', screen_name: 'jpitts' },
 	function (user) {
 		
 		res.partial('user/session', {
@@ -36,7 +54,6 @@ exports.test_create = function (req, res) {
 	}
   );
   
-
 };
 
 
