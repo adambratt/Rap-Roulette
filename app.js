@@ -6,6 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , battle = require('./routes/battle')
+  , player = require('./routes/player')
   , auth = require('./lib/auth')
   , ejs = require('ejs')
   , ea = require('everyauth')
@@ -48,11 +50,23 @@ app.configure('production', function(){
 
 
 // Routes
-
 app.get('/', routes.index);
 app.get('/user', user.index);
 app.get('/user/session', user.session);
 app.get('/user/logout', user.logout);
+
+// battles
+app.get('/battles', battle.index);
+app.get('/battles/list', battle.list);
+app.get('/battles/create', battle.create);
+app.get('/battle/:id', battle.view);
+
+// players
+app.get('/players', player.index);
+app.get('/players/list', player.list);
+app.get('/players/create', player.create);
+app.get('/player/:id', player.view);
+
 
 var port = process.env.NODE_PORT || 3000;
 app.listen(port);
