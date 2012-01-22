@@ -41,7 +41,7 @@ function Round(clock, currentPlayer) {
   this.currentPlayer = currentPlayer;
 }
 
-Round.prototype.startTime(id, time) {
+Round.prototype.startTime = function(id, time) {
   if (time) {
     // TODO set time
     $(id).val(time);
@@ -67,11 +67,11 @@ function Room(battle, queue) {
   this.otSession = null;
 }
 
-Room.prototype.removePlayerFromQueue(id) {
+Room.prototype.removePlayerFromQueue = function(id) {
   // TODO: remove dom elements after searching for player with id
 }
 
-Room.prototype.addPlayerToQueue(id) {
+Room.prototype.addPlayerToQueue = function(id) {
   // TODO: create DOM elements for new player
   // only do this in response to this specific event from server, not when I personally choose to join
 }
