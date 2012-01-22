@@ -147,6 +147,20 @@ function populateRoom() {
 	}
 }
 
+function dropBling(left) {
+	$(".stage").prepend('<img id="bling" src="images/bling.png">');
+	$("#bling").css("z-index", "1");
+	$("#bling").css("position", "absolute");
+	$("#bling").css("top", "-500px");
+	if (left) $("#bling").css("left", "95px");
+	else $("#bling").css("left", "550px");
+	$("#bling").animate({"top": "+=650px"}, 1000);
+}
+
+function removeBling() {
+	$("#bling").remove();
+}
+
 // Do this on page load
 $(document).ready(function(){
 	populateRoom();
