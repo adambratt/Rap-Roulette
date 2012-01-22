@@ -36,7 +36,7 @@ gSock.on('playSound', function(data) {
 gSock.on('playKey', function(data) {
   // data
   // .id
-  switch(data){
+  switch(parseInt(data)){
     case 65: //a
       moveSpotlight(true); break;
     case 83: //s
@@ -52,7 +52,6 @@ gSock.on('playKey', function(data) {
     case 88: //x
       flash(); break;
   }
-  
   
 });
 
