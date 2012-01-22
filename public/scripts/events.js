@@ -66,7 +66,7 @@ $(function(){
   soundManager.onready( function(){
     hornSound = soundManager.createSound({ id: 'hornExplode', url: '/audio/airorn+explosion1.wav', autoLoad: true });
     endSound = soundManager.createSound({id: 'winExplode', url: '/audio/luger+explosion.wav', autoLoad: true });
-    lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/lemonade.mp3', autoLoad: true });
+    lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/lemonade.mp3', autoLoad: true, volume: 50 });
   });
   
   $("body").keypress(function(event) {
