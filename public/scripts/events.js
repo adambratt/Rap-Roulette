@@ -19,7 +19,7 @@ function initializeBattleUI(battle) {
     var ele = $('#player'+x);
     if (ele) {
       ele.find('.name').text(battle.players[x].name);
-      // setup open tok videos for player
+      // setup open tok videos for player, mute all
     }
   }
   
@@ -27,14 +27,18 @@ function initializeBattleUI(battle) {
   // Handle song initialization
   battle.song.manager = soundManager.createSound({ id: data.id, url: data.file, autoLoad: true });
   
-   // create timer
+   // Create timer
   currentRoom.battle.round.startTime('#timer', time);
   
+  // Set votes
+  setMeter(currentBattle.vote)
   
   initializeRoundUI(battle.round);
 }
 
 function initializeRoundUI(round) {
+  
+  // open tok needs to unmute current player
   
   // Get the current player initialized
   var player = currentRoom.battle.players[round.currentPlayer];
@@ -42,6 +46,15 @@ function initializeRoundUI(round) {
   
 	// Set the round time
   round.startTime('#timer', round.time);
+  
+  // Setup spotlight
+  if (round.currentPlayer) {
+    // Move to right side if player index > 0
+    moveSpotlight(true);
+  } else {
+    // Move it to the left side
+    moveSpotlight();
+  }
   
 }
 
@@ -81,6 +94,7 @@ function cleanupBattleUI() {
 }
 
 function cleanupRoundUI() {
+  // open tok needs to mute all players at end of round
   $('.player').find('.active').removeClass('active');
 }
 
@@ -228,6 +242,8 @@ gSock.on('joinRoom', function(data) {
       roundSock.on('nextPlayer', function(data) {
         // data
         // .currentPlayer
+        
+        // open tok needs to mute current player before changing its value
         
         currentRound.currentPlayer = data.currentPlayer;
         cleanupRoundUI();
