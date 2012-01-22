@@ -43,23 +43,25 @@
     
 	<span id="soundplayer"></span>
     
-    
+    <div class="subwoofer"></div>
     <div class="stage">
       <div class="winner rapper">
         <div class="video-wrapper">
           <div class="video video1"></div>
           <span>Raj Vir</span>
+          <button class="madprops left" onClick="player1_vote();">Mad Props!</button>
         </div>
         <div class="clear"></div>
       </div>
 
-      <div id="timer"></div>
       <div class="vs"></div>
+      <div id="timer" class="timer">:24</div>
 
       <div class="challenger rapper">
         <div class="video-wrapper">
           <div class="video video2"></div>
           <span>Erik Torenberg</span>
+          <button class="madprops right" onClick="player2_vote();">Mad Props!</button>
         </div>
         <div class="clear"></div>
 
@@ -67,6 +69,8 @@
       <div class="gauge">
         <div class="meter"></div>
       </div>
+      <div class="bar left"></div>
+      <div class="bar right"></div>
       <div class="clear"></div>
       <div class="speaker left"></div>
       <div class="speaker right"></div>
@@ -74,6 +78,7 @@
     </div>
     <div class="clear"></div>
     <div class="crowd">
+    <button class="getinline">Get in Line</button>
     <ul class="queue">
         <h4>Lineup</h4>
         <li>Raj Vir</li>
@@ -81,7 +86,6 @@
         <li>Ben Burke</li>
         <li>Connor Stack</li>
       </ul>
-      <button class="getinline">Get in Line</button>
     </div>
   </div>  
 </body>
