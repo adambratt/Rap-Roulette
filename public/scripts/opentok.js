@@ -21,23 +21,6 @@ OPENTOK.connectToSession = function(room) {
   OPENTOK.session.addEventListener('streamDestroyed', OPENTOK.streamDestroyedHandler);
 }
 
-var findMyPublisher = function() {
-  var myStream;
-  var publishers;
-  for (var i = 0; i < OPENTOK.streams.length) {
-    if (event.streams[i].connection.connectionId == OPENTOK.session.connection.connectionId) {
-      publishers = OPENTOK.session.getPublishersForStream(OPENTOK.streams[i]);
-      if (publishers.length > 1) {
-        console.log('oops');
-        return
-      }
-      return publishers[0];
-    }
-  }
-  console.log('oops');
-  return;
-}
-
 function addStream(stream, div) {
 	// Check if this is the stream that I am publishing, and if so do not publish.
 	if (stream.connection.connectionId == session.connection.connectionId) {
