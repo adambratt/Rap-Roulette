@@ -28,10 +28,8 @@ exports.create = function(req, res){
 	};
 	player = Player.create(null, obj, function () {});
 	
-	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write("<html><body>Player Created");
-	res.write("<br/>" + util.inspect(player));
-	res.write("</body></html>");
+	res.writeHead(200, {"Content-Type": "application/json"});
+	res.write(util.inspect(player));
 	res.end();
 };
 
@@ -44,9 +42,8 @@ exports.view = function(req, res){
 	
 	player = Player.get(null, id, function () {});
 	
-	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write("<br/>" + util.inspect(player));
-	res.write("</body></html>");
+	res.writeHead(200, {"Content-Type": "application/json"});
+	res.write(util.inspect(player));
 	res.end();
 };
 
@@ -56,10 +53,8 @@ exports.view = function(req, res){
 exports.list = function(req, res){
 	players = Player.list(null, {}, function () {});
 	
-	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write("<html><body>");
+	res.writeHead(200, {"Content-Type": "application/json"});
 	res.write(util.inspect(players));
-	res.write("</body></html>");
 	res.end();
 
 };

@@ -40,10 +40,8 @@ exports.create = function(req, res){
 	
 	battle = Battle.create(null, obj, function () {});
 	
-	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write("<html><body>Battle Created");
-	res.write("<br/>" + util.inspect(battle));
-	res.write("</body></html>");
+	res.writeHead(200, {"Content-Type": "application/json"});
+	res.write(util.inspect(battle));
 	res.end();
 };
 
@@ -56,9 +54,8 @@ exports.view = function(req, res){
 	
 	battle = Battle.get(null, id, function () {});
 	
-	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write("<br/>" + util.inspect(battle));
-	res.write("</body></html>");
+	res.writeHead(200, {"Content-Type": "application/json"});
+	res.write(util.inspect(battle));
 	res.end();
 };
 
@@ -68,10 +65,8 @@ exports.view = function(req, res){
 exports.list = function(req, res){
 	battles = Battle.list(null, {}, function () {});
 	
-	res.writeHead(200, {"Content-Type": "text/html"});
-	res.write("<html><body>");
+	res.writeHead(200, {"Content-Type": "application/json"});
 	res.write(util.inspect(battles));
-	res.write("</body></html>");
 	res.end();
 
 };
