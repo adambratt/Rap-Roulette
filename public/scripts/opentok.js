@@ -62,8 +62,9 @@ OPENTOK.streamDestroyedHandler = function(event) {
 var publisher;
 $('body').keypress(function(event) {
   if (!publisher && event.which == 43) {
-  	publisher = session.publish(OPENTOK.divs[OPENTOK.nextStream]);
+  	publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream]);
   	OPENTOK.nextStream++;
   }
 });
 
+OPENTOK.connectToSession();
