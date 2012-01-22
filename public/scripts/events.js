@@ -35,7 +35,7 @@ function queue_list(){
     
     // Fill the queue
     for (x in data.list){
-        ele = data.list[x].append("<li>"+data.name+"</li>");
+        ele.append("<li>"+data.list[x].name+"</li>");
     }
 }
 
@@ -91,16 +91,14 @@ function player_start(){
     var ele = $('.player[rel='+data.id+']');
     ele.find('.timer').addClass('warmup');
     setTimeout(function(){ player_timer(data.id, data.warmup_time, true); data=null; });
-    
 }
 
 function player_timer(id, time_left, warmup){
     // Base state
     warmup = warmup || false;
     
-    // Update timer
-    time_left-=1;
-    var timer_ele = $('.player[rel='+data.id+']').find('.timer');
+    // Render timer
+    var timer_ele = $('.player[rel='+id+']').find('.timer');
     timer_ele.text(time_left);
     
     // If not in a round set timer to wait
@@ -111,7 +109,7 @@ function player_timer(id, time_left, warmup){
     
     if (time_left > 0){
         // Call timer again
-        setTimeout(function(){ player_timer(id, time_left, warmup)}, 1000);
+        setTimeout(function(){ player_timer(id, time_left-1, warmup)}, 1000);
     } else if(warmup) {
         // Switch from warmup timer to normal timer
         if (room.battle.current_round.current_player.perform_time){
