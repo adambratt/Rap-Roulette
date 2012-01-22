@@ -12,7 +12,8 @@ var express = require('express')
   , ejs = require('ejs')
   , ea = require('everyauth')
   , MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory')
-  , io = require('socket.io');
+  , io = require('socket.io')
+  , game = require('./lib/game-logic');
 
 var app = module.exports = express.createServer();
 
@@ -49,7 +50,8 @@ app.configure('production', function(){
 });
 
 // SocketIO Config
-
+var socketServer = io.listen(app);
+module.exports.game = game.startGame(socketServer);
 
 // Routes
 app.get('/', routes.index);
