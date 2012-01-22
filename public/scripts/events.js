@@ -192,6 +192,9 @@ Round.prototype.startTime = function(id, time) {
 }
 // -------------- Socket Logic -------------------
 
+// setup socket root
+var socketLibRoot = 'http://raproulette.fm';
+
 // general socket
 var gSock = io.connect(socketLibRoot);
 
@@ -315,7 +318,13 @@ gSock.on('joinRoom', function(data) {
 });
 
 // ------------------   Preload Sounds ---------------
+var hornSound;
+var endSound;
+
 $(function(){
-  var hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
-  var endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
+  soundManager.url = '/scripts/';
+  soundManager.onready( function(){
+    hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
+    endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
+  });
 });
