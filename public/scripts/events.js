@@ -318,10 +318,13 @@ gSock.on('joinRoom', function(data) {
 });
 
 // ------------------   Preload Sounds ---------------
+var hornSound;
+var endSound;
+
 $(function(){
   soundManager.url = '/scripts/';
   soundManager.onready( function(){
-    var hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
-    var endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
+    hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
+    endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
   });
 });
