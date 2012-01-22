@@ -178,11 +178,11 @@ function changeAnimation(index) {
 }
 
 function populateRoom() {
-	for (var i=0; i<10; i++) {
+	for (var i=0; i<20; i++) {
 		var model = Math.floor(Math.random()*9)+1;
-		var x = i*70;
-		if (i>=5) x += 210;
-		var y = Math.floor(Math.random()*150)-25;
+		var x = i*35;
+		if (i>=10) x += 210;
+		var y = Math.floor(Math.random()*250)-25;
 		$(".crowd").append('<img id="avatar'+i+'"src="images/avatar'+model+'.png" style="z-index:'+(y+26)+';"></div>');
 		document.getElementById("avatar"+i).style.margin = y+"px 0 0 "+x+"px";
 		startEnjoying(i);
