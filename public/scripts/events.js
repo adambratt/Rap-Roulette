@@ -320,6 +320,8 @@ gSock.on('joinRoom', function(data) {
 // ------------------   Preload Sounds ---------------
 $(function(){
   soundManager.url = '/scripts/';
-  var hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
-  var endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
+  soundManager.onready( function(){
+    var hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
+    var endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
+  });
 });
