@@ -237,12 +237,12 @@ a {
     width:756px;
     margin:0 auto;
     position:relative;
-    z-index:20;
+    z-index:0;
 }
 
 .spotlight {
     position:absolute;
-    z-index:20;
+    z-index:0;
     width:756px;
     left:auto;
     right:auto;
