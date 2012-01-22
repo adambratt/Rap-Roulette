@@ -20,8 +20,7 @@ var gSock = io.connect(socketLibRoot);
 gSock.on('syncVote', function(data) {
   // data
   // .vote
-  
-  setMeter(data.vote);
+  setMeter(parseInt(data));
 });
 
 gSock.on('playSound', function(data) {
@@ -63,7 +62,7 @@ $(function(){
   
   $('.madprops').click(function(){
     var vote = $(this).attr('rel');
-    gSock.emit('vote', { vote: vote });
+    gSock.emit('vote', vote.toString() );
     return false;
   });
   
