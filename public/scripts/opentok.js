@@ -25,7 +25,7 @@ OPENTOK.connectToSession = function(room) {
 
 function addStream(stream, div) {
 	// Check if this is the stream that I am publishing, and if so do not publish.
-	if (stream.connection.connectionId == session.connection.connectionId) {
+	if (stream.connection.connectionId == OPENTOK.session.connection.connectionId) {
 		return;
 	}
 	session.subscribe(stream, div);
@@ -40,7 +40,7 @@ OPENTOK.sessionConnectedHandler = function(event) {
 	
 	$('body').keypress(function(event) {
     if (!publisher && event.which == 43) {
-    	publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream]);
+    	publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream], { height: 240, width: 320 });
     	OPENTOK.nextStream++;
     }
   });
