@@ -19,6 +19,8 @@ OPENTOK.connectToSession = function(room) {
   OPENTOK.session.addEventListener('connectionDestroyed', OPENTOK.connectionDestroyedHandler);
   OPENTOK.session.addEventListener('streamCreated', OPENTOK.streamCreatedHandler);
   OPENTOK.session.addEventListener('streamDestroyed', OPENTOK.streamDestroyedHandler);
+  
+  OPENTOK.session.connect(OPENTOK.apiKey, OPENTOK.token);
 }
 
 function addStream(stream, div) {
