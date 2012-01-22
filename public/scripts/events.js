@@ -33,6 +33,29 @@ gSock.on('playSound', function(data) {
   
 });
 
+gSock.on('playKey', function(data) {
+  // data
+  // .id
+  switch(data){
+    case 65: //a
+      moveSpotlight(true); break;
+    case 83: //s
+      moveSpotlight(false);break;
+    
+    case 68: //d
+      dropBling(true);break;
+    case 70: //f
+      dropBling(false);break;
+    case 82: //r
+      removeBling();break;
+      
+    case 88: //x
+      flash(); break;
+  }
+  
+  
+});
+
 
 // ------------------   Preloads and Triggers ---------------
 var hornSound;
@@ -57,6 +80,8 @@ $(function(){
      } else if (event.which == 108) {
       // l
       gSock.emit('sendSound', 'lemonade');
+     } else {
+      gSock.emit('sendKey', event.which.toString());
      }
   });
   

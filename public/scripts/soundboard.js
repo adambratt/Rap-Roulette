@@ -21,20 +21,6 @@ $(window).keydown(function(e) {
 	case 81: //q
 		playBeat("sounds/lemonade.mp3");break;
 		
-	case 65: //a
-		moveSpotlight(true); break;
-	case 83: //s
-		moveSpotlight(false);break;
-	
-	case 68: //d
-		dropBling(true);break;
-	case 70: //f
-		dropBling(false);break;
-	case 82: //r
-		removeBling();break;
-		
-	case 88: //x
-		flash(); break;
 	case 67: //c
 		player1_vote();break;
 	case 86: //v
