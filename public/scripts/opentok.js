@@ -28,7 +28,7 @@ function addStream(stream, div) {
 	if (stream.connection.connectionId == OPENTOK.session.connection.connectionId) {
 		return;
 	}
-	session.subscribe(stream, div);
+	OPENTOK.session.subscribe(stream, div);
 	OPENTOK.nextStream++;
 }
 
