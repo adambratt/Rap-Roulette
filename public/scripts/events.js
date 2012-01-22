@@ -40,7 +40,7 @@ var hornSound;
 var endSound;
 
 $(function(){
-  
+  soundManager.debugMode = false;
   soundManager.url = '/scripts/';
   soundManager.onready( function(){
     hornSound = soundManager.createSound({ id: 'hornExplode', url: '/audio/airorn+explosion1.wav', autoLoad: true });
