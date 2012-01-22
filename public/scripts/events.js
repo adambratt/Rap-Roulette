@@ -274,6 +274,14 @@ gSock.on('joinRoom', function(data) {
     
     })
     
+    battleSock.on('syncVote', function(data) {
+      // data
+      //  .vote
+      
+      setMeter(data.vote);
+      
+    });
+    
     
     battleSock.on('syncSong', function(data) {
       // data
@@ -317,14 +325,22 @@ gSock.on('joinRoom', function(data) {
   
 });
 
-// ------------------   Preload Sounds ---------------
+// ------------------   Preloads and Triggers ---------------
 var hornSound;
 var endSound;
 
 $(function(){
+  
   soundManager.url = '/scripts/';
   soundManager.onready( function(){
     hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
     endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
   });
+  
+  $('.madprops').click(function(){
+    var vote = $(this).attr('rel');
+    socket.emit('vote', { vote: vote });
+    return false;
+  });
+  
 });
