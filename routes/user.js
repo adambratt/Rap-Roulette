@@ -18,10 +18,10 @@ exports.index = function (req, res) {
 exports.session = function (req, res) {
   var User = model.User; 
   	
-  console.log(util.inspect(req.session.auth.facebook));
+  //console.log(util.inspect(req.session.auth.facebook));
   //console.log(util.inspect(User.get(req,res)));
    
-  console.log('screen id: ' + req.session.screen_id);
+  console.log('screen id: ' + req.session.auth.facebook);
   
   res.partial('user/session', {
 	facebook: req.session.auth.facebook	
@@ -32,11 +32,10 @@ exports.session = function (req, res) {
 // session logout
 
 exports.logout = function (req, res) {
-  var User = model.User; 
+  var User = model.User;
+  User.delete_from_app(req, res);
   
-  res.partial('user/session', {
-	'req': req 
-  });
+  res.partial('user/logout', {});
 };
 
 
