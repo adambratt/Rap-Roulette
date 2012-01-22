@@ -11,8 +11,9 @@ var express = require('express')
   , auth = require('./lib/auth')
   , ejs = require('ejs')
   , ea = require('everyauth')
-  , MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory');
-  //, MySQLSessionStore = require('connect-mysql-session')(express);
+  , MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory')
+  , io = require('socket.io')
+  , game = require('./lib/game-logic');
 
 var app = module.exports = express.createServer();
 
@@ -48,6 +49,9 @@ app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
 
+// SocketIO Config
+var socketServer = io.listen(app);
+module.exports.game = game.startGame(socketServer);
 
 // Routes
 app.get('/', routes.index);
