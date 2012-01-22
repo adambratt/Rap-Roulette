@@ -8,7 +8,9 @@ var express = require('express')
   , user = require('./routes/user')
   , auth = require('./lib/auth')
   , ejs = require('ejs')
-  , ea = require('everyauth');
+  , ea = require('everyauth')
+  , MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory');
+  //, MySQLSessionStore = require('connect-mysql-session')(express);
 
 var app = module.exports = express.createServer();
 
@@ -19,10 +21,20 @@ app.configure(function(){
   app.set('view engine', 'ejs');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
+  app.use(express.cookieParser()); 
+  //app.use(express.session({ secret: 'htuayreve'})); 
+  app.use(
+	express.session({
+	  store: new MemoryStore({ reapInterval: 60000 * 10  }),
+	  secret: "asfasdfsad"
+	})
+  );
+  /*app.use(express.session({
+	store: new MySQLSessionStore("rap", "rapuser", "rappass", { port: 8889  }),
+	secret: "htuayreve"
+  }))*/
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-  app.use(express.cookieParser()); 
-  app.use(express.session({ secret: 'htuayreve'}));
   app.use(ea.middleware());
 });
 

@@ -17,11 +17,14 @@ exports.index = function (req, res) {
 
 exports.session = function (req, res) {
   var User = model.User; 
-	
-  console.log(util.inspect(req.session));
-	  
+  	
+  console.log(util.inspect(req.session.auth.facebook));
+  //console.log(util.inspect(User.get(req,res)));
+   
+  console.log('screen id: ' + req.session.screen_id);
+  
   res.partial('user/session', {
-	'req': req 
+	facebook: req.session.auth.facebook	
   });
 };
 
@@ -30,8 +33,6 @@ exports.session = function (req, res) {
 
 exports.logout = function (req, res) {
   var User = model.User; 
-
-  console.log(util.inspect(ea));
   
   res.partial('user/session', {
 	'req': req 
