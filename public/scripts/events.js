@@ -84,7 +84,17 @@ function initializeQueueUI(queue) {
 }
 
 function endBattleUI(battle, winner) {
-  var winningPlayer = currentRoom.currentBattle
+  
+  var winningPlayer = currentRoom.battle.players[winner];
+  
+  if (winner) {
+    // drop bling on right
+    dropbling()
+  } else {
+    // drop bling on left
+    dropBling(true);
+  }
+  
   setTimeout('cleanupBattleUI()', 10000);
 }
 
@@ -274,7 +284,7 @@ gSock.on('joinRoom', function(data) {
   
   roomSock.on('endBattle', function(data) {
     // data
-    //  .winner
+    //  .winner - winning player index
     
     endBattleUI(currentRoom.currentBattle, winner);
     currentRoom.currentBattle = null;
@@ -302,4 +312,10 @@ gSock.on('joinRoom', function(data) {
     
   });
   
+});
+
+// ------------------   Preload Sounds ---------------
+$(function(){
+  var hornSound = soundManager.createSound({ id: 'hornSound', url: '/audio/airorn+explosion1.wav', autoLoad: true });
+  var endSound = soundManager.createSound({id: 'endSound', url: '/audio/luger+explosion.wav', autoLoad: true });
 });
