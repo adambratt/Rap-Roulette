@@ -28,7 +28,7 @@ gSock.on('playSound', function(data) {
   // data
   // .id
   
-  var sound = soundManager.getSoundById(data.id);
+  var sound = soundManager.getSoundById(data);
   sound.play();
   
   
@@ -51,13 +51,13 @@ $(function(){
   $("body").keypress(function(event) {
     if ( event.which == 106) {
       // j
-       gSock.emit('sendSound', {sound: 'hornExplode'});
+       gSock.emit('sendSound', 'hornExplode');
      } else if (event.which == 107) {
       // k
-      gSock.emit('sendSound', {sound: 'winExplode'});
+      gSock.emit('sendSound', 'winExplode');
      } else if (event.which == 108) {
       // l
-      gSock.emit('sendSound', {sound: 'lemonade'});
+      gSock.emit('sendSound', 'lemonade');
      }
   });
   
