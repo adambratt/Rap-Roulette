@@ -3,14 +3,87 @@
 /* requires socketLibRoot */
 
 // ------------------   UI Helpers  ---------------
-function initializeRoomUI(time) {
-  // create timer
-  currentRoom.battle.round.startTime('#timer', time);
+function initializeRoomUI(room) {
+	
+  initializeQueueUI(room.queue);
+ 
   // TODO insert queue into dom (currentRoom.queue)
   
   // TODO download sound into manager (currentRoom.battle.song.manager)
+  initializeBattleUI(room.battle);
+}
+
+function initializeBattleUI(battle) {
+  
+  for (x in battle.players) {
+    var ele = $('#player'+x);
+    if (ele) {
+      ele.find('.name').text(battle.players[x].name);
+      // setup open tok videos for player
+    }
+  }
+  
+  
+  // Handle song initialization
+  battle.song.manager = soundManager.createSound({ id: data.id, url: data.file, autoLoad: true });
+  
+   // create timer
+  currentRoom.battle.round.startTime('#timer', time);
+  
+  
+  initializeRoundUI(battle.round);
+}
+
+function initializeRoundUI(round) {
+  
+  // Get the current player initialized
+  var player = currentRoom.battle.players[round.currentPlayer];
+  initializePlayerUI(player);
+  
+	// Set the round time
+  round.startTime('#timer', round.time);
   
 }
+
+function initializePlayerUI(player) {
+  
+  // Go through elements and make it work
+  var playerElement = $('#player'+player);
+  playerElement.find('.name').addClass('active');
+  playerElement.find('.video').addClass('active');
+  
+}
+
+function initializeQueueUI(queue) {
+  // Get queue element and clear it out
+  var queueElement = $('.queue ul');
+  queueElement.html('');
+  $('#queueCount').text(queue.length);
+
+  if (!queue.length)
+    return;
+
+  // Loop through and add each person in the queue
+  for (x in queue){
+    ele.append('<li rel="'+queue[x].id+'"><img src="'+queue[x].img+'"><span>'+queue[x].name+'</span></li>"');
+  }
+  
+}
+
+function endBattleUI(battle, winner) {
+  var winningPlayer = currentRoom.currentBattle
+  setTimeout('cleanupBattleUI()', 10000);
+}
+
+function cleanupBattleUI() {
+  $('.player').find('.name, .video').html('');
+  $('.player').find('.active').removeClass('active');
+}
+
+function cleanupRoundUI() {
+  $('.player').find('.active').removeClass('active');
+}
+
 
 // ------------------ Model Objects ---------------
 
@@ -36,22 +109,10 @@ function Player(id, name, img) {
   this.publisher = null;
 }
 
-function Round(clock, currentPlayer) {
-  this.clock = clock;
-  this.currentPlayer = currentPlayer;
-}
-
-Round.prototype.startTime = function(id, time) {
-  if (time) {
-    // TODO set time
-    $(id).val(time);
-  }
-  this.clock = setTimer(function () {
-    var oldTime = parseInt($(id).html());
-    if (oldTime > 0) {
-      $(id).html(oldTime-1)
-    }
-  }, 1000);
+function Round(time, currentPlayer) {
+  this.time = time;
+  this.clock = null;
+  this.currentPlayer = currentPlayer; 
 }
 
 function Battle(song, round, vote, players) {
@@ -68,14 +129,43 @@ function Room(battle, queue) {
 }
 
 Room.prototype.removePlayerFromQueue = function(id) {
-  // TODO: remove dom elements after searching for player with id
+  for (x in this.queue) {
+    if (this.queue[x].id == id) {
+      this.queue[x].pop();
+      $('li[rel='+id+']').remove();
+      break;
+    }
+  }
 }
 
-Room.prototype.addPlayerToQueue = function(id) {
-  // TODO: create DOM elements for new player
-  // only do this in response to this specific event from server, not when I personally choose to join
+Room.prototype.addPlayerToQueue = function(player) {
+  this.queue.push(player);
+  $('.queue ul').append('<li rel="'+player.id+'"><img src="'+player.img+'"><span>'+player.name+'</span></li>"');
 }
 
+
+Song.prototype.syncSong = function(position) {
+  if (this.manager) {
+    var diff = abs(this.manager.position - position);
+    if (diff > 250) {
+      this.manager.setPosition(position+25)
+    }
+  }
+}
+
+Round.prototype.startTime = function(id, time) {
+  this.time = time;
+  if (time) {
+    // TODO set time
+    $(id).val(time);
+  }
+  this.clock = setTimer(function () {
+    var oldTime = parseInt($(id).html());
+    if (oldTime > 0) {
+      $(id).html(oldTime-1)
+    }
+  }, 1000);
+}
 // -------------- Socket Logic -------------------
 
 // general socket
@@ -92,9 +182,11 @@ gSock.on('joinRoom', function(data) {
   //  .vote
   //  .players
   
-  currentRound = new Round(null, currentPlayer);
-  currentBattle = new Battle(song, currentRound, vote, players)
-  currentRoom = new Room(currentBattle, queue);
+  var currentRound = new Round(data.time, data.currentPlayer);
+  var currentBattle = new Battle(data.song, data.currentRound, data.vote, data.players)
+  currentRoom = new Room(data.currentBattle, data.queue);
+  
+  initializeRoomUI(currentRoom);
   
   roomSock = io.connect(socketLibRoot + '/room');
   
@@ -103,6 +195,19 @@ gSock.on('joinRoom', function(data) {
   roomSock.on('startBattle', function(data) {
     // data
     //  .battleId
+    //  .song
+    //  .currentRound
+    //  .vote
+    //  .players
+    
+    currentBattle = new Battle(data.song, data.currentRound, data.vote, data.players);
+    currentRoom.battle = currentBattle;
+    
+    
+    // open-tok video setup?
+    
+    initializeBattleUI(currentBattle);
+    currentBattle.song.manager.play();
     
     // TODO subscribe to round events
     
@@ -113,17 +218,20 @@ gSock.on('joinRoom', function(data) {
       // data
       //  .roundId
       
-      // TODO
+      currentRound = new Round(data.time, data.currentPlayer);
+      currentBattle.currentRound = currentRound;
+      
+      initializeRoundUI(currentRound);
       
       roundSock = io.connect(socketLibRoot + '/room' + '/battle:'+ data.battleId + '/round:' + data.roundId );
       
-      roundSock.on('startPlayer', function(data) {
-        // TODO
+      roundSock.on('nextPlayer', function(data) {
+        // data
+        // .currentPlayer
         
-      });
-      
-      roundSock.on('endPlayer', function() {
-        // TODO
+        currentRound.currentPlayer = data.currentPlayer;
+        cleanupRoundUI();
+        initializeRoundUI();
         
       });
       
@@ -131,159 +239,51 @@ gSock.on('joinRoom', function(data) {
     
     
     battleSock.on('endRound', function() {
-      // TODO
       
+      cleanupRoundUI(currentRound);
       roundSock.leave();
+    
     })
+    
+    
+    battleSock.on('syncSong', function(data) {
+      // data
+      //  .songPosition
+      
+      currentBattle.song.syncSong(data.songPosition);
+      
+    });
     
   });
   
-  roomSock.on('endBattle', function() {
-    // TODO 
+  roomSock.on('endBattle', function(data) {
+    // data
+    //  .winner
+    
+    endBattleUI(currentRoom.currentBattle, winner);
+    currentRoom.currentBattle = null;
     
     battleSock.leave();
     
   });
   
+  roomSock.on('queueAdd', function(data){
+    // data
+    //  .id
+    //  .name
+    //  .img
+    
+    var Player = new Player(data.id, data.name, data.img);
+    currentRoom.addPlayerToQueue(Player);
+    
+  });
+  
+  roomSock.on('queueRemove', function(data){
+    // data
+    // .id
+    
+    currentRoom.removePlayerFromQueue(data.id);
+    
+  });
+  
 });
-
-// if i'm in a room...
-if (currentRoom) {
-  initializeRoomUI(data.time);
-}
-
-// if i'm in a battle...
-initializeBattleUI()
-
-// if i'm in a round...
-initializeRoundUI();
-
-
-function room_init(){
-    battle_start();	
-}
-
-function song_start(){
-    var data = {"id": 3, "file": ""};
-    room.song = data;
-    room.song.manager = soundManager.createSound({ id: data.id, url: data.file});
-    room.song.manager.play()
-}
-
-function song_sync(){
-    var data = {"position": 15000};
-    var diff = abs(room.song.manager.position-data.position);
-    if (diff > 250){
-        room.song.manager.stop();
-        room.song.manager.setPosition(data.position+25);
-        room.song.manager.play();
-    }
-}
-
-function song_end(){
-    room.song.manager.stop();
-    room.song = null;
-}
-
-function queue_list(){
-    var data = {"list": [{"id": 4, "name": "Bob"}, {"id": 6, "name": "Stephen"}, {"id": 9, "name": "Freddie"}]};
-    
-    // Get the queue and clean it out
-    var ele = $('.queue ul');
-    ele.html('');
-    
-    // Fill the queue
-    for (x in data.list){
-        ele.append("<li>"+data.list[x].name+"</li>");
-    }
-}
-
-function queue_add(){
-    
-}
-
-function battle_start(){
-    // Todo: Cleanup previous battle if needed
-    var data = {"id": "300", "players": [ {"id": 3, "name": "Adam Bratt", "img": "https://twimg0-a.akamaihd.net/profile_images/1708962739/K4OCl_normal.png"}, {"id": 4, "name": "Bill Nye", "img": "https://twimg0-a.akamaihd.net/profile_images/1708962739/K4OCl_normal.png"}]};
-    for( x in data.players ){
-        // Get player element and update ID
-        p_ele = $('#player'+x);
-        p_ele.attr('rel',data.players[x].id);
-        // Update player name
-        p_ele.find('.player-name').text(data.players[x].name);
-        // Update player image
-        p_ele.find('.player-img').attr('src',data.players[x].img);
-    }
-    room.battle = data;
-    round_start();
-}
-
-function battle_end(){
-    var data = {"winner": 3}
-    room.battle = {};
-    
-    // Winner/Loser display logic
-    winner_ele = $('.player[rel='+data.winner+']');
-    winner_ele.find('.player-win').show();
-    loser_ele = $('.player[rel!='+data.winner+']');
-    loser_ele.find('.player-lose').show();
-    
-    // Cleanup the battle after 9 seconds
-    setTimeout(function(){ battle_cleanup(data.winner); data = null; }, 9000);
-}
-
-function round_start(){
-    var data = {"count": 2};
-    $(".round-count").text(data.count);
-    room.battle.current_round = data;
-    player_start();
-}
-
-function round_end(){
-    var data = {};
-    room.battle.current_round = null;
-}
-
-function player_start(){
-    var data = {"id": 3, "warmup_time": 5, "perform_time": 30};
-    room.battle.current_round.current_player = data;
-    var ele = $('.player[rel='+data.id+']');
-    ele.find('.timer').addClass('warmup');
-    setTimeout(function(){ player_timer(data.id, data.warmup_time, true); data=null; });
-}
-
-function player_timer(id, time_left, warmup){
-    // Base state
-    warmup = warmup || false;
-    
-    // Render timer
-    var timer_ele = $('.player[rel='+id+']').find('.timer');
-    timer_ele.text(time_left);
-    
-    // If not in a round set timer to wait
-    if (!room.battle.current_round || room.battle.current_round == undefined){
-        timer_ele.text('WAIT');
-        return;
-    }
-    
-    if (time_left > 0){
-        // Call timer again
-        setTimeout(function(){ player_timer(id, time_left-1, warmup)}, 1000);
-    } else if(warmup) {
-        // Switch from warmup timer to normal timer
-        if (room.battle.current_round.current_player.perform_time){
-            timer_ele.removeClass('warmup');
-            setTimeout(function(){ player_timer(id, room.battle.current_round.current_player.perform_time)}, 1000);
-        }
-    } else {
-        // remove this later
-        player_end();
-    }
-}
-
-function player_end(){
-    var data = {"id": 3};
-    var ele = $('.player[rel='+data.id+']');
-    // Change timer text to WAIT
-    ele.find('.timer').text('WAIT');
-}

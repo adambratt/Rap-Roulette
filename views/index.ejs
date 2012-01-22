@@ -1,2 +1,86 @@
-<h1>Test example page</h1>
-<p>WHOOHOO</p>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Rap Roulette | <%= title %></title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/reset.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/text.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/960.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/raproulette.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="jquery-animate-css-rotate-scale.js"></script>
+  <script src="jquery-css-transform.js"></script>
+  <script src="rotate3Di.js"></script>
+  <script src="animation.js"></script>
+  <script src="https://raw.github.com/LearnBoost/socket.io-client/master/dist/socket.io.min.js" type="text/javascript"></script>
+  <script src="/public/scripts/soundmanager2-jsmin.js" type="text/javascript"></script>
+  
+</head>
+<body>
+  <div class="spotlight-wrapper">
+    <img class="spotlight" src="images/spotlight.png" />
+  </div>
+  <div id="navbar-wrapper">
+    <div id="navbar">
+      <a href="/"><img src="images/logo.png" /></a>
+      <!-- <a href="#logout">
+        <img src="http://dummyimage.com/25x25" />
+        Raj Vir
+      </a> -->
+    </div>
+  </div>
+
+  <div class="container_12">
+    <div class="songinfo">
+  	    Lose Yourself
+  	    <br>
+  	    Eminem
+  	    <br>
+  	    <a href="http://itunes.com">Buy on iTunes</a>
+    </div>
+    
+	<span id="soundplayer"></span>
+    
+    
+    <div class="stage">
+      <div class="winner rapper">
+        <div class="video-wrapper">
+          <div class="video video1"></div>
+          <span>Raj Vir</span>
+        </div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="timer"></div>
+      <div class="vs"></div>
+
+      <div class="challenger rapper">
+        <div class="video-wrapper">
+          <div class="video video2"></div>
+          <span>Erik Torenberg</span>
+        </div>
+        <div class="clear"></div>
+
+      </div>
+      <div class="gauge">
+        <div class="meter"></div>
+      </div>
+      <div class="clear"></div>
+      <div class="speaker left"></div>
+      <div class="speaker right"></div>
+
+    </div>
+    <div class="clear"></div>
+    <div class="crowd">
+    <ul class="queue">
+        <h4>Lineup</h4>
+        <li>Raj Vir</li>
+        <li>Shiva Kilaru</li>
+        <li>Ben Burke</li>
+        <li>Connor Stack</li>
+      </ul>
+      <button class="getinline">Get in Line</button>
+    </div>
+  </div>  
+</body>
+</html>
