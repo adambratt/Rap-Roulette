@@ -198,132 +198,23 @@ var socketLibRoot = 'http://raproulette.fm';
 // general socket
 var gSock = io.connect(socketLibRoot);
 
-var roomSock;
-
-gSock.on('joinRoom', function(data) {
+gSock.on('syncVote', function(data) {
   // data
-  //  .song
-  //  .queue
-  //  .time
-  //  .currentPlayer
-  //  .vote
-  //  .players
+  // .vote
   
-  var currentRound = new Round(data.time, data.currentPlayer);
-  var currentBattle = new Battle(data.song, data.currentRound, data.vote, data.players)
-  currentRoom = new Room(data.currentBattle, data.queue);
+  setMeter(data.vote);
+});
+
+gSock.on('playSound', function(data) {
+  // data
+  // .id
   
-  initializeRoomUI(currentRoom);
+  var sound = soundManager.getSoundById(data.id);
+  sound.play();
   
-  roomSock = io.connect(socketLibRoot + '/room');
-  
-  var battleSock;
-  
-  roomSock.on('startBattle', function(data) {
-    // data
-    //  .battleId
-    //  .song
-    //  .currentRound
-    //  .vote
-    //  .players
-    
-    currentBattle = new Battle(data.song, data.currentRound, data.vote, data.players);
-    currentRoom.battle = currentBattle;
-    
-    
-    // open-tok video setup?
-    
-    initializeBattleUI(currentBattle);
-    currentBattle.song.manager.play();
-    
-    // TODO subscribe to round events
-    
-    battleSock = io.connect(socketLibRoot + '/room' + '/battle:'+ data.battleId );
-    var roundSock;
-    
-    battleSock.on('startRound', function(data) {
-      // data
-      //  .roundId
-      
-      currentRound = new Round(data.time, data.currentPlayer);
-      currentBattle.currentRound = currentRound;
-      
-      initializeRoundUI(currentRound);
-      
-      roundSock = io.connect(socketLibRoot + '/room' + '/battle:'+ data.battleId + '/round:' + data.roundId );
-      
-      roundSock.on('nextPlayer', function(data) {
-        // data
-        // .currentPlayer
-        
-        // open tok needs to mute current player before changing its value
-        
-        currentRound.currentPlayer = data.currentPlayer;
-        cleanupRoundUI();
-        initializeRoundUI();
-        
-      });
-      
-    });
-    
-    
-    battleSock.on('endRound', function() {
-      
-      cleanupRoundUI(currentRound);
-      roundSock.leave();
-    
-    })
-    
-    battleSock.on('syncVote', function(data) {
-      // data
-      //  .vote
-      
-      setMeter(data.vote);
-      
-    });
-    
-    
-    battleSock.on('syncSong', function(data) {
-      // data
-      //  .songPosition
-      
-      currentBattle.song.syncSong(data.songPosition);
-      
-    });
-    
-  });
-  
-  roomSock.on('endBattle', function(data) {
-    // data
-    //  .winner - winning player index
-    
-    endBattleUI(currentRoom.currentBattle, winner);
-    currentRoom.currentBattle = null;
-    
-    battleSock.leave();
-    
-  });
-  
-  roomSock.on('queueAdd', function(data){
-    // data
-    //  .id
-    //  .name
-    //  .img
-    
-    var Player = new Player(data.id, data.name, data.img);
-    currentRoom.addPlayerToQueue(Player);
-    
-  });
-  
-  roomSock.on('queueRemove', function(data){
-    // data
-    // .id
-    
-    currentRoom.removePlayerFromQueue(data.id);
-    
-  });
   
 });
+
 
 // ------------------   Preloads and Triggers ---------------
 var hornSound;
