@@ -35,6 +35,13 @@ OPENTOK.sessionConnectedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {
 		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
 	}
+	
+	$('body').keypress(function(event) {
+    if (!publisher && event.which == 43) {
+    	publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream]);
+    	OPENTOK.nextStream++;
+    }
+  });
 }
 
 OPENTOK.sessionDisconnectedHandler = function(event) {
@@ -60,11 +67,6 @@ OPENTOK.streamDestroyedHandler = function(event) {
 }
 
 var publisher;
-$('body').keypress(function(event) {
-  if (!publisher && event.which == 43) {
-  	publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream]);
-  	OPENTOK.nextStream++;
-  }
-});
 
+TB.setLogLevel(TB.DEBUG);
 OPENTOK.connectToSession();
