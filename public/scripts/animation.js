@@ -142,14 +142,14 @@ function startEnjoying(index) {
 		$(".queue").hide();	
 		
 		}
-function moveSpotlight(right) {
+function moveSpotlight(left) {
 	// Flip and flash spotlight
 	for (var i=0; i<3; i++) {
 		$(".spotlight").fadeTo(100,0);
 		$(".spotlight").fadeTo(100,1);
 	}
 	$(".spotlight").fadeTo(100,0);
-	if (right) {
+	if (left) {
 		$(".spotlight").rotate3Di(0, 1000);
 	} else {
 		$(".spotlight").rotate3Di(180, 1000);
@@ -170,6 +170,11 @@ function turnSpotlightOff() {
 		document.getElementById("soundplayer").innerHTML=
 		"<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
 	}
+	
+	function playBeat(soundfile) {
+		document.getElementById("beatplayer").innerHTML=
+		"<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
+	}
 
 function changeAnimation(index) {
 	stopEnjoying(index);
@@ -183,7 +188,7 @@ function populateRoom() {
 		var x = i*35;
 		if (i>=10) x += 210;
 		var y = Math.floor(Math.random()*250)-25;
-		$(".crowd").append('<img id="avatar'+i+'"src="images/avatar'+model+'.png" style="z-index:'+(y+26)+';"></div>');
+		$(".crowd").append('<img id="avatar'+i+'"src="images/avatar'+model+'.png" style="z-index:'+(y+100)+';"></div>');
 		document.getElementById("avatar"+i).style.margin = y+"px 0 0 "+x+"px";
 		startEnjoying(i);
 	}
