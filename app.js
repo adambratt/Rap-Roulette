@@ -6,6 +6,7 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , room = require('./routes/room')
   , battle = require('./routes/battle')
   , player = require('./routes/player')
   , auth = require('./lib/auth')
@@ -51,6 +52,13 @@ app.configure('production', function(){
 
 // routes
 app.get('/', routes.index);
+
+// rooms
+app.get('/room', room.index);
+app.get('/room/list', room.list);
+app.get('/room/create', room.create);
+app.get('/room/myroom', room.myroom);
+app.get('/rooms/:id', room.view);
 
 // battles
 app.get('/battle', battle.index);

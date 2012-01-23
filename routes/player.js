@@ -1,6 +1,6 @@
 var model = require('../lib/model')
-	, Player = model.Player
-	, util = require('util')
+  , Player = model.Player
+  , util = require('util')
 ;
 
 
@@ -11,10 +11,10 @@ var model = require('../lib/model')
 // index
 
 exports.index = function(req, res){
-	//res.render('index')
-	res.writeHead(200, {"Content-Type": "text/plain"});
-	res.write("Players");
-	res.end();
+  //res.render('index')
+  res.writeHead(200, {"Content-Type": "text/plain"});
+  res.write("Players");
+  res.end();
 };
 
 
@@ -22,52 +22,52 @@ exports.index = function(req, res){
 // TODO: post-only this
 
 exports.create = function(req, res){
-		
-	obj = {
-		name: req.query.name 
-	};
-	player = Player.create(null, obj, function () {});
-	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect(player));
-	res.end();
+    
+  obj = {
+    name: req.query.name 
+  };
+  player = Player.create(null, obj, function () {});
+  
+  res.writeHead(200, {"Content-Type": "application/json"});
+  res.write(util.inspect(player));
+  res.end();
 };
 
 // myself
 
 exports.myself = function(req, res){
-		
-	player = Player.get_myself(null, req, function (err, dbUser) {
-		res.writeHead(200, {"Content-Type": "application/json"});
-		res.write(util.inspect(dbUser));
-		res.end();
-	});
-	
+    
+  player = Player.get_myself(null, req, function (err, dbUser) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.write(util.inspect(dbUser));
+    res.end();
+  });
+  
 
 };
 
 // view
 
 exports.view = function(req, res){
-		
-	id = req.params.id;
-	
-	player = Player.get(null, id, function () {});
-	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect(player));
-	res.end();
+    
+  id = req.params.id;
+  
+  player = Player.get(null, id, function () {});
+  
+  res.writeHead(200, {"Content-Type": "application/json"});
+  res.write(util.inspect(player));
+  res.end();
 };
 
 
 // list
 
 exports.list = function(req, res){
-	players = Player.list(null, {}, function () {});
-	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect(players));
-	res.end();
+  players = Player.list(null, {}, function () {});
+  
+  res.writeHead(200, {"Content-Type": "application/json"});
+  res.write(util.inspect(players));
+  res.end();
 
 };
 
