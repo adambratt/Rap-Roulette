@@ -46,22 +46,24 @@ exports.logout = function (req, res) {
 };
 
 
-// test create a user
+// myself
 
-exports.test_create = function (req, res) {
-  
-  var User = model.User; 
-  User.create({ service: 'facebook', screen_name: 'jpitts' },
-	function (user) {
-		
-		res.partial('user/session', {
-			'user': user
+exports.myself = function(req, res){
+	
+	player = Player.get_myself(null, req, function (err, dbUser) {
 		});
 
-	}
-  );
+  user_get_from_db({ service: req.session.service, screen_id: req.session.screen_id }, function (err, dbUser) {
+    
+	  res.writeHead(200, {"Content-Type": "application/json"});
+		res.write(util.inspect(dbUser));
+		res.end();
   
+  });
+
+
 };
+
 
 
 

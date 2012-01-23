@@ -49,11 +49,8 @@ app.configure('production', function(){
 });
 
 
-// Routes
+// routes
 app.get('/', routes.index);
-app.get('/user', user.index);
-app.get('/user/session', user.session);
-app.get('/user/logout', user.logout);
 
 // battles
 app.get('/battle', battle.index);
@@ -68,6 +65,12 @@ app.get('/player/list', player.list);
 app.get('/player/create', player.create);
 app.get('/player/myself', player.myself);
 app.get('/players/:id', player.view);
+
+// users (some are for testing only)
+app.get('/user', user.index);
+app.get('/user/session', user.session);
+app.get('/user/logout', user.logout);
+app.get('/user/myself', player.myself);
 
 
 var port = process.env.NODE_PORT || 3000;
