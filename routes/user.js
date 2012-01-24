@@ -17,36 +17,16 @@ exports.index = function (req, res) {
 
 exports.session = function (req, res) {
   var User = model.User; 
-  	
-  //console.log(util.inspect(req.session.auth.facebook));
-  //console.log(util.inspect(User.get(req,res)));
+  
+	res.writeHead(200, {"Content-Type": "application/json"});
+	res.write(util.inspect(req.session));
+	res.end();
    
-  //console.log('screen id: ' + req.session.auth.facebook);
-  
-  console.log(req.session.service);
- 
-  res.partial('user/session', {
-	facebook: req.session.auth.facebook	
-  });
-};
-
-
-// session logout
-
-exports.logout = function (req, res) {
-  //var User = model.User;
-  //User.delete_from_app(req, res);
-  
-  var Player = model.Player;
-  Player.get_myself(null, req, function (err, player) {
-  	Player.drop(null, player.id, function () {});
-  });
-
-  res.partial('user/logout', {});
 };
 
 
 // myself
+// returns the database representation of the user
 
 exports.myself = function(req, res){
 	

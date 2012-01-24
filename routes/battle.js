@@ -4,10 +4,6 @@ var model = require('../lib/model')
 ;
 
 
-/*
- * GET home page.
- */
-
 // index
 
 exports.index = function(req, res){
@@ -22,27 +18,45 @@ exports.index = function(req, res){
 // TODO: post-only this
 
 exports.create = function(req, res){
-		
-	var obj = {
-		song_id: req.query.song_id,
-
-		players: [
-		{
-			id: 1, 
-			name: 'Test 1',
-		},
-		{
-			id: 2,
-			name: 'Test 2',
-		}
-		],
-	};
-	
+  
+  obj = {
+    room_id: req.query.room_id,
+    song_id: req.query.song_id,
+    name: req.query.name,
+    players: ( (typeof req.query.players !== 'undefined') ? req.query.players.split(',') : [])
+  };
+ 		
 	battle = Battle.create(null, obj, function () {});
 	
 	res.writeHead(200, {"Content-Type": "application/json"});
 	res.write(util.inspect(battle));
 	res.end();
+};
+
+
+// drop
+
+exports.drop = function(req, res){
+		
+	id = req.params.id;
+	
+  Battle.drop(null, id, function() {});
+	
+	res.writeHead(200, {"Content-Type": "application/json"});
+	res.write(util.inspect({ success: { message: 'The battle was dropped' } }));
+	res.end();
+};
+
+
+// list
+
+exports.list = function(req, res){
+	battles = Battle.list(null, {}, function () {});
+	
+	res.writeHead(200, {"Content-Type": "application/json"});
+	res.write(util.inspect(battles));
+	res.end();
+
 };
 
 
@@ -57,18 +71,6 @@ exports.view = function(req, res){
 	res.writeHead(200, {"Content-Type": "application/json"});
 	res.write(util.inspect(battle));
 	res.end();
-};
-
-
-// list
-
-exports.list = function(req, res){
-	battles = Battle.list(null, {}, function () {});
-	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect(battles));
-	res.end();
-
 };
 
 

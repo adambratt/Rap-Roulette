@@ -1,0 +1,34 @@
+
+<h2>User and Player</h2>
+
+<a href="/auth/facebook" target="_new">Login Using Facebook</a><br/>
+
+    <div style="padding:10px 10px 10px 25px">
+        <h3>Once you are logged in...</h3>
+        <a href="/player/myself" target="_new">Myself</a><br/>
+        <a href="/players/1" target="_new">Player 1</a><br/>
+        <a href="/player/logout" target="_new">Logout</a><br/>
+    </div>
+
+<h2>Room</h2>
+
+    <div style="padding:10px 10px 10px 25px">
+        <a href="/room/list" target="_new">Room List</a><br/>
+        <a href="/rooms/1" target="_new">Room 1</a><br/>
+        <a href="http://raproulette.fm:3000/room/create?name=x&players=1,2,3&player_queue=" target="_new">Create New Room</a> 
+            (but with invalid players)<br/>
+        <a href="/rooms/2/drop" target="_new">Drop Room 2</a><br/>
+    </div>
+
+<h2>Battle</h2>
+
+    <div style="padding:10px 10px 10px 25px">
+        <a href="/battle/list" target="_new">Battle List</a><br/>
+        <a href="/battles/1" target="_new">Battle 1</a><br/>
+
+        <a href="http://raproulette.fm:3000/battle/create?room_id=1&name=&song_id=1&players=1,2" target="_new">Create New Battle In Room 1</a> 
+            (but with invalid players)<br/>
+        <a href="/battles/2/drop" target="_new">Drop Battle 2</a><br/>
+        
+    </div>
+

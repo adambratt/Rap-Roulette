@@ -1,19 +1,27 @@
 
+
 /**
  * Module dependencies.
  */
 
 var express = require('express')
+  , ejs = require('ejs')
+  , ea = require('everyauth')
+  , MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory')
+  
+  // our libraries
+  , auth = require('./lib/auth')
+  , model = require('./lib/model')
+
+  // our routes (mapped to URIs)
   , routes = require('./routes')
   , user = require('./routes/user')
   , room = require('./routes/room')
   , battle = require('./routes/battle')
   , player = require('./routes/player')
-  , auth = require('./lib/auth')
-  , ejs = require('ejs')
-  , ea = require('everyauth')
-  , MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory');
-  //, MySQLSessionStore = require('connect-mysql-session')(express);
+  , admin = require('./routes/admin')
+  ;
+;
 
 var app = module.exports = express.createServer();
 
@@ -59,6 +67,7 @@ app.get('/room/list', room.list);
 app.get('/room/create', room.create);
 app.get('/room/myroom', room.myroom);
 app.get('/rooms/:id', room.view);
+app.get('/rooms/:id/drop', room.drop);      // should not expose this except to admins
 
 // battles
 app.get('/battle', battle.index);
@@ -66,10 +75,12 @@ app.get('/battle/list', battle.list);
 app.get('/battle/create', battle.create);
 app.get('/battle/mybattle', player.mybattle);
 app.get('/battles/:id', battle.view);
+app.get('/battles/:id/drop', battle.drop);  // should not expose this except to admins 
 
 // players
 app.get('/player', player.index);
 app.get('/player/list', player.list);
+app.get('/player/logout', player.logout);
 app.get('/player/create', player.create);
 app.get('/player/myself', player.myself);
 app.get('/players/:id', player.view);
@@ -77,8 +88,10 @@ app.get('/players/:id', player.view);
 // users (some are for testing only)
 app.get('/user', user.index);
 app.get('/user/session', user.session);
-app.get('/user/logout', user.logout);
 app.get('/user/myself', player.myself);
+
+// admin screens
+app.get('/admin/testboard', admin.testboard);
 
 
 var port = process.env.NODE_PORT || 3000;
