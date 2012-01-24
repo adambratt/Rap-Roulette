@@ -25,11 +25,13 @@ exports.create = function(req, res){
     players: ( (typeof req.query.players !== 'undefined') ? req.query.players.split(',') : [])
   };
 
-  room = Room.create(null, obj, function () {});
+  room = Room.create(null, obj, function (err, room) {
   
-  res.writeHead(200, {"Content-Type": "application/json"});
-  res.write(util.inspect(room));
-  res.end();
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.write(util.inspect(room));
+    res.end();
+
+  });
 };
 
 
@@ -39,11 +41,12 @@ exports.drop = function(req, res){
 		
 	id = req.params.id;
     
-  Room.drop(null, id, function() {});
-	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect({ success: { message: 'The room was dropped' } }));
-	res.end();
+  Room.drop(null, id, function(err) {
+	  res.writeHead(200, {"Content-Type": "application/json"});
+	  res.write(util.inspect({ success: { message: 'The room was dropped' } }));
+	  res.end();
+  });
+
 };
 
 
@@ -65,7 +68,7 @@ exports.myroom = function(req, res){
 
 exports.list = function(req, res){
   
-  rooms = Room.list(null, {}, function (err, rooms) {
+  Room.list(null, {}, function (err, rooms) {
     res.writeHead(200, {"Content-Type": "application/json"});
     res.write(util.inspect(rooms));
     res.end();

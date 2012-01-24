@@ -33,22 +33,25 @@ exports.view = function(req, res){
     
   id = req.params.id;
   
-  player = Player.get(null, id, function () {});
-  
-  res.writeHead(200, {"Content-Type": "application/json"});
-  res.write(util.inspect(player));
-  res.end();
+  Player.get(null, id, function (err, player) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.write(util.inspect(player));
+    res.end();
+  });
+
 };
 
 
 // list
 
 exports.list = function(req, res){
-  players = Player.list(null, {}, function () {});
   
-  res.writeHead(200, {"Content-Type": "application/json"});
-  res.write(util.inspect(players));
-  res.end();
+  Player.list(null, {}, function (err, players) {
+   
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.write(util.inspect(players));
+    res.end();
+  });
 
 };
 
@@ -64,17 +67,19 @@ exports.logout = function (req, res) {
     
     // drop the player from the game
     var Player = model.Player;
-    Player.drop(null, req.session.user_id, function () {});
+    Player.drop(null, req.session.user_id, function (err) {
      
-    // clear the session
-    req.session.auth = null;
-    res.clearCookie('auth');  
-    req.session.destroy(function() {});
+      // clear the session
+      req.session.auth = null;
+      res.clearCookie('auth');  
+      req.session.destroy(function() {});
     
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect({ success: { nessage: 'Player was logged out' } }));
-    res.end();    
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: { nessage: 'Player was logged out' } }));
+      res.end();    
   
+    });
+
   } else {
     
     res.writeHead(200, {"Content-Type": "application/json"});

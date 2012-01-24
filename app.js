@@ -76,6 +76,7 @@ app.get('/battle/create', battle.create);
 app.get('/battle/mybattle', player.mybattle);
 app.get('/battles/:id', battle.view);
 app.get('/battles/:id/drop', battle.drop);  // should not expose this except to admins 
+app.get('/battles/:id/song', battle.song);
 
 // players
 app.get('/player', player.index);

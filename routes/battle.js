@@ -26,11 +26,13 @@ exports.create = function(req, res){
     players: ( (typeof req.query.players !== 'undefined') ? req.query.players.split(',') : [])
   };
  		
-	battle = Battle.create(null, obj, function () {});
+	Battle.create(null, obj, function (err, battle) {
 	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect(battle));
-	res.end();
+	  res.writeHead(200, {"Content-Type": "application/json"});
+	  res.write(util.inspect(battle));
+	  res.end();
+
+  });
 };
 
 
@@ -40,22 +42,59 @@ exports.drop = function(req, res){
 		
 	id = req.params.id;
 	
-  Battle.drop(null, id, function() {});
+  Battle.drop(null, id, function(err) {
 	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect({ success: { message: 'The battle was dropped' } }));
-	res.end();
+	  res.writeHead(200, {"Content-Type": "application/json"});
+	  res.write(util.inspect({ success: { message: 'The battle was dropped' } }));
+	  res.end();
+
+  });
+
 };
 
 
 // list
 
 exports.list = function(req, res){
-	battles = Battle.list(null, {}, function () {});
 	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect(battles));
-	res.end();
+  Battle.list(null, {}, function (err, battles) {
+	
+	  res.writeHead(200, {"Content-Type": "application/json"});
+	  res.write(util.inspect(battles));
+	  res.end();
+
+  });
+
+};
+
+// song
+// get info about the song for a given battle
+
+exports.song = function(req, res){
+	Song = model.Song
+	
+	battle_id = req.params.id;
+  	
+	Battle.get(null, battle_id, function (err, battle) {
+    
+    if (typeof battle !== 'undefined') {
+
+	  Song.get(null, battle.song_id, function (err, song) {
+    
+	    res.writeHead(200, {"Content-Type": "application/json"});
+	    res.write(util.inspect(song));
+	    res.end();
+
+    });
+
+    } else {
+
+     	res.writeHead(200, {"Content-Type": "application/json"});
+	    res.write(util.inspect({ error: { message: "Battle does not exist."}}));
+	    res.end(); 
+    }
+
+  });
 
 };
 
@@ -66,11 +105,14 @@ exports.view = function(req, res){
 		
 	id = req.params.id;
 	
-	battle = Battle.get(null, id, function () {});
+	Battle.get(null, id, function (err, battle) {
 	
-	res.writeHead(200, {"Content-Type": "application/json"});
-	res.write(util.inspect(battle));
-	res.end();
+	  res.writeHead(200, {"Content-Type": "application/json"});
+	  res.write(util.inspect(battle));
+	  res.end();
+
+  });
+
 };
 
 
