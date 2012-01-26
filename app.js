@@ -7,9 +7,11 @@
 var express = require('express')
   , ejs = require('ejs')
   , ea = require('everyauth')
-  , MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory')
-  
+  //, MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory')
+  , mongo_store = require('connect-mongo')
+
   // our libraries
+  , cfg = require('./config').Config
   , auth = require('./lib/auth')
   , model = require('./lib/model')
 
@@ -33,13 +35,18 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser()); 
+    app.use(express.session({
+    secret: cfg.cookie_secret,
+    store: new mongo_store(cfg.mongodb)
+  }));
+  // older ways implementing persistent sessions
   //app.use(express.session({ secret: 'htuayreve'})); 
-  app.use(
+  /*app.use(
 	express.session({
 	  store: new MemoryStore({ reapInterval: 60000 * 10  }),
 	  secret: "asfasdfsad"
-	})
-  );
+	  })
+  })*/
   /*app.use(express.session({
 	store: new MySQLSessionStore("rap", "rapuser", "rappass", { port: 8889  }),
 	secret: "htuayreve"
@@ -67,6 +74,8 @@ app.get('/room/list', room.list);
 app.get('/room/create', room.create);
 app.get('/room/myroom', room.myroom);
 app.get('/rooms/:id', room.view);
+app.get('/rooms/:id/enter', room.enter);
+app.get('/rooms/:id/leave', room.leave);
 app.get('/rooms/:id/drop', room.drop);      // should not expose this except to admins
 
 // battles
