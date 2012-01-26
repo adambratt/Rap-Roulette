@@ -7,7 +7,6 @@
 var express = require('express')
   , ejs = require('ejs')
   , ea = require('everyauth')
-  //, MemoryStore = require('./node_modules/express/node_modules/connect/lib/middleware/session/memory')
   , mongo_store = require('connect-mongo')
 
   // our libraries
@@ -39,18 +38,6 @@ app.configure(function(){
     secret: cfg.cookie_secret,
     store: new mongo_store(cfg.mongodb)
   }));
-  // older ways implementing persistent sessions
-  //app.use(express.session({ secret: 'htuayreve'})); 
-  /*app.use(
-	express.session({
-	  store: new MemoryStore({ reapInterval: 60000 * 10  }),
-	  secret: "asfasdfsad"
-	  })
-  })*/
-  /*app.use(express.session({
-	store: new MySQLSessionStore("rap", "rapuser", "rappass", { port: 8889  }),
-	secret: "htuayreve"
-  }))*/
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
   app.use(ea.middleware());
