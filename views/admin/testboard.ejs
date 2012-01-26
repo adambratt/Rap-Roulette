@@ -1,46 +1,71 @@
 
+<table width="100%">
+<tr>
+
+<td valign="top">
+
 <h2>User and Player</h2>
 
 
     <div style="padding:10px 10px 10px 25px">
         
-        <a href="/player/list" target="_new">Player List</a><br/>
-        <a href="/auth/facebook" target="_new">Login Using Facebook</a><br/>
+        <a href="/player/list" target="output">Player List</a><br/>
+        <a href="/players/jamie_pitts" target="output">Player X</a><br/>
+        <a href="/auth/facebook" target="output">Login Using Facebook</a><br/>
         
         <h3>Once you are logged in...</h3>
-        <a href="/player/myself" target="_new">Myself</a><br/>
-        <a href="/players/1" target="_new">Player 1</a><br/>
-        <a href="/player/logout" target="_new">Logout</a><br/>
+        <a href="/player/myself" target="output">Myself</a><br/>
+        <a href="/player/logout" target="output">Logout</a><br/>
     </div>
+
+</td>
+
+<td valign="top">
 
 <h2>Room</h2>
 
     <div style="padding:10px 10px 10px 25px">
-        <a href="/room/list" target="_new">Room List</a><br/>
+        <a href="/room/list" target="output">Room List</a><br/>
 
-        <a href="http://raproulette.fm:3000/room/create?name=x&players=1,2,3&player_queue=" target="_new">Create New Room</a> 
-            (but with invalid players)<br/>
+        <a href="/room/create?name=Main%20Stage&players=&player_queue=" target="output">Create "Main Stage"</a><br/>
+        <a href="/rooms/main_stage" target="output">View "Main Stage"</a><br/>
+        <a href="/rooms/main_stage/drop" target="output">Drop "Main Stage"</a><br/>
+        
+        <a href="/room/create?name=Room%20X&players=&player_queue=" target="output">Create Room "X"</a><br/>
+        <a href="/rooms/room_x" target="output">View Room "X"</a><br/>
+        <a href="/rooms/room_x/drop" target="output">Drop Room "X"</a><br/>
 
-        <a href="/rooms/1" target="_new">Room 1</a><br/>
-        <a href="/rooms/1/drop" target="_new">Drop Room 1</a>
-            (this is the main stage)<br/>
-        <a href="/rooms/2/drop" target="_new">Drop Room 2</a><br/>
+        <h3>Once you are logged in...</h3>
+        <a href="/rooms/main_stage/enter" target="output">Enter the "Main Stage"</a><br/>
+        <a href="/room/myroom" target="output">My Room</a> (current location)<br/>
+        <a href="/rooms/main_stage/leave" target="output">Leave the "Main Stage"</a><br/>
+
+        
+
     </div>
 
 <h2>Battle</h2>
 
     <div style="padding:10px 10px 10px 25px">
-        <a href="/battle/list" target="_new">Battle List</a><br/>
-
-
-        <a href="http://raproulette.fm:3000/battle/create?room_id=1&name=&song_id=1&players=1,2" target="_new">Create New Battle In Room 1</a> 
-            (but with invalid players)<br/>
-
-        <a href="/battles/1" target="_new">Battle 1</a><br/>
-        <a href="/battles/1/song" target="_new">Battle 1's Song</a><br/>
-
-        <a href="/battles/1/drop" target="_new">Drop Battle 1</a><br/>
-        <a href="/battles/2/drop" target="_new">Drop Battle 2</a><br/>
+        <a href="/battle/list" target="output">Battle List</a><br/>
+        
+        <a href="/battle/create?room_id=main_stage&name=&song_id=1&players=" target="output">Create New Battle</a><br/>
+        
+        <h3>Must specify battle id in the url...</h3>
+        <a href="/battles/z" target="_new">Battle Z</a><br/>
+        <a href="/battles/z/song" target="_new">Battle Z's Song</a><br/>
+        <a href="/battles/z/drop" target="_new">Drop Battle Z</a><br/>
         
     </div>
+
+</td>
+
+<td>
+<iframe src="/" name="output" width="600" height="600"></iframe>
+</td>
+
+</tr>
+</table>
+
+
 

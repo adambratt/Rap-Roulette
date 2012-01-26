@@ -59,15 +59,33 @@ exports.list = function(req, res){
 // logout
 
 exports.logout = function (req, res) {
-  //var User = model.User;
-  //User.delete_from_app(req, res);
   
   //if (typeof req.session !== 'undefined') {
-  if (typeof req.session !== 'undefined' && typeof req.session.user_id !== 'undefined') { 
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') { 
     
-    // drop the player from the game
-    var Player = model.Player;
-    Player.drop(null, req.session.user_id, function (err) {
+
+    // store that the player is logged out
+    Player.collection.findAndModify( {
+        query: {id: req.session.player_id}, 
+        update : { "$set": { is_logged_in: 0} }, 
+        'new': false
+      },
+      function (err) {
+        
+        // clear the session
+        req.session.auth = null;
+        res.clearCookie('auth');  
+        req.session.destroy(function() {});
+    
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.write(util.inspect({ success: { nessage: 'Player was logged out' } }));
+        res.end();            
+
+        }
+      )
+
+    /*
+    Player.collection.(null, req.session.user_id, function (err) {
      
       // clear the session
       req.session.auth = null;
@@ -79,6 +97,7 @@ exports.logout = function (req, res) {
       res.end();    
   
     });
+    */
 
   } else {
     

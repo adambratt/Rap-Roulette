@@ -49,6 +49,47 @@ exports.drop = function(req, res){
 
 };
 
+// enter
+
+exports.enter = function(req, res){
+
+  id = req.params.id;
+
+  // get the room
+  Room.get(null, id, function (err, room) {
+    
+    // enter this room
+    Room.enter(null, room, req, function (err, room) {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: {message: "Player entered " + room.name} }));
+      res.end();
+    });
+
+  });
+
+};
+
+// leave
+
+exports.leave = function(req, res){
+
+  id = req.params.id;
+
+  // get the room
+  Room.get(null, id, function (err, room) {
+    
+    // leave this room
+    Room.leave(null, room, req, function (err, room) {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: { message: "Player left " + room.name} }));
+      res.end();
+    });
+
+  });
+
+};
+
+
 
 // myroom
 
@@ -59,7 +100,6 @@ exports.myroom = function(req, res){
     res.write(util.inspect(room));
     res.end();
   });
-  
 
 };
 
