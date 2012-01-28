@@ -207,36 +207,50 @@ function playBeat(soundfile) {
 // Timer
 ////////////////////////////////
 
-function startTimer(start){
-    increment = setInterval('incrementTo('+start+')', 1000);
+var time = 30;
+var countdownInterval;
+var setTimerInterval;
+
+function setTimer( value, time ) {
+	// animate the clock to the given value in time milliseconds
+	time = typeof(time) != 'undefined' ? time : 1000; // default time 1 second
+	setTimerValue( 0 );
+	setTimerInterval = setInterval("incrementTimer("+value+")", time/value);
 }
 
-function incrementTo(top){
-    var curTime = $('#timer').text();
-    if(curTime >= top){
-        clearInterval(increment);
-        timer = setInterval('reduceTimer()', 1000)
-    } else {
-        newTime = parseInt(curTime) + 1;
-        setTimer(newTime);
+function setTimerValue( seconds ) {
+	// Set the timer to seconds
+	time = Math.floor(seconds);
+    if (time < 10) {
+        time = "0" + time + '';
     }
+    $('#timer').text(time);
 }
 
-function reduceTimer(){
-    var curTime = $('#timer').text();
-    if(curTime == 0){
-        clearInterval(timer);
-        startTimer(30);
-    } else {
-        setTimer(curTime-1);
-    }
+function incrementTimer( limit ) {
+	time += 1;
+	setTimerValue( time );
+	if ( time >= limit ) {
+		setTimerValue( limit );
+		clearInterval( setTimerInterval );
+	}
 }
 
-function setTimer(seconds){
-    if (seconds < 10) {
-        seconds = "0" + seconds + '';
-    }
-    $('#timer').text(seconds);
+function startCountdown() {
+	countdownInterval = setInterval("decrementTimer()", 1000);
+}
+
+function stopCountdown() {
+	clearInterval(countdownInterval);
+}
+
+function decrementTimer() {
+	time -= 1;
+	setTimerValue( time );
+	if ( time <= 0 ) {
+		setTimer( 0 );
+		clearInterval( countdownInterval );
+	}
 }
 
 ////////////////////////////////
