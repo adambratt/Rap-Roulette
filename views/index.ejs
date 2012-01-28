@@ -3,20 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <title>Rap Roulette | <%= title %></title>
-  <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css" />
-  <link rel="stylesheet" type="text/css" href="/stylesheets/text.css" />
-  <link rel="stylesheet" type="text/css" href="/stylesheets/960.css" />
-  <link rel="stylesheet" type="text/css" href="/stylesheets/raproulette.css" />
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-  <script src="/scripts/jquery-animate-css-rotate-scale.js"></script>
-  <script src="/scripts/jquery-css-transform.js"></script>
-  <script src="/scripts/rotate3Di.js"></script>
-  <script src="/scripts/animation.js"></script>
-  <script src="/scripts/soundmanager2-jsmin.js" type="text/javascript"></script>
-  <script src="https://raw.github.com/LearnBoost/socket.io-client/master/dist/socket.io.min.js" type="text/javascript"></script>
-  <script src="/scripts/events.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="stylesheets/reset.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/text.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/960.css" />
+  <link rel="stylesheet" type="text/css" href="stylesheets/raproulette.css" />
+  <link rel="icon" href="images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+  
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
+  <script src="scripts/jquery-animate-css-rotate-scale.js"></script>
+  <script src="scripts/jquery-css-transform.js"></script>
+  <script src="scripts/rotate3Di.js"></script>
+  <script src="scripts/animation.js"></script>
+  <script src="scripts/jquery.media.js"></script>
+   
+  <script src="scripts/demo.js"></script>
+  
 </head>
 <body>
+  <div class="popover"></div>
   <div class="spotlight-wrapper">
     <img class="spotlight" src="images/spotlight.png" />
   </div>
@@ -32,32 +38,42 @@
 
   <div class="container_12">
     <div class="songinfo">
-  	    Lose Yourself
+  	    "Lemonade"
   	    <br>
-  	    Eminem
+  	    Bangladesh
   	    <br>
   	    <a href="http://itunes.com">Buy on iTunes</a>
     </div>
     
+   
+    
 	<span id="soundplayer"></span>
     
+    <span id="beatplayer"></span>
     
+    <div class="subwoofer"></div>
     <div class="stage">
       <div class="winner rapper">
         <div class="video-wrapper">
-          <div class="video video1"></div>
-          <span>Raj Vir</span>
+          <div class="video video1">
+          <a class="media" href="sample.mov"></a>
+          </div>
+          <span>Adam Bratt</span>
+          <button class="madprops left" >Mad Props!</button>
         </div>
         <div class="clear"></div>
       </div>
 
-      <div id="timer"></div>
       <div class="vs"></div>
+      <div class="timer">:<span id="timer">12</span></div>
 
       <div class="challenger rapper">
         <div class="video-wrapper">
-          <div class="video video2"></div>
+          <div class="video video2">
+          <a class="media" href="sample.mov"></a>
+          </div>
           <span>Erik Torenberg</span>
+          <button class="madprops right" >Mad Props!</button>
         </div>
         <div class="clear"></div>
 
@@ -65,6 +81,8 @@
       <div class="gauge">
         <div class="meter"></div>
       </div>
+      <div class="bar left"></div>
+      <div class="bar right"></div>
       <div class="clear"></div>
       <div class="speaker left"></div>
       <div class="speaker right"></div>
@@ -72,6 +90,7 @@
     </div>
     <div class="clear"></div>
     <div class="crowd">
+    <button class="getinline">Get in Line</button>
     <ul class="queue">
         <h4>Lineup</h4>
         <li>Raj Vir</li>
@@ -79,7 +98,6 @@
         <li>Ben Burke</li>
         <li>Connor Stack</li>
       </ul>
-      <button class="getinline">Get in Line</button>
     </div>
   </div>  
 </body>
