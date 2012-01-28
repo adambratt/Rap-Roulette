@@ -20,6 +20,7 @@ var express = require('express')
   , room = require('./routes/room')
   , battle = require('./routes/battle')
   , player = require('./routes/player')
+  , wufoo = require('./routes/wufoo')
   , admin = require('./routes/admin')
   ;
 ;
@@ -53,7 +54,7 @@ app.configure('production', function(){
 
 
 // routes
-app.get('/', routes.index);
+app.get('/', wufoo.index);
 
 // rooms
 app.get('/room', room.index);
