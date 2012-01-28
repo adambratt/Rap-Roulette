@@ -8,10 +8,12 @@ var express = require('express')
   , ejs = require('ejs')
   , ea = require('everyauth')
   , mongo_store = require('connect-mongo')
+  , io = require('socket.io')
 
   // our libraries
   , cfg = require('./config').Config
   , auth = require('./lib/auth')
+  , game = require('./lib/game-logic')
   , model = require('./lib/model')
 
   // our routes (mapped to URIs)
@@ -50,6 +52,12 @@ app.configure('development', function(){
 app.configure('production', function(){
   app.use(express.errorHandler()); 
 });
+
+
+
+// SocketIO Config
+var socketServer = io.listen(app);
+module.exports.game = game.startGame(socketServer);
 
 
 // routes
