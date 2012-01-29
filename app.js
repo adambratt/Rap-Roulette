@@ -70,7 +70,9 @@ app.get('/room/create', room.create);
 app.get('/room/myroom', room.myroom);
 app.get('/rooms/:id', room.view);
 app.get('/rooms/:id/enter', room.enter);
+app.get('/rooms/:id/enter_queue', room.enter_queue);
 app.get('/rooms/:id/leave', room.leave);
+app.get('/rooms/:id/leave_queue', room.leave_queue);
 app.get('/rooms/:id/drop', room.drop);      // should not expose this except to admins
 
 // battles

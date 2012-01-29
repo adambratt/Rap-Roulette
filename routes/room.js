@@ -72,6 +72,30 @@ exports.enter = function(req, res){
 
 };
 
+
+// enter queue
+
+exports.enter_queue = function(req, res){
+
+  id = req.params.id;
+
+  // get the room
+  Room.get(null, id, function (err, room) {
+    
+    // enter this room
+    Room.enter_queue(null, room, req, function (err, room) {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: {message: "Player entered the queue in " + room.name} }));
+      res.end();
+    });
+
+  });
+
+};
+
+
+
+
 // leave
 
 exports.leave = function(req, res){
@@ -91,6 +115,28 @@ exports.leave = function(req, res){
   });
 
 };
+
+
+// leave_queue
+
+exports.leave_queue = function(req, res){
+
+  id = req.params.id;
+
+  // get the room
+  Room.get(null, id, function (err, room) {
+    
+    // leave this room queue
+    Room.leave_queue(null, room, req, function (err, room) {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: { message: "Player left the queue in " + room.name} }));
+      res.end();
+    });
+
+  });
+
+};
+
 
 
 
