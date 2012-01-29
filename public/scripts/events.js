@@ -70,9 +70,12 @@ $(function(){
   soundManager.debugMode = false;
   soundManager.url = '/scripts/';
   soundManager.onready( function(){
-    hornSound = soundManager.createSound({ id: 'hornExplode', url: '/audio/airorn+explosion1.wav', autoLoad: true });
-    endSound = soundManager.createSound({id: 'winExplode', url: '/audio/luger+explosion.wav', autoLoad: true });
-    lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/lemonade.mp3', autoLoad: true, volume: 50 });
+    hornExplode= soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion1.wav', autoLoad: true });
+    endSound = soundManager.createSound({id: 'winExplode', url: '/audio/effects/luger+explosion.wav', autoLoad: true });
+    lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/effects/lemonade.mp3', autoLoad: true, volume: 50 });
+	hornSound = soundManager.createSound({ id: 'airhorn', url: '/audio/effects/airorn.wav', autoLoad: true });
+	hornSound2 = soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
+	
   });
   
   $("body").keypress(function(event) {
