@@ -104,10 +104,11 @@ function player2_vote(){
 }
 
 function updateGraph() {
-	var p1=(p1votes*3); //3 is arbitrary scaling constant, change for pleasure
-	var p2=(p2votes*3);
-	$(".bar.left").animate({width: p1+"%"}, "fast");
-	$(".bar.right").animate({width: p2+"%"}, "fast");
+    var constant = 2.4; //arbitrary scaling constant, change for pleasure
+	var p1=(p1votes*constant); 
+	var p2=(p2votes*constant);
+	$(".bar.left").animate({width: p1+"%"}, 100);
+	$(".bar.right").animate({width: p2+"%"}, 100);
 	if ( p1 >= 40 && !p1awesome) {
 		$(".speaker.left").hide("explode", 1000);
 		p1awesome = true;
