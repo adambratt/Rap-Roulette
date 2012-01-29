@@ -333,22 +333,22 @@ a {
     position:relative;
     z-index:19;
     margin-top:-50px;
-    border-radius:8px;
+    border-radius:2px;
     background-repeat:no-repeat;
-    background-color:#42fb12;
+    background-color:transparent;
 }
 
 .bar.left {
     float:right;
     margin-right:500px;
-    background-image:url(../images/bar.png);
+    background-image:url(../images/newbar1.png);
     background-position: right;
 }
 
 .bar.right {
     float:left;
     margin-left:500px;
-    background-image:url(../images/bar2.png);
+    background-image:url(../images/newbar.png);
 }
 
 .subwoofer {
