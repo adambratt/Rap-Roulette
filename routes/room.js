@@ -17,12 +17,15 @@ exports.index = function(req, res){
 // TODO: post-only this
 
 exports.create = function(req, res){
-    
+  console.log(req.query.players.length); 
+  console.log((typeof req.query.player_queue !== 'undefined' && req.query.player_queue.length > 0));  
+  console.log((typeof req.query.player_queue !== 'undefined'));  
+
   obj = {
     name: req.query.name,
     battle_id: null, // battle can only be created after room created
-    player_queue: ( (typeof req.query.player_queue !== 'undefined') ? req.query.player_queue.split(',') : []),
-    players: ( (typeof req.query.players !== 'undefined') ? req.query.players.split(',') : [])
+    player_queue: ( (typeof req.query.player_queue !== 'undefined' && req.query.player_queue.length > 0) ? req.query.player_queue.split(',') : []),
+    players: ( (typeof req.query.players !== 'undefined' && req.query.players.length > 0) ? req.query.players.split(',') : [])
   };
 
   room = Room.create(null, obj, function (err, room) {
