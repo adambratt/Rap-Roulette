@@ -288,7 +288,25 @@ function moveSpotlight(left) {
 function turnSpotlightOff() {
 	$(".spotlight").fadeTo(100,0);
 }
+function clearQueue()
+{
+	$(".queue").empty();
+	
+}
+function setQueue(data) {
+// data should contain list of player names in order of their queue position
+	clearQueue();
+	var list=document.getElementById("queue");
 
+	for(var i=0; i<data.length; i++){
+		var bullet=document.createElement("li");
+		bullet.innerHTML=data[i];
+		list.insertBefore(bullet);
+	}
+	
+
+
+}
 function dropBling(left) {
 	numBling += 1;
 	var margin = 95;
@@ -342,5 +360,5 @@ function crowdGoesWild(go) {
 $(document).ready(function() {
 	populateRoom();
 	updateGraph();
-	hideQueue();
+	
 });

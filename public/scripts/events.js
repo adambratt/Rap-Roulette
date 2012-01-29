@@ -23,6 +23,12 @@ gSock.on('syncVote', function(data) {
   setMeter(parseInt(data));
 });
 
+gSock.on('setQueue', function(data) {
+	// data should contain list of player names
+	setQueue(data);
+	
+});
+
 gSock.on('playSound', function(data) {
   // data
   // .id
