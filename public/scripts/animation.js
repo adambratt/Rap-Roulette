@@ -195,8 +195,7 @@ function resetMeter() {
 ////////////////////////////////
 
 function playSound(soundfile) {
-	document.getElementById("soundplayer").innerHTML=
-	"<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
+	gSock.emit('sendSound', soundfile);
 }
 	
 function playBeat(soundfile) {
@@ -294,7 +293,7 @@ function clearQueue()
 	
 }
 function setQueue(data) {
-// data should contain list of player names in order of their queue position
+// data should contain list of player names in order of queue
 	clearQueue();
 	var list=document.getElementById("queue");
 
@@ -327,13 +326,13 @@ function clearBling() {
 }
 
 function transition(left) {
-	playSound('audio/effects/airhorn.wav'); //make this serverside
+	playSound('airhorn'); //make this serverside
 	moveSpotlight(left);
 }
 
 function winner(left) {
 	dropBling(left);
-	playSound('audio/effects/hyphyairhorn2.wav');
+	playSound('hyphyairhorn2');
 	flash(3);
 }
 
@@ -342,7 +341,7 @@ function crowdGoesWild(go) {
 	// If false, go back to normal
 	if (go) {
 		flashingID = setInterval(function(){flash(1);}, 1000);  //start interval for repeating the animation
-		playSound('audio/effects/airhorn+explosion.wav'); //make this serverside
+		playSound('hornExplode'); //make this serverside
 		for (var i=0; i<numAvatars; i++) {
 			startEnjoying(i);
 		}
@@ -358,6 +357,10 @@ function crowdGoesWild(go) {
 // Do this on page load
 ////////////////////////////////
 $(document).ready(function() {
+var socketLibRoot = 'http://raproulette.fm';
+
+// general socket
+var gSock = io.connect(socketLibRoot);
 	populateRoom();
 	updateGraph();
 	
