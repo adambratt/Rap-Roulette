@@ -17,10 +17,11 @@ var socketLibRoot = document.location.host;
 // general socket
 var gSock = io.connect(socketLibRoot);
 
-gSock.on('syncVote', function(data) {
-  // data
-  // .vote
-  setMeter(parseInt(data));
+gSock.on("updateVotes", function(data) {
+	// Handle voting updates from the server
+	var numVotesLeft = data[0];
+	var numVotesRight = data[1];
+	setVoteBars(numVotesLeft, numVotesRight);
 });
 
 gSock.on('setQueue', function(data) {
@@ -98,6 +99,9 @@ $(function(){
 	
   });
   
+  // Tell the server I've entered the room so I can sync the game state
+  gSock.emit("enterRoom", "" );
+  
   $("body").keypress(function(event) {
     if ( event.which == 106) {
       // j
@@ -113,9 +117,13 @@ $(function(){
      }
   });
   
-  $('.madprops').click(function(){
-    var vote = $(this).attr('rel');
-    gSock.emit('vote', vote.toString() );
+  $('.madprops.left').click(function(){
+    gSock.emit("vote", "left" );
+    return false;
+  });
+  
+  $('.madprops.right').click(function(){
+    gSock.emit("vote", "right" );
     return false;
   });
 
