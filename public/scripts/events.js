@@ -146,7 +146,7 @@ $(function(){
 
       // login using facebook
       } else {
-        alert('http://' + document.location.host + '/auth/facebook');
+        //alert('http://' + document.location.host + '/auth/facebook');
         window.location.href = '/auth/facebook';
       }
 

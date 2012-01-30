@@ -365,12 +365,9 @@ function crowdGoesWild(go) {
 ////////////////////////////////
 // Do this on page load
 ////////////////////////////////
-
-/* RELOCATED to index.ejs (in order to be able to render server variables in the initializing javascript)
 $(document).ready(function() {
 
   populateRoom();
 	updateGraph();
 	
 });
-*/

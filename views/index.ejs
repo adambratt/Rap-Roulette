@@ -19,18 +19,6 @@
   <script src="/scripts/events.js" type="text/javascript"></script>
   <script src="/scripts/soundboard.js" type="text/javascript"></script>
   <script src="/scripts/model.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    
-    // initialize the game
-    $(document).ready(function() {
-        authMysid = "<%= sid %>"; // TODO: review the security implications of this... it may be better to getch via XHR in Player.get_mysid()
-        
-        populateRoom();
-        updateGraph();
-    });
-
-  </script>
-  
 </head>
 <body>
   <div class="spotlight-wrapper">
