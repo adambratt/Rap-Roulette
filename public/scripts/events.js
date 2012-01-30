@@ -17,6 +17,13 @@ var socketLibRoot = document.location.host;
 // general socket
 var gSock = io.connect(socketLibRoot);
 
+gSock.on("updateVotes", function(data) {
+	// Handle voting updates from the server
+	var numVotesLeft = data[0];
+	var numVotesRight = data[1];
+	setVoteBars(numVotesLeft, numVotesRight);
+});
+
 gSock.on('syncVote', function(data) {
   // data
   // .vote
@@ -93,9 +100,13 @@ $(function(){
      }
   });
   
-  $('.madprops').click(function(){
-    var vote = $(this).attr('rel');
-    gSock.emit('vote', vote.toString() );
+  $('.madprops.left').click(function(){
+    gSock.emit("vote", "left" );
+    return false;
+  });
+  
+  $('.madprops.right').click(function(){
+    gSock.emit("vote", "right" );
     return false;
   });
   

@@ -92,6 +92,15 @@ var p2votes=0;
 var p1awesome = false;
 var p2awesome = false;
 var prevAverage=0.5;
+
+function setVoteBars(numVotesLeft, numVotesRight) {
+	// Update the UI to show the current vote total
+	var constant = 2.4; //arbitrary scaling constant, change for pleasure
+	var p1 = (numVotesLeft*constant); 
+	var p2 = (numVotesRight*constant);
+	$(".bar.left").animate({width: p1+"%"}, 100);
+	$(".bar.right").animate({width: p2+"%"}, 100);
+}
 		
 function player1_vote(){
 	p1votes+=1;
@@ -357,10 +366,10 @@ function crowdGoesWild(go) {
 // Do this on page load
 ////////////////////////////////
 $(document).ready(function() {
-var socketLibRoot = 'http://raproulette.fm';
+	var socketLibRoot = window.location.host;
 
-// general socket
-var gSock = io.connect(socketLibRoot);
+	// general socket
+	var gSock = io.connect(socketLibRoot);
 	populateRoom();
 	updateGraph();
 	
