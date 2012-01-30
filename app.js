@@ -90,6 +90,7 @@ app.get('/player/list', player.list);
 app.get('/player/logout', player.logout);
 app.get('/player/create', player.create);
 app.get('/player/myself', player.myself);
+app.get('/player/mysid', player.mysid);
 app.get('/players/:id', player.view);
 
 // users (some are for testing only)

@@ -24,8 +24,28 @@ gSock.on('syncVote', function(data) {
 });
 
 gSock.on('setQueue', function(data) {
-	// data should contain list of player names
-	setQueue(data);
+  
+  /*
+  var example_data = {
+    success: { message: ... }
+    player { id: ... name: ...}
+  };
+  */
+  if (data.success !== 'undefined') {
+    
+    // ridiculousness
+    //playSound("sounds/explosion.wav");
+ 
+    alert(data.success.message + ' (NOTE: queue UI still requires implementation)');
+    //alert(data.player.name);
+    
+    // setQueue accepts a list of player names
+	  //setQueue([ data.player.name ]);
+    // TODO: this is temporary and will be replaced by a call to the data model
+
+  } else {
+    alert(data);
+  }
 	
 });
 
@@ -98,5 +118,31 @@ $(function(){
     gSock.emit('vote', vote.toString() );
     return false;
   });
-  
+
+
+  $('.getinline').click(function() {
+
+    // NOTE: this does not work because httpOnly is set for this cookie
+    //var sid = $.cookie('connect.sid');      
+     
+    // get the player
+    var player = new Player;
+    player.get_mysid(null, function(err, player_sid) {
+      
+      // enter the queue
+      if (player_sid !== 'undefined') {
+        gSock.emit('enterRoomQueue', {room_id: 'main_stage', sid: player_sid} );
+         
+      // login using facebook
+      } else {
+        window.location('/auth/facebook');
+      }
+
+    });
+    
+    return false;
+    
+  });
+
+
 });

@@ -296,7 +296,6 @@ function setQueue(data) {
 // data should contain list of player names in order of queue
 	clearQueue();
 	var list=document.getElementById("queue");
-
 	for(var i=0; i<data.length; i++){
 		var bullet=document.createElement("li");
 		bullet.innerHTML=data[i];
@@ -353,15 +352,17 @@ function crowdGoesWild(go) {
 	}
 }
 
+
 ////////////////////////////////
 // Do this on page load
 ////////////////////////////////
 $(document).ready(function() {
-var socketLibRoot = 'http://raproulette.fm';
 
-// general socket
-var gSock = io.connect(socketLibRoot);
-	populateRoom();
+  //var socketLibRoot = 'http://raproulette.fm';
+  //var gSock = io.connect(socketLibRoot);
+  // NOTE: the above variables are already defined in events.js...
+	
+  populateRoom();
 	updateGraph();
 	
 });

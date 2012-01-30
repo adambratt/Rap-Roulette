@@ -17,15 +17,46 @@ exports.index = function(req, res){
 // myself
 
 exports.myself = function(req, res){
-    
-  player = Player.get_myself(null, req, function (err, dbUser) {
+ 
+  //console.log(util.inspect(req.sessionID));
+
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+    player = Player.get_myself(null, req.session.player_id, function (err, dbUser) {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect(dbUser));
+      res.end();
+    });
+  } else {
     res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(dbUser));
+    res.write(util.inspect(undefined));
     res.end();
-  });
+  }
   
 
 };
+
+
+// mysid
+// this returns the session id and is necessary because the sid cannot be acquired in the client
+// from the connect.sid cookie due to protection via node specifying httpOnly for this cookie
+
+exports.mysid = function(req, res){
+ 
+  //console.log(util.inspect(req.sessionID));
+
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+    res.json(req.sessionID);
+  } else {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.write(util.inspect(undefined));
+    res.end();
+  }
+  
+
+};
+
+
+
 
 // view
 

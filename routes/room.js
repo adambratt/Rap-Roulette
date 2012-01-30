@@ -17,9 +17,9 @@ exports.index = function(req, res){
 // TODO: post-only this
 
 exports.create = function(req, res){
-  console.log(req.query.players.length); 
-  console.log((typeof req.query.player_queue !== 'undefined' && req.query.player_queue.length > 0));  
-  console.log((typeof req.query.player_queue !== 'undefined'));  
+  //console.log(req.query.players.length); 
+  //console.log((typeof req.query.player_queue !== 'undefined' && req.query.player_queue.length > 0));  
+  //console.log((typeof req.query.player_queue !== 'undefined'));  
 
   obj = {
     name: req.query.name,
@@ -57,18 +57,26 @@ exports.drop = function(req, res){
 exports.enter = function(req, res){
 
   id = req.params.id;
+  
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
 
-  // get the room
-  Room.get(null, id, function (err, room) {
-    
-    // enter this room
-    Room.enter(null, room, req, function (err, room) {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: {message: "Player entered " + room.name} }));
-      res.end();
+    // get the room
+    Room.get(null, id, function (err, room) {
+      
+      // enter this room
+      Room.enter(null, room, req.session.player_id, function (err, room) {
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.write(util.inspect({ success: {message: "Player entered " + room.name} }));
+        res.end();
+      });
+
     });
-
-  });
+  
+  } else {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ error: {message: "Player needs to be logged in to perform this action."} }));
+      res.end();
+  }
 
 };
 
@@ -79,17 +87,25 @@ exports.enter_queue = function(req, res){
 
   id = req.params.id;
 
-  // get the room
-  Room.get(null, id, function (err, room) {
-    
-    // enter this room
-    Room.enter_queue(null, room, req, function (err, room) {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: {message: "Player entered the queue in " + room.name} }));
-      res.end();
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+
+    // get the room
+    Room.get(null, id, function (err, room) {
+      
+      // enter this room
+      Room.enter_queue(null, req.session.player_id, function (err, room) {
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.write(util.inspect({ success: {message: "Player entered the queue in " + room.name} }));
+        res.end();
+      });
+
     });
 
-  });
+  } else {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: {message: "Player needs to be logged in to perform this action."} }));
+      res.end();
+  }
 
 };
 
@@ -101,18 +117,26 @@ exports.enter_queue = function(req, res){
 exports.leave = function(req, res){
 
   id = req.params.id;
+  
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
 
-  // get the room
-  Room.get(null, id, function (err, room) {
+    // get the room
+    Room.get(null, id, function (err, room) {
     
-    // leave this room
-    Room.leave(null, room, req, function (err, room) {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: { message: "Player left " + room.name} }));
-      res.end();
-    });
+      // leave this room
+      Room.leave(null, room, req.session.player_id, function (err, room) {
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.write(util.inspect({ success: { message: "Player left " + room.name} }));
+        res.end();
+      });
 
-  });
+    });
+  
+  } else {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: {message: "Player needs to be logged in to perform this action."} }));
+      res.end();
+  }
 
 };
 
@@ -123,17 +147,25 @@ exports.leave_queue = function(req, res){
 
   id = req.params.id;
 
-  // get the room
-  Room.get(null, id, function (err, room) {
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+  
+    // get the room
+    Room.get(null, id, function (err, room) {
     
-    // leave this room queue
-    Room.leave_queue(null, room, req, function (err, room) {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: { message: "Player left the queue in " + room.name} }));
-      res.end();
-    });
+      // leave this room queue
+      Room.leave_queue(null, req.session.player_id, function (err, room) {
+        res.writeHead(200, {"Content-Type": "application/json"});
+        res.write(util.inspect({ success: { message: "Player left the queue in " + room.name} }));
+        res.end();
+      });
 
-  });
+    });
+    
+  } else {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect({ success: {message: "Player needs to be logged in to perform this action."} }));
+      res.end();
+  }
 
 };
 
@@ -143,12 +175,21 @@ exports.leave_queue = function(req, res){
 // myroom
 
 exports.myroom = function(req, res){
-    
-  Room.get_myroom(null, req, function (err, room) {
+  
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+   
+    Room.get_myroom(null, req.session.player_id, function (err, room) {
+      res.writeHead(200, {"Content-Type": "application/json"});
+      res.write(util.inspect(room));
+      res.end();
+    });
+
+  } else {  
     res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(room));
-    res.end();
-  });
+    res.write(util.inspect({ error: { message: "Player needs to be logged in in order to perform this action"} }));
+    res.end();    
+  
+  }
 
 };
 
