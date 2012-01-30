@@ -24,12 +24,6 @@ gSock.on("updateVotes", function(data) {
 	setVoteBars(numVotesLeft, numVotesRight);
 });
 
-gSock.on('syncVote', function(data) {
-  // data
-  // .vote
-  setMeter(parseInt(data));
-});
-
 gSock.on('setQueue', function(data) {
 	// data should contain list of player names
 	setQueue(data);
@@ -84,6 +78,9 @@ $(function(){
 	hornSound2 = soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
 	
   });
+  
+  // Tell the server I've entered the room so I can sync the game state
+  gSock.emit("enterRoom", "" );
   
   $("body").keypress(function(event) {
     if ( event.which == 106) {
