@@ -12,7 +12,7 @@ var tokSession;
 
 
 // setup socket root
-var socketLibRoot = 'http://raproulette.fm';
+var socketLibRoot = document.location.host;
 
 // general socket
 var gSock = io.connect(socketLibRoot);
