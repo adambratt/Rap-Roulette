@@ -110,6 +110,18 @@ exports.enter_queue = function(req, res){
 };
 
 
+// get
+
+exports.get = function(req, res){
+    
+  id = req.params.id;
+  Room.get(null, id, function (err, room) {
+    res.writeHead(200, {"Content-Type": "application/json"});
+    res.write(util.inspect(room));
+    res.end();      
+  });
+
+};
 
 
 // leave
@@ -194,6 +206,33 @@ exports.myroom = function(req, res){
 };
 
 
+// myroom_redirect
+// redirect the user to their room, or, by default, redirects to the main stage
+
+
+exports.myroom_redirect = function(req, res){
+  
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+   
+    Room.get_myroom(null, req.session.player_id, function (err, room) {
+      
+      if (room.id == 'main_stage') {
+        res.redirect('/');
+      } else {
+        res.redirect('/rooms/' + room.id);
+      }
+      
+    });
+
+  } else {  
+    res.redirect('/');
+  }
+
+};
+
+
+
+
 // list
 
 exports.list = function(req, res){
@@ -213,11 +252,13 @@ exports.view = function(req, res){
     
   id = req.params.id;
   Room.get(null, id, function (err, room) {
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(room));
-    res.end();      
+
+    // set the room to be main_stage if the user is not logged in
+    req.session.room_id = room.id;
+
+    res.render('index', { title: room.name, sid: req.sessionID, room: room })
+
   });
-  
 
 };
 

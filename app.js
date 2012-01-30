@@ -68,6 +68,7 @@ app.get('/room', room.index);
 app.get('/room/list', room.list);
 app.get('/room/create', room.create);
 app.get('/room/myroom', room.myroom);
+app.get('/room/myroom_redirect', room.myroom_redirect);
 app.get('/rooms/:id', room.view);
 app.get('/rooms/:id/enter', room.enter);
 app.get('/rooms/:id/enter_queue', room.enter_queue);
@@ -87,6 +88,7 @@ app.get('/battles/:id/song', battle.song);
 // players
 app.get('/player', player.index);
 app.get('/player/list', player.list);
+app.get('/player/loggedin', player.loggedin);
 app.get('/player/logout', player.logout);
 app.get('/player/create', player.create);
 app.get('/player/myself', player.myself);

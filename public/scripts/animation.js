@@ -365,13 +365,12 @@ function crowdGoesWild(go) {
 ////////////////////////////////
 // Do this on page load
 ////////////////////////////////
+
+/* RELOCATED to index.ejs (in order to be able to render server variables in the initializing javascript)
 $(document).ready(function() {
 
-  //var socketLibRoot = 'http://raproulette.fm';
-  //var gSock = io.connect(socketLibRoot);
-  // NOTE: the above variables are already defined in events.js...
-	
   populateRoom();
 	updateGraph();
 	
 });
+*/

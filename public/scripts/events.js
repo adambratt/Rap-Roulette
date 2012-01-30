@@ -100,7 +100,7 @@ $(function(){
   });
   
   // Tell the server I've entered the room so I can sync the game state
-  gSock.emit("enterRoom", "" );
+  gSock.emit("room.enter", "main_stage" );
   
   $("body").keypress(function(event) {
     if ( event.which == 106) {
@@ -132,18 +132,22 @@ $(function(){
 
     // NOTE: this does not work because httpOnly is set for this cookie
     //var sid = $.cookie('connect.sid');      
-     
-    // get the player
-    var player = new Player;
-    player.get_mysid(null, function(err, player_sid) {
+    
+    // player logged in
+    model.Player.loggedin(null, function(err, player_loggedin) {
       
       // enter the queue
-      if (player_sid !== 'undefined') {
-        gSock.emit('enterRoomQueue', {room_id: 'main_stage', sid: player_sid} );
-         
+      if (typeof player_loggedin !== 'undefined' && player_loggedin) {
+        
+        // get the sid.... required to link express session to socket.io
+        model.Player.get_mysid(null, function(err, player_sid) {
+          gSock.emit('room.enterQueue', {room_id: 'main_stage', sid: player_sid} );
+        });
+
       // login using facebook
       } else {
-        window.location('/auth/facebook');
+        alert('http://' + document.location.host + '/auth/facebook');
+        window.location.href = '/auth/facebook';
       }
 
     });
