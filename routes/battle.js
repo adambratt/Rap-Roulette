@@ -27,11 +27,10 @@ exports.create = function(req, res){
   };
  		
 	Battle.create(null, obj, function (err, battle) {
-	
-	  res.writeHead(200, {"Content-Type": "application/json"});
-	  res.write(util.inspect(battle));
-	  res.end();
-
+    
+    delete battle['_id'];
+    res.json(battle); 
+    
   });
 };
 
@@ -44,9 +43,7 @@ exports.drop = function(req, res){
 	
   Battle.drop(null, id, function(err) {
 	
-	  res.writeHead(200, {"Content-Type": "application/json"});
-	  res.write(util.inspect({ success: { message: 'The battle was dropped' } }));
-	  res.end();
+	  res.json({ success: { message: 'The battle was dropped' } })
 
   });
 
@@ -58,14 +55,18 @@ exports.drop = function(req, res){
 exports.list = function(req, res){
 	
   Battle.list(null, {}, function (err, battles) {
-	
-	  res.writeHead(200, {"Content-Type": "application/json"});
-	  res.write(util.inspect(battles));
-	  res.end();
+    
+    // remove the mongo _id
+    for (var i=0; i < battles.length; i++) {
+      delete battles[i]['_id'];
+    }
+
+    res.json(battles);
 
   });
 
 };
+
 
 // song
 // get info about the song for a given battle
@@ -74,24 +75,26 @@ exports.song = function(req, res){
 	Song = model.Song
 	
 	battle_id = req.params.id;
-  	
-	Battle.get(null, battle_id, function (err, battle) {
+	
+  Battle.get(null, battle_id, function (err, battle) {
     
     if (typeof battle !== 'undefined') {
+	      
+      Song.get(null, battle.song_id, function (err, song) {
+        if (typeof song !== 'undefined') {
+            
+          delete song['_id'];
+          res.json(song);
+          
+        } else {
+	        res.json({ error: { message: "Song not found."}});
 
-	  Song.get(null, battle.song_id, function (err, song) {
-    
-	    res.writeHead(200, {"Content-Type": "application/json"});
-	    res.write(util.inspect(song));
-	    res.end();
-
-    });
+        }
+      });
 
     } else {
 
-     	res.writeHead(200, {"Content-Type": "application/json"});
-	    res.write(util.inspect({ error: { message: "Battle does not exist."}}));
-	    res.end(); 
+	    res.json({ error: { message: "Battle does not exist."}});
     }
 
   });
@@ -106,10 +109,9 @@ exports.view = function(req, res){
 	id = req.params.id;
 	
 	Battle.get(null, id, function (err, battle) {
-	
-	  res.writeHead(200, {"Content-Type": "application/json"});
-	  res.write(util.inspect(battle));
-	  res.end();
+    
+    delete battle['_id'];
+    res.json(battle);
 
   });
 

@@ -29,10 +29,8 @@ exports.create = function(req, res){
   };
 
   room = Room.create(null, obj, function (err, room) {
-  
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(room));
-    res.end();
+    delete room['_id'];
+    res.json(room);
 
   });
 };
@@ -45,9 +43,7 @@ exports.drop = function(req, res){
 	id = req.params.id;
     
   Room.drop(null, id, function(err) {
-	  res.writeHead(200, {"Content-Type": "application/json"});
-	  res.write(util.inspect({ success: { message: 'The room was dropped' } }));
-	  res.end();
+	  res.json({ success: { message: 'The room was dropped' } });
   });
 
 };
@@ -65,17 +61,13 @@ exports.enter = function(req, res){
       
       // enter this room
       Room.enter(null, room, req.session.player_id, function (err, room) {
-        res.writeHead(200, {"Content-Type": "application/json"});
-        res.write(util.inspect({ success: {message: "Player entered " + room.name} }));
-        res.end();
+        res.json({ success: {message: "Player entered " + room.name} });
       });
 
     });
   
   } else {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ error: {message: "Player needs to be logged in to perform this action."} }));
-      res.end();
+    res.json({ error: {message: "Player needs to be logged in to perform this action."} });
   }
 
 };
@@ -94,17 +86,13 @@ exports.enter_queue = function(req, res){
       
       // enter this room
       Room.enter_queue(null, req.session.player_id, function (err, room) {
-        res.writeHead(200, {"Content-Type": "application/json"});
-        res.write(util.inspect({ success: {message: "Player entered the queue in " + room.name} }));
-        res.end();
+        res.json({ success: {message: "Player entered the queue in " + room.name} });
       });
 
     });
 
   } else {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: {message: "Player needs to be logged in to perform this action."} }));
-      res.end();
+    res.json({ success: {message: "Player needs to be logged in to perform this action."} });
   }
 
 };
@@ -116,9 +104,8 @@ exports.get = function(req, res){
     
   id = req.params.id;
   Room.get(null, id, function (err, room) {
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(room));
-    res.end();      
+    delete room['_id'];
+    res.json(room);
   });
 
 };
@@ -137,17 +124,13 @@ exports.leave = function(req, res){
     
       // leave this room
       Room.leave(null, room, req.session.player_id, function (err, room) {
-        res.writeHead(200, {"Content-Type": "application/json"});
-        res.write(util.inspect({ success: { message: "Player left " + room.name} }));
-        res.end();
+        res.json({ success: { message: "Player left " + room.name} });
       });
 
     });
   
   } else {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: {message: "Player needs to be logged in to perform this action."} }));
-      res.end();
+    res.json({ success: {message: "Player needs to be logged in to perform this action."} });
   }
 
 };
@@ -166,17 +149,13 @@ exports.leave_queue = function(req, res){
     
       // leave this room queue
       Room.leave_queue(null, req.session.player_id, function (err, room) {
-        res.writeHead(200, {"Content-Type": "application/json"});
-        res.write(util.inspect({ success: { message: "Player left the queue in " + room.name} }));
-        res.end();
+        res.json({ success: { message: "Player left the queue in " + room.name} });
       });
 
     });
     
   } else {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: {message: "Player needs to be logged in to perform this action."} }));
-      res.end();
+    res.json({ success: {message: "Player needs to be logged in to perform this action."} });
   }
 
 };
@@ -191,15 +170,12 @@ exports.myroom = function(req, res){
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
    
     Room.get_myroom(null, req.session.player_id, function (err, room) {
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect(room));
-      res.end();
+      delete room['_id'];
+      res.json(room);
     });
 
   } else {  
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect({ error: { message: "Player needs to be logged in in order to perform this action"} }));
-    res.end();    
+    res.json({ error: { message: "Player needs to be logged in in order to perform this action"} });
   
   }
 
@@ -238,15 +214,21 @@ exports.myroom_redirect = function(req, res){
 exports.list = function(req, res){
   
   Room.list(null, {}, function (err, rooms) {
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(rooms));
-    res.end();
+
+    // remove the mongo _id
+    for (var i=0; i < rooms.length; i++) {
+      delete rooms[i]['_id'];
+    }
+    
+    res.json(rooms);
+  
   });
   
 };
 
 
 // view
+// this does not return JSON as it is a URI that is browsed to
 
 exports.view = function(req, res){
     

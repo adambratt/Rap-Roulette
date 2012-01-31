@@ -53,9 +53,13 @@ exports.view = function(req, res){
   id = req.params.id;
   
   Player.get(null, id, function (err, player) {
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(player));
-    res.end();
+    res.json({
+      id: player.id, 
+      name: player.name, 
+      is_logged_in: player.is_logged_in, 
+      room_id: player.room_id, 
+      is_in_queue: player.is_in_queue
+    });
   });
 
 };
@@ -66,10 +70,14 @@ exports.view = function(req, res){
 exports.list = function(req, res){
   
   Player.list(null, {}, function (err, players) {
-   
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect(players));
-    res.end();
+    
+    // remove the mongo _id
+    for (var i=0; i < players.length; i++) {
+      delete players[i]['_id'];
+    }
+    
+    res.json(players);
+  
   });
 
 };
@@ -110,9 +118,7 @@ exports.logout = function (req, res) {
         res.clearCookie('auth');  
         req.session.destroy(function() {});
     
-        res.writeHead(200, {"Content-Type": "application/json"});
-        res.write(util.inspect({ success: { nessage: 'Player was logged out' } }));
-        res.end();            
+        res.json({ success: { nessage: 'Player was logged out' } });
 
         }
       )
@@ -134,9 +140,7 @@ exports.logout = function (req, res) {
 
   } else {
     
-    res.writeHead(200, {"Content-Type": "application/json"});
-    res.write(util.inspect({ success: { message: 'Player was not logged in.'} }));
-    res.end();    
+    res.json({ success: { message: 'Player was not logged in.'} });
  
   }
 

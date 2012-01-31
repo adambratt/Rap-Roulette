@@ -22,6 +22,7 @@ var express = require('express')
   , room = require('./routes/room')
   , battle = require('./routes/battle')
   , player = require('./routes/player')
+  , song = require('./routes/song')
   , admin = require('./routes/admin')
   ;
 ;
@@ -95,10 +96,15 @@ app.get('/player/myself', player.myself);
 app.get('/player/mysid', player.mysid);
 app.get('/players/:id', player.view);
 
+// songs
+app.get('/song/list', song.list);
+app.get('/song/create', song.create);
+app.get('/songs/:id', song.view);
+
 // users (some are for testing only)
-app.get('/user', user.index);
-app.get('/user/session', user.session);
-app.get('/user/myself', player.myself);
+//app.get('/user', user.index);
+//app.get('/user/session', user.session);
+//app.get('/user/myself', player.myself);
 
 // admin screens
 app.get('/admin/testboard', admin.testboard);
