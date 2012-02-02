@@ -17,8 +17,35 @@ var socketLibRoot = document.location.host;
 // general socket
 var gSock = io.connect(socketLibRoot);
 
+/////////////////////
+// State Changes
+/////////////////////
 gSock.on("stateNewRapper", function(data) {
-	alert("stateNewRapper");
+	// Put stuff here
+});
+
+gSock.on("stateCountdown", function(data) {
+	// Put stuff here
+});
+
+gSock.on("statePlayer1Rap", function(data) {
+	// Put stuff here
+});
+
+gSock.on("stateBetweenRounds", function(data) {
+	// Put stuff here
+});
+
+gSock.on("statePlayer2Rap", function(data) {
+	// Put stuff here
+});
+
+gSock.on("stateFinalVoting", function(data) {
+	// Put stuff here
+});
+
+gSock.on("stateShowWinner", function(data) {
+	// Put stuff here
 });
 
 gSock.on("updateVotes", function(data) {
