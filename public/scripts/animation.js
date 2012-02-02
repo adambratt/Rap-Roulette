@@ -275,11 +275,12 @@ function incrementTimer( limit ) {
 
 function decrementTimer() {
 	time -= 1;
-	setTimerValue( time );
+	
 	if ( time <= 0 ) {
 		setTimer( 0 );
 		clearInterval( countdownInterval );
 	}
+	setTimerValue( time );
 }
 
 ////////////////////////////////
