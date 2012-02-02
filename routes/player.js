@@ -13,6 +13,26 @@ exports.index = function(req, res){
   res.end();
 };
 
+// create
+// TODO: post-only this
+// TODO: enable this for admins only
+
+exports.create = function(req, res){
+
+  obj = {
+    name: req.query.name,
+    service: req.query.service,
+  };
+
+  Player.create(null, obj, function (err, player) {
+    delete player['_id'];
+    res.json(player);
+
+  });
+};
+
+
+
 
 // myself
 
