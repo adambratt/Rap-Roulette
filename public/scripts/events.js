@@ -28,7 +28,7 @@ gSock.on('stopSound', function(data) {
 	//stop all sounds playing
 	soundManager.stopAll();
 
-}
+});
 
 gSock.on('setQueue', function(data) {
   
@@ -70,7 +70,7 @@ gSock.on('stopSound', function(data) {
 	//stop all sounds playing
 	soundManager.stopAll();
 
-}
+});
 
 gSock.on('playKey', function(data) {
   // data
@@ -115,8 +115,8 @@ $(function(){
 	beat4 = soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: 50 });
 	beat5 = soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: 50 });
 	beat6 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
-	beat1 = soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: 50 });
-	beat2 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: 50 });
+	beat7 = soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: 50 });
+	beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: 50 });
 	
 	
   });
