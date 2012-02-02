@@ -60,6 +60,10 @@ gSock.on("statePostRap", function(data) {
 	// Put stuff here
 });
 
+///////////////////
+// Sync state
+///////////////////
+
 gSock.on("updateVotes", function(data) {
 	// Handle voting updates from the server
 	var numVotesLeft = data[0];
