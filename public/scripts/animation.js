@@ -314,6 +314,8 @@ function moveSpotlight(left) {
 function turnSpotlightOff() {
 	$(".spotlight").fadeTo(100,0);
 }
+
+//Setting queue from server
 function clearQueue()
 {
 	$(".queue").empty();
@@ -323,6 +325,14 @@ function setQueue(data) {
 // data should contain list of player names in order of queue
 	clearQueue();
 	var list=document.getElementById("queue");
+	
+	
+	//the word "lineup"
+	var lineup = document.createElement("h4");
+	lineup.setAttribute("id", "queue_lineup");
+	lineup.innerHTML="Lineup";
+	
+	list.insertBefore(lineup);
 	
 	for(var i=0; i<data.length; i++){
 		var bullet=document.createElement("li");
