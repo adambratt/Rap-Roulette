@@ -1,5 +1,6 @@
 var model = require('../lib/model')
   , Room = model.Room
+  , Battle = model.Battle
   , Player = model.Player
   , util = require('util')
 ;
@@ -279,10 +280,20 @@ exports.view = function(req, res){
   id = req.params.id;
   Room.get(null, id, function (err, room) {
 
-    // set the room to be main_stage if the user is not logged in
+    // set the room to be main_stage in case the user is not logged in
     req.session.room_id = room.id;
+    
+    delete room['_id'];
 
-    res.render('index', { title: room.name, sid: req.sessionID, room: room })
+    battle = Battle.states[room.battle_id];
+    delete battle['_id']; // possible unintended consequences here
+
+    res.render('index', { 
+      title: room.name, 
+      sid: req.sessionID, 
+      room: room,
+      battle: battle
+    })
 
   });
 

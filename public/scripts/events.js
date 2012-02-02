@@ -26,11 +26,13 @@ gSock.on("stateNewRapper", function(data) {
 	//		publish new stream
 });
 
+var beatIndex;
 gSock.on("statePreRap", function(data) {
 
 	//these shouldnt be here
 	//server should be choosing/socketing the song
-	var beatIndex=Math.floor(Math.random()*maxBeats+1);
+  soundManager.stopAll();
+	beatIndex=Math.floor(Math.random()*maxBeats+1);
 	playSound('beat'+beatIndex);
 	
 	
@@ -75,7 +77,7 @@ gSock.on("stateFinalVoting", function(data) {
 
 gSock.on("statePostRap", function(data) {
 	resetVotes();
-	stopSound();
+	stopSound('beat'+beatIndex);
 	//TODO: calculate/announce winner
 	//		boot off loser
 	//		

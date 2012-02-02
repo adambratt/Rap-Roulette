@@ -22,12 +22,13 @@
   <script type="text/javascript">
       $(document).ready(function() {
         room_id = "<%- room.id %>";
-        room = <%- JSON.stringify(room) %>; // so XHR does not have to be initially used
-        
+        room = <%- JSON.stringify(room) %>;
+        battle = <%- JSON.stringify(battle) %>;
+         
         // example of how to get the queue
-        model.Room.get_queue(null, room_id, function (err, queue) {
+        //model.Room.get_queue(null, room_id, function (err, queue) {
            //alert(queue);
-        });
+        //});
  
         populateRoom();
         updateGraph();
