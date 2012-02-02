@@ -200,6 +200,19 @@ function resetMeter() {
 }
 
 ////////////////////////////////
+// Popup stuff
+////////////////////////////////
+
+function showDialog() {
+$( "#enqueue-popup" ).modal(
+	{opacity:0}
+);
+
+
+}
+
+
+////////////////////////////////
 // Sounds
 ////////////////////////////////
 
@@ -333,8 +346,10 @@ function clearBling() {
 	$(".bling").remove();
 }
 
+
+
 function transition(left) {
-	playSound('airhorn'); //make this serverside
+	playSound('airhorn'); 
 	moveSpotlight(left);
 }
 
