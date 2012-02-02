@@ -26,22 +26,29 @@ gSock.on("stateNewRapper", function(data) {
 
 gSock.on("statePreRap", function(data) {
 	setTimer(30);
+	moveSpotlight(true);
 });
 
 gSock.on("statePlayer1Rap", function(data) {
 	startCountdown();
 });
 
-gSock.on("stateBetweenRounds", function(data) {
+gSock.on("stateBeforePlayer2", function(data) {
 	setTimer(30);
+	moveSpotlight(false);
 });
 
 gSock.on("statePlayer2Rap", function(data) {
 	startCountdown();
 });
 
+gSock.on("stateBeforePlayer1", function(data) {
+	setTimer(30);
+	moveSpotlight(true);
+});
+
 gSock.on("stateFinalVoting", function(data) {
-	// Put stuff here
+	turnSpotlightOff();
 });
 
 gSock.on("statePostRap", function(data) {
