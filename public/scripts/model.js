@@ -63,4 +63,46 @@ function Model() {
 
   }
 
+
+  this.Room = new Room();
+
+  // Room constructor
+  function Room() {
+
+    // get
+    this.get = function (err, id, cb) {
+    
+      $.ajax({
+        url: "/rooms/" + id + "/get",
+        context: document.body,
+        success: function(room){
+          cb(err, room);     
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          //alert(xhr.status);
+          //alert(thrownError);
+        }
+      });
+
+    }
+
+    // get queue
+    this.get_queue = function (err, id, cb) {
+    
+      $.ajax({
+        url: "/rooms/" + id + "/get_queue",
+        context: document.body,
+        success: function(player_queue){
+          cb(err, player_queue);     
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          //alert(xhr.status);
+          //alert(thrownError);
+        }
+      });
+
+    }
+
+  }
+
 }

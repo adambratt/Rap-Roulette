@@ -111,6 +111,18 @@ exports.get = function(req, res){
 };
 
 
+// get queue
+
+exports.get_queue = function(req, res){
+    
+  id = req.params.id;
+  Room.get(null, id, function (err, room) {
+    res.json(room.player_queue);
+  });
+
+};
+
+
 // leave
 
 exports.leave = function(req, res){

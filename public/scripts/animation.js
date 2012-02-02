@@ -379,10 +379,6 @@ function crowdGoesWild(go) {
 
 ////////////////////////////////
 // Do this on page load
+//
+// NOTE: moved to index.js
 ////////////////////////////////
-$(document).ready(function() {
-
-  populateRoom();
-	updateGraph();
-	
-});
