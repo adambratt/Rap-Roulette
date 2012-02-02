@@ -318,6 +318,7 @@ function setQueue(data) {
 // data should contain list of player names in order of queue
 	clearQueue();
 	var list=document.getElementById("queue");
+	
 	for(var i=0; i<data.length; i++){
 		var bullet=document.createElement("li");
 		bullet.innerHTML=data[i];

@@ -58,6 +58,10 @@ OPENTOK.connectionDestroyedHandler = function(event) {
   
 }
 
+function forceUnpublishStream(streamId) {
+    session.forceUnpublish(subscribers[streamId].stream);
+}
+
 OPENTOK.streamCreatedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {
 		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
