@@ -29,7 +29,6 @@ gSock.on("statePreRap", function(data) {
 });
 
 gSock.on("statePlayer1Rap", function(data) {
-	alert("statePlayer1Rap");
 	startCountdown();
 });
 
@@ -38,7 +37,6 @@ gSock.on("stateBetweenRounds", function(data) {
 });
 
 gSock.on("statePlayer2Rap", function(data) {
-	alert("statePlayer2Rap");
 	startCountdown();
 });
 

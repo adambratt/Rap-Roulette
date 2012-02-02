@@ -257,7 +257,6 @@ function stopCountdown() {
 
 function setTimerValue( seconds ) {
 	// Set the timer to seconds
-	stopCountdown();
 	time = Math.floor(seconds);
     if (time < 10) {
         time = "0" + time + '';
