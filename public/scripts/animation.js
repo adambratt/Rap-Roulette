@@ -217,7 +217,12 @@ $( "#enqueue-popup" ).modal(
 ////////////////////////////////
 
 function playSound(soundfile) {
+
 	gSock.emit('sendSound', soundfile);
+}
+function stopSound() {
+	gSock.emit('stopSound');
+
 }
 	
 function playBeat(soundfile) {
