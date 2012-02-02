@@ -5,6 +5,36 @@
 // ------------------   UI Helpers  ---------------
 var maxBeats=8;
 
+
+// --------------- Game Logic --------------------
+
+var serverClock;
+function setServerClock() { serverClock = new Date(pageServedAt); }
+
+function initServerClock() {
+  setServerClock();
+  setInterval("serverClockTick()", 1000);
+}
+
+function serverClockTick()  {
+  serverClock.setSeconds(serverClock.getSeconds()+1); 
+  
+  // print the time to the console every 5 sec
+  if (game_debug && serverClock.getSeconds() % 5 === 0 ) {
+    window.console.log("server time: " + prettyPrintServerTime());
+  }
+
+}
+
+function prettyPrintServerTime() {
+  var min = serverClock.getMinutes();
+  if (min<10) { min="0"+min; }
+  var sec = serverClock.getSeconds();
+  if (sec<10) { sec="0"+sec; }
+  return serverClock.getHours() + ":" + min + ":" + sec;
+}
+
+
 // -------------- Socket Logic -------------------
 
 var videoKey0;
