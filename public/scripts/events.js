@@ -43,10 +43,10 @@ gSock.on('setQueue', function(data) {
  
     alert(data.success.message + ' (NOTE: queue UI still requires implementation)');
     //alert(data.player.name);
-    
-    // setQueue accepts a list of player names
-	  //setQueue([ data.player.name ]);
-    // TODO: this is temporary and will be replaced by a call to the data model
+	
+    model.Room.get_queue(null, room_id, function (err, queue) {
+           setQueue(queue);
+        });
 
   } else {
     alert(data);
@@ -97,9 +97,19 @@ $(function(){
   soundManager.onready( function(){
     hornExplode= soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion1.wav', autoLoad: true });
     endSound = soundManager.createSound({id: 'winExplode', url: '/audio/effects/luger+explosion.wav', autoLoad: true });
-    lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/effects/lemonade.mp3', autoLoad: true, volume: 50 });
+    lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
 	hornSound = soundManager.createSound({ id: 'airhorn', url: '/audio/effects/airorn.wav', autoLoad: true });
 	hornSound2 = soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
+	
+	beat1 = soundManager.createSound({id: 'beat1', url: '/audio/beats/6_foot_7_foot.mp3', autoLoad: true, volume: 50 });
+	beat2 = soundManager.createSound({id: 'beat2', url: '/audio/beats/black_and_yellow.mp3', autoLoad: true, volume: 50 });
+	beat3 = soundManager.createSound({id: 'beat3', url: '/audio/beats/bonfire.mp3', autoLoad: true, volume: 50 });
+	beat4 = soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: 50 });
+	beat5 = soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: 50 });
+	beat6 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
+	beat1 = soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: 50 });
+	beat2 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: 50 });
+	
 	
   });
   
