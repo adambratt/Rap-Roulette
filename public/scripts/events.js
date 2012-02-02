@@ -55,6 +55,12 @@ gSock.on("updateVotes", function(data) {
 	setVoteBars(numVotesLeft, numVotesRight);
 });
 
+gSock.on('stopSound', function(data) {
+	//stop all sounds playing
+	soundManager.stopAll();
+
+}
+
 gSock.on('setQueue', function(data) {
   
   /*
@@ -90,6 +96,12 @@ gSock.on('playSound', function(data) {
   
   
 });
+
+gSock.on('stopSound', function(data) {
+	//stop all sounds playing
+	soundManager.stopAll();
+
+}
 
 gSock.on('playKey', function(data) {
   // data
