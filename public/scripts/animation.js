@@ -217,7 +217,12 @@ $( "#enqueue-popup" ).modal(
 ////////////////////////////////
 
 function playSound(soundfile) {
+
 	gSock.emit('sendSound', soundfile);
+}
+function stopSound() {
+	gSock.emit('stopSound');
+
 }
 	
 function playBeat(soundfile) {
@@ -235,18 +240,29 @@ var setTimerInterval;
 
 function setTimer( value, time ) {
 	// animate the clock to the given value in time milliseconds
+	stopCountdown();
 	time = typeof(time) != 'undefined' ? time : 1000; // default time 1 second
 	setTimerValue( 0 );
 	setTimerInterval = setInterval("incrementTimer("+value+")", time/value);
 }
 
+function startCountdown() {
+	stopCountdown();
+	countdownInterval = setInterval("decrementTimer()", 1000);
+}
+
+function stopCountdown() {
+	clearInterval(countdownInterval);
+}
+
 function setTimerValue( seconds ) {
 	// Set the timer to seconds
+	stopCountdown();
 	time = Math.floor(seconds);
     if (time < 10) {
         time = "0" + time + '';
     }
-    $('#timer').text(time);
+    $('#timer').text(":"+time);
 }
 
 function incrementTimer( limit ) {
@@ -256,14 +272,6 @@ function incrementTimer( limit ) {
 		setTimerValue( limit );
 		clearInterval( setTimerInterval );
 	}
-}
-
-function startCountdown() {
-	countdownInterval = setInterval("decrementTimer()", 1000);
-}
-
-function stopCountdown() {
-	clearInterval(countdownInterval);
 }
 
 function decrementTimer() {
@@ -309,6 +317,8 @@ function moveSpotlight(left) {
 function turnSpotlightOff() {
 	$(".spotlight").fadeTo(100,0);
 }
+
+//Setting queue from server
 function clearQueue()
 {
 	$(".queue").empty();
@@ -318,6 +328,14 @@ function setQueue(data) {
 // data should contain list of player names in order of queue
 	clearQueue();
 	var list=document.getElementById("queue");
+	
+	
+	//the word "lineup"
+	var lineup = document.createElement("h4");
+	lineup.setAttribute("id", "queue_lineup");
+	lineup.innerHTML="Lineup";
+	
+	list.insertBefore(lineup);
 	
 	for(var i=0; i<data.length; i++){
 		var bullet=document.createElement("li");
