@@ -240,12 +240,14 @@ var setTimerInterval;
 
 function setTimer( value, time ) {
 	// animate the clock to the given value in time milliseconds
+	stopCountdown();
 	time = typeof(time) != 'undefined' ? time : 1000; // default time 1 second
 	setTimerValue( 0 );
 	setTimerInterval = setInterval("incrementTimer("+value+")", time/value);
 }
 
 function startCountdown() {
+	stopCountdown();
 	countdownInterval = setInterval("decrementTimer()", 1000);
 }
 
