@@ -17,6 +17,10 @@ var socketLibRoot = document.location.host;
 // general socket
 var gSock = io.connect(socketLibRoot);
 
+gSock.on("stateNewRapper", function(data) {
+	alert("stateNewRapper");
+});
+
 gSock.on("updateVotes", function(data) {
 	// Handle voting updates from the server
 	var numVotesLeft = data[0];
