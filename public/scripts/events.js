@@ -25,11 +25,15 @@ gSock.on("stateNewRapper", function(data) {
 });
 
 gSock.on("stateCountdown", function(data) {
-	// Put stuff here
+	alert("stateCountdown");
+	setTimer(5);
+	startCountdown();
 });
 
 gSock.on("statePlayer1Rap", function(data) {
-	// Put stuff here
+	alert("statePlayer1Rap");
+	setTimer(30);
+	startCountdown();
 });
 
 gSock.on("stateBetweenRounds", function(data) {
@@ -59,7 +63,7 @@ gSock.on('stopSound', function(data) {
 	//stop all sounds playing
 	soundManager.stopAll();
 
-}
+});
 
 gSock.on('setQueue', function(data) {
   
@@ -101,7 +105,7 @@ gSock.on('stopSound', function(data) {
 	//stop all sounds playing
 	soundManager.stopAll();
 
-}
+});
 
 gSock.on('playKey', function(data) {
   // data

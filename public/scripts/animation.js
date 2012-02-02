@@ -240,13 +240,22 @@ function setTimer( value, time ) {
 	setTimerInterval = setInterval("incrementTimer("+value+")", time/value);
 }
 
+function startCountdown() {
+	countdownInterval = setInterval("decrementTimer()", 1000);
+}
+
+function stopCountdown() {
+	clearInterval(countdownInterval);
+}
+
 function setTimerValue( seconds ) {
 	// Set the timer to seconds
+	stopCountdown();
 	time = Math.floor(seconds);
     if (time < 10) {
         time = "0" + time + '';
     }
-    $('#timer').text(time);
+    $('#timer').text(":"+time);
 }
 
 function incrementTimer( limit ) {
@@ -256,14 +265,6 @@ function incrementTimer( limit ) {
 		setTimerValue( limit );
 		clearInterval( setTimerInterval );
 	}
-}
-
-function startCountdown() {
-	countdownInterval = setInterval("decrementTimer()", 1000);
-}
-
-function stopCountdown() {
-	clearInterval(countdownInterval);
 }
 
 function decrementTimer() {
