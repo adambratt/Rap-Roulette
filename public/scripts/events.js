@@ -22,42 +22,63 @@ var gSock = io.connect(socketLibRoot);
 // State Changes
 /////////////////////
 gSock.on("stateNewRapper", function(data) {
-	// Put stuff here
+	//TODO: pop guy off queue
+	//		publish new stream
 });
 
 gSock.on("statePreRap", function(data) {
 
+	//these shouldnt be here
+	//server should be choosing/socketing the song
 	var beatIndex=Math.floor(Math.random()*maxBeats+1);
 	playSound('beat'+beatIndex);
+	
+	
 	setTimer(30);
 	moveSpotlight(true);
+	
+	//TODO: notify player 1 that he is about to rap
+	//		tell both rappers some pre-rap stuff?
 });
 
 gSock.on("statePlayer1Rap", function(data) {
 	startCountdown();
+	//TODO: mute player 2
 });
 
 gSock.on("stateBeforePlayer2", function(data) {
 	setTimer(30);
 	moveSpotlight(false);
+	//TODO: mute player 1
+	//play airhorn
+	//notify player 2 that he is about to rap
+	
 });
 
 gSock.on("statePlayer2Rap", function(data) {
+//TODO: unmute player 2
 	startCountdown();
+	
 });
 
 gSock.on("stateBeforePlayer1", function(data) {
+	//TODO: notify player 1 that he is about to rap
+		//play airhorn
 	setTimer(30);
 	moveSpotlight(true);
 });
 
 gSock.on("stateFinalVoting", function(data) {
 	turnSpotlightOff();
+	//TODO: play hyphy airhorn
 });
 
 gSock.on("statePostRap", function(data) {
+	resetVotes();
 	stopSound();
-	// Put stuff here
+	//TODO: calculate/announce winner
+	//		boot off loser
+	//		
 });
 
 ///////////////////
@@ -141,6 +162,11 @@ gSock.on('playKey', function(data) {
   
 });
 
+function resetVotes(){
+	setVoteBars(0,0);
+	gSock.emit('resetVotes', [0,0]);
+
+}
 
 // ------------------   Preloads and Triggers ---------------
 var hornSound;
