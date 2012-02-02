@@ -3,6 +3,7 @@
 /* requires socketLibRoot */
 
 // ------------------   UI Helpers  ---------------
+var maxBeats=8;
 
 // -------------- Socket Logic -------------------
 
@@ -25,6 +26,9 @@ gSock.on("stateNewRapper", function(data) {
 });
 
 gSock.on("statePreRap", function(data) {
+
+	var beatIndex=Math.floor(Math.random()*maxBeats+1);
+	playSound('beat'+beatIndex);
 	setTimer(30);
 	moveSpotlight(true);
 });
@@ -52,6 +56,7 @@ gSock.on("stateFinalVoting", function(data) {
 });
 
 gSock.on("statePostRap", function(data) {
+	stopSound();
 	// Put stuff here
 });
 
