@@ -16,6 +16,8 @@ exports.index = function(req, res){
     
     // set the room to be main_stage if the user is not logged in
     req.session.room_id = 'main_stage';
+    
+    delete room['_id'];
 
     res.render('index', { title: room.name, sid: req.sessionID, room: room })
   

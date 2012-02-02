@@ -71,6 +71,8 @@ app.get('/room/create', room.create);
 app.get('/room/myroom', room.myroom);
 app.get('/room/myroom_redirect', room.myroom_redirect);
 app.get('/rooms/:id', room.view);
+app.get('/rooms/:id/get', room.get);
+app.get('/rooms/:id/get_queue', room.get_queue);
 app.get('/rooms/:id/enter', room.enter);
 app.get('/rooms/:id/enter_queue', room.enter_queue);
 app.get('/rooms/:id/leave', room.leave);
