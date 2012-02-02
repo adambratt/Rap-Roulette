@@ -1,5 +1,6 @@
 var model = require('../lib/model')
   , Room = model.Room
+  , Player = model.Player
   , util = require('util')
 ;
 
@@ -117,7 +118,38 @@ exports.get_queue = function(req, res){
     
   id = req.params.id;
   Room.get(null, id, function (err, room) {
-    res.json(room.player_queue);
+    //console.log(util.inspect(room.player_queue)); 
+   
+    var query = { '$or': [] };
+    var fields = { id: 1, name: 1 } ;
+
+    // form the query
+    for (var i=0; i<room.player_queue.length; i++) {
+      query['$or'].push({ id: room.player_queue[i] });
+    }
+    
+    Player.collection.find(query, fields).toArray(function (err, players) {
+
+      var players_by_id = {};
+      var player_names = [];
+      
+      // prepare the hash 
+      for (var i=0; i < room.player_queue.length; i++) {
+        players_by_id[players[i].id] = players[i].name;
+      }
+      
+      // order the names in the queue order
+      for (var i=0; i < room.player_queue.length; i++) {
+        player_names.push(room.player_queue[i]);
+      } 
+      
+      // it is about now when I plea for a relational database
+
+      res.json(player_names);
+
+    });
+    
+     
   });
 
 };
