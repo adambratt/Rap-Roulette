@@ -1,1 +1,1 @@
-./bin/node_dev.sh
+./bin/node_demo.sh
