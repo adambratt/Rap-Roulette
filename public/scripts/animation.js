@@ -395,6 +395,42 @@ function crowdGoesWild(go) {
 	}
 }
 
+function crowdAction (action) {
+	// If go is true, start the "Crowd Goes Wild" state
+	// If false, go back to normal
+	
+  if (action == 'wild') {
+		flashingID = setInterval(function(){flash(1);}, 1000);  //start interval for repeating the animation
+		playSound('hornExplode'); //make this serverside
+		for (var i=0; i<numAvatars; i++) {
+			startEnjoying(i);
+		}
+  } else if (action == 'dance') {
+		for (var i=0; i<numAvatars; i++) {
+			startEnjoying(i);
+		}
+  } else if (action == 'calm') {
+		for (var i=0; i<numAvatars; i++) {
+      if (i % 2 === 0) {
+			  startEnjoying(i);
+      } else {
+			  stopEnjoying(i);
+      }
+    }
+  } else if (action == 'stop') {
+		for (var i=0; i<numAvatars; i++) {
+			stopEnjoying(i);
+		}
+	} else {
+		for (var i=0; i<numAvatars; i++) {
+			startEnjoying(i);
+		}
+	}
+  
+}
+
+
+
 
 ////////////////////////////////
 // Do this on page load

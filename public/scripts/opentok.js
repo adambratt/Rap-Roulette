@@ -39,7 +39,7 @@ OPENTOK.sessionConnectedHandler = function(event) {
 	}
 	
 	$('body').keypress(function(event) {
-    if (!publisher && event.which == 43) {
+    if (!publisher && event.which == 43) { // the + key
     	publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream], { height: 240, width: 320 });
     	OPENTOK.nextStream++;
     }
@@ -58,9 +58,11 @@ OPENTOK.connectionDestroyedHandler = function(event) {
   
 }
 
+/* this was not present in the demo version of this script
 function forceUnpublishStream(streamId) {
     session.forceUnpublish(subscribers[streamId].stream);
 }
+*/
 
 OPENTOK.streamCreatedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {

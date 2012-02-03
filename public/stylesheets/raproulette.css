@@ -169,11 +169,13 @@ a {
 }
 
 .video1 {
-    background-image:url(../images/video1.png);
+    /*background-image:url(../images/video1.png);*/
+    background: black;
 }
 
 .video2 {
-    background-image:url(../images/video2.png);
+    /*background-image:url(../images/video2.png);*/
+    background: black;
 }
 
 .songinfo {
@@ -267,7 +269,7 @@ a {
     width:756px;
     margin:0 auto;
     position:relative;
-    z-index:20;
+    z-index:0; /* when this div is in front of the video boxes, it interferes with user allowing camera on  */
 }
 
 .spotlight {
@@ -276,6 +278,7 @@ a {
     width:756px;
     left:auto;
     right:auto;
+    z-index:0;
 }
 
 .speaker {

@@ -35,10 +35,24 @@
         //model.Room.get_queue(null, room_id, function (err, queue) {
             //alert(queue);
         //});
-
+        
         initServerClock();
         populateRoom();
         updateGraph();       
+        
+        crowdAction('calm');
+        
+        setTimeout(function() {
+            beatIndex=Math.floor(Math.random()*maxBeats+1);
+            soundManager.stopAll();
+            var sound = soundManager.getSoundById('beat'+beatIndex);
+            sound.play();
+            
+            crowdAction('dance');
+
+            window.console.log("page init in index.ejs: dance and play beat" + beatIndex + " until we fix room init");
+        }, 3000);
+
 
     });
 

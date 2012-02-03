@@ -21,7 +21,7 @@ function serverClockTick()  {
   
   // print the time to the console every 5 sec
   if (game_debug && serverClock.getSeconds() % 5 === 0 ) {
-    window.console.log("server time: " + prettyPrintServerTime());
+    window.console.log("serverClockTick: " + prettyPrintServerTime());
   }
 
 }
@@ -54,60 +54,82 @@ var gSock = io.connect(socketLibRoot);
 gSock.on("stateNewRapper", function(data) {
 	//TODO: pop guy off queue
 	//		publish new stream
+  crowdAction('stop');
 });
 
 var beatIndex;
 gSock.on("statePreRap", function(data) {
-
+  window.console.log('statePreRap');
 	//these shouldnt be here
 	//server should be choosing/socketing the song
-  soundManager.stopAll();
-	beatIndex=Math.floor(Math.random()*maxBeats+1);
-	playSound('beat'+beatIndex);
-	
+  soundManager.stopAll();;
+	playSound('beat' + data.beatIndex);
 	
 	setTimer(30);
 	moveSpotlight(true);
+  
+  crowdAction('calm');
 	
 	//TODO: notify player 1 that he is about to rap
 	//		tell both rappers some pre-rap stuff?
 });
 
 gSock.on("statePlayer1Rap", function(data) {
+  window.console.log('statePlayer1Rap');
+
 	startCountdown();
 	//TODO: mute player 2
+  crowdAction('dance');
 });
 
 gSock.on("stateBeforePlayer2", function(data) {
+  window.console.log('stateBeforePlayer2');
+
 	setTimer(30);
 	moveSpotlight(false);
 	//TODO: mute player 1
 	//play airhorn
 	//notify player 2 that he is about to rap
+  crowdAction('calm');
 	
 });
 
 gSock.on("statePlayer2Rap", function(data) {
+  window.console.log('statePlayer2Rap');
+
 //TODO: unmute player 2
 	startCountdown();
-	
+  crowdAction('dance');
 });
 
 gSock.on("stateBeforePlayer1", function(data) {
+  window.console.log('stateBeforePlayer1');
+
 	//TODO: notify player 1 that he is about to rap
 		//play airhorn
 	setTimer(30);
 	moveSpotlight(true);
+  crowdAction('calm');
+
 });
 
 gSock.on("stateFinalVoting", function(data) {
+  window.console.log('stateFinalVoting');
+
 	turnSpotlightOff();
 	//TODO: play hyphy airhorn
+  crowdAction('stop');
+
 });
 
 gSock.on("statePostRap", function(data) {
+  window.console.log('statePostRap');
+
 	resetVotes();
-	stopSound('beat'+beatIndex);
+	//stopSound('beat'+beatIndex); // no need to broadcast this
+	soundManager.stopAll();
+  crowdAction('stop');
+
 	//TODO: calculate/announce winner
 	//		boot off loser
 	//		
@@ -176,6 +198,9 @@ gSock.on('playKey', function(data) {
   // data
   // .id
   switch(parseInt(data)){
+    //case 103: //g
+    //  startGame(); break;
+
     case 65: //a
       moveSpotlight(true); break;
     case 83: //s
@@ -208,9 +233,9 @@ $(function(){
   soundManager.debugMode = false;
   soundManager.url = '/scripts/';
   soundManager.onready( function(){
-    hornExplode= soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion1.wav', autoLoad: true });
-    endSound = soundManager.createSound({id: 'winExplode', url: '/audio/effects/luger+explosion.wav', autoLoad: true });
-    lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
+  hornExplode= soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion1.wav', autoLoad: true });
+  endSound = soundManager.createSound({id: 'winExplode', url: '/audio/effects/luger+explosion.wav', autoLoad: true });
+  lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
 	hornSound = soundManager.createSound({ id: 'airhorn', url: '/audio/effects/airorn.wav', autoLoad: true });
 	hornSound2 = soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
 	
@@ -218,11 +243,17 @@ $(function(){
 	beat2 = soundManager.createSound({id: 'beat2', url: '/audio/beats/black_and_yellow.mp3', autoLoad: true, volume: 50 });
 	beat3 = soundManager.createSound({id: 'beat3', url: '/audio/beats/bonfire.mp3', autoLoad: true, volume: 50 });
 	beat4 = soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: 50 });
-	beat5 = soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: 50 }); //lol this one is not instrumental
-	beat6 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
-	beat7 = soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: 50 });
-	beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: 50 }); //this one neither
 	
+  //beat5 = soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: 50 }); //lol this one is not instrumental
+	beat5 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
+	// temporarily using lemonade
+  
+  beat6 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
+	beat7 = soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: 50 });
+	
+  //beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: 50 }); //this one neither
+	beat8 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
+	// temporarily using lemonade
 	
   });
   
