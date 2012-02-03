@@ -60,12 +60,15 @@ gSock.on("stateNewRapper", function(data) {
 var beatIndex;
 gSock.on("statePreRap", function(data) {
   window.console.log('statePreRap');
-	//these shouldnt be here
-	//server should be choosing/socketing the song
-  soundManager.stopAll();;
-	playSound('beat' + data.beatIndex);
 	
-	setTimer(30);
+  crowdAction('stop');
+
+  soundManager.stopAll();;
+	//playSound('beat' + data.beatIndex); // no need to broadcast this
+  var sound = soundManager.getSoundById('beat'+data.beatIndex);
+  sound.play();
+	
+  setTimer(30);
 	moveSpotlight(true);
   
   crowdAction('calm');
