@@ -5,12 +5,25 @@ var OPENTOK = {
   sessionId : '1_MX4wfn4yMDEyLTAxLTIyIDE3OjA0OjAxLjU5ODY2NCswMDowMH4wLjAzMjIwNDA3MTY5Mzd-',
   token : 'devtoken',
   divs : [ 'pub0', 'pub1' ],
-  nextStream : 0
+  nextStream : 0,
+  publisher: null  // http://www.tokbox.com/opentok/api/tools/js/documentation/api/Publisher.html
 };
+
+
+function initOPENTOK () {
+
+  // http://www.tokbox.com/opentok/api/tools/js/documentation/api/TB.html
+  TB.setLogLevel(TB.DEBUG);
+
+  OPENTOK.connectToSession();
+
+}
+
 
 OPENTOK.connectToSession = function(room) {
   // ignore room for now, just one session hardcoded
   
+  // http://www.tokbox.com/opentok/api/tools/js/documentation/api/TB.html#initSession
   OPENTOK.session = TB.initSession(OPENTOK.sessionId);
   
   OPENTOK.session.addEventListener('sessionConnected', OPENTOK.sessionConnectedHandler);
@@ -37,10 +50,10 @@ OPENTOK.sessionConnectedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {
 		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
 	}
-	
-	$('body').keypress(function(event) {
-    if (!publisher && event.which == 43) { // the + key
-    	publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream], { height: 240, width: 320 });
+
+  $('body').keypress(function(event) {
+    if (!OPENTOK.publisher && event.which == 43) { // the + key
+    	OPENTOK.publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream], { height: 240, width: 320 });
     	OPENTOK.nextStream++;
     }
   });
@@ -74,7 +87,3 @@ OPENTOK.streamDestroyedHandler = function(event) {
 
 }
 
-var publisher;
-
-TB.setLogLevel(TB.DEBUG);
-OPENTOK.connectToSession();

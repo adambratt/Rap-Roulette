@@ -53,10 +53,23 @@ var gSock = io.connect(socketLibRoot);
 /////////////////////
 // State Changes
 /////////////////////
-gSock.on("stateNewRapper", function(data) {
+
+gSock.on("stateNewBattle", function(battleState) {
 	//TODO: pop guy off queue
 	//		publish new stream
+  
   crowdAction('stop');
+  
+  model.battle = new model.Battle(battleState, function (battle) {
+    //console.log("stateNewBattle battle_id " + battle.id);
+    
+    //alert(battle.players[0]); 
+    $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.players[0] + '</span>'); 
+    $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.players[1] + '</span>'); 
+     
+  });
+
+
 });
 
 var beatIndex;
@@ -64,10 +77,10 @@ gSock.on("statePreRap", function(data) {
   window.console.log('statePreRap');
 	
   crowdAction('stop');
-
+  
   soundManager.stopAll();;
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
-  var sound = soundManager.getSoundById(data.song_id);
+  var sound = soundManager.getSoundById(model.battle.song_id);
   sound.play();
 	
   setTimer(30);
@@ -236,8 +249,16 @@ var endSound;
 
 // initialize sound
 
-function initSound (callback) {
+var sound_beat_volume;
+var sound_effects_volume;
 
+function initSound (config, callback) {
+
+  // configure the sound for the player
+  config = config || {};
+  sound_beat_volume = (typeof config.beat_volume !== 'undefined') ? config.beat_volume : 40;
+  sound_effects_volume = (typeof config.effects_volume !== 'undefined') ? config.effects_volume : 40;
+  
   // initialization of sounds
   soundManager.debugMode = false;
   soundManager.url = '/scripts/';

@@ -23,41 +23,42 @@
 
     // globals set from the server
     var game_debug = <%= GLOBAL.game_debug %>;
-
-    var sound_beat_volume = 10; // typically = 50
-    var sound_effects_volume = 50;
-    
     var room_id = "<%- room.id %>";
-    var pageServedAt = <%= ( new Date().getTime() + 700) %>;
     
     // page init
     $(document).ready(function() {
     
         initModel(function (model) {
             
-            // set up the player
             model.player = new model.Player({sid: "<%= sid %>"}, function (player) { 
                 //alert(player.sid);
                 gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
             });
             
-            // set up the room
             model.room = new model.Room(<%- JSON.stringify(room) %>, function (room) {
-                //alert(room.battle_id);
+              //alert(room.battle_id);
             });
-
-            // set up the battle
+            
+            <% if (typeof battleState !== 'undefined') { %>
             model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
-                //alert(battle.song_id);
+              //alert(battle.song_id);
+              
+              $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.players[0] + '</span>');
+              $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.players[1] + '</span>');
+            
             });
+            <% } %>
              
         });
 
         initEvents(function () {});
-        initSound(function (soundManager) {});
-        initServerClock(pageServedAt);
+        
+        initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
+        
+        initServerClock(<%= ( new Date().getTime() + 700) %>);
+        initOPENTOK(function () {});
         populateRoom();
-        updateGraph();       
+        updateGraph();
         crowdAction('calm');
     });
 
@@ -92,9 +93,11 @@
     <div class="subwoofer"></div>
     <div class="stage">
       <div class="winner rapper">
-        <div class="video-wrapper">
-          <div class="video video1"><div id='pub0'></div></div>
-          <span>Mr. J-Query</span>
+        <div class="video-wrapper video-wrapper0">
+          <div class="video video0">
+            <div id="pub0"></div>
+          </div>
+          <span>&nbsp;</span>
           <button class="madprops left" rel='0'>Mad Props!</button>
         </div>
         <div class="clear"></div>
@@ -104,9 +107,11 @@
       <div id="timer" class="timer">:00</div>
 
       <div class="challenger rapper">
-        <div class="video-wrapper">
-          <div class="video video2"><div id='pub1'></div></div>
-          <span>Dr. Node</span>
+        <div class="video-wrapper video-wrapper1">
+          <div class="video video1">
+            <div id="pub1"></div>
+          </div>
+          <span>&nbsp;</span>
           <button class="madprops right" rel='1'>Mad Props!</button>
         </div>
         <div class="clear"></div>

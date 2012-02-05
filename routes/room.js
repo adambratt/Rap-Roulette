@@ -286,7 +286,6 @@ exports.view = function(req, res){
     delete room['_id'];
 
     battleState = Battle.states[room.battle_id];
-    delete battle['_id']; // possible unintended consequences here
 
     res.render('index', { 
       title: room.name, 

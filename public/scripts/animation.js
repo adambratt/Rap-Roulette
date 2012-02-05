@@ -230,8 +230,17 @@ function playBeat(soundfile) {
 	"<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
 }
 
+
+
 ////////////////////////////////
-// Timer
+// Stage
+////////////////////////////////
+
+
+
+
+////////////////////////////////
+// Countdown Clock
 ////////////////////////////////
 
 var time = 30;

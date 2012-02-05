@@ -12,8 +12,6 @@ var model = require('../lib/model')
 exports.index = function(req, res){
   //console.log(util.inspect(req.session));
  
-  
-
   Room.get(null, 'main_stage', function (err, room) {
       
     // set the room in case the user is not logged in
@@ -22,8 +20,7 @@ exports.index = function(req, res){
     delete room['_id'];
      
     battleState = Battle.states[room.battle_id];
-    delete battleState['_id']; // possible unintended consequences here
-
+    
     res.render('index', { 
       title: room.name, 
       sid: req.sessionID, 

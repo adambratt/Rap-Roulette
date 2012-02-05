@@ -84,9 +84,13 @@ function Model () {
     this.id = obj.id;
     this.battle_id = obj.battle_id;
     this.name = obj.name;
-
-    callback(this);
+    this.player_queue = obj.player_queue;
     
+    // full player information may be added or deleted later
+    this.players = {};
+     
+    callback(this);
+        
 
     // get
     this.get = function (err, id, cb) {
@@ -136,7 +140,7 @@ function Model () {
     this.current_player_id = obj.current_player_id;
     this.current_state_id = obj.current_state_id;
     this.song_id = obj.song_id;
-
+     
     callback(this);
     
   }
