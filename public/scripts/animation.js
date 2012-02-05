@@ -405,7 +405,12 @@ function crowdGoesWild(go) {
 }
 
 function crowdAction (action) {
-	
+  
+  // temporarily disable this
+  //console.log('crowdAction ' + action + ' (disabled for now)');
+  //return;
+	// the crowd has been taking up too much cpu
+  
   if (action == 'wild') {
 		flashingID = setInterval(function(){flash(1);}, 1000);  //start interval for repeating the animation
 		playSound('hornExplode'); //make this serverside
