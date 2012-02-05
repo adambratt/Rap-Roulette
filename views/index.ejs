@@ -22,38 +22,39 @@
   <script type="text/javascript">
 
     // globals set from the server
-    var game_debug = 1;
+    var game_debug = <%= GLOBAL.game_debug %>;
+
+    var sound_beat_volume = 10; // typically = 50
+    var sound_effects_volume = 50;
+    
     var room_id = "<%- room.id %>";
     var room = <%- JSON.stringify(room) %>;
     var battle = <%- JSON.stringify(battle) %>;
-    var pageServedAt = <%= ( new Date().getTime() ) %>;
+    var pageServedAt = <%= ( new Date().getTime() + 700) %>;
     
     // page init
     $(document).ready(function() {
     
-        // example of how to get the queue
-        //model.Room.get_queue(null, room_id, function (err, queue) {
-            //alert(queue);
-        //});
-        
-        initServerClock();
+        initModel(function (model) {
+            
+            // set up the player
+            model.player = new model.Player({sid: "<%= sid %>"}, function (player) { 
+                //alert(player.sid);
+                gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
+            });
+            
+            // set up the room
+            
+            // set up the battle
+
+        });
+
+        initEvents(function () {});
+        initSound(function (soundManager) {});
+        initServerClock(pageServedAt);
         populateRoom();
         updateGraph();       
-        
         crowdAction('calm');
-        
-        setTimeout(function() {
-            beatIndex=Math.floor(Math.random()*maxBeats+1);
-            soundManager.stopAll();
-            var sound = soundManager.getSoundById('beat'+beatIndex);
-            sound.play();
-            
-            crowdAction('dance');
-
-            window.console.log("page init in index.ejs: dance and play beat" + beatIndex + " until we fix room init");
-        }, 4000);
-
-
     });
 
   </script>

@@ -48,17 +48,18 @@ app.configure(function(){
 
 app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
+  GLOBAL.game_debug=1;
 });
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
+  GLOBAL.game_debug=0;
 });
 
 
-
-// SocketIO Config
+// SocketIO Config and game init
 var socketServer = io.listen(app);
-module.exports.game = game.startGame(socketServer);
+module.exports.game = game.initGame(socketServer);
 
 
 // routes

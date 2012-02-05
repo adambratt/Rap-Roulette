@@ -8,31 +8,32 @@ var maxBeats=8;
 
 // --------------- Game Logic --------------------
 
-var serverClock;
-function setServerClock() { serverClock = new Date(pageServedAt); }
+var serverTime;
+function setServerClock(startAtTime) { serverTime = new Date(startAtTime); }
 
-function initServerClock() {
-  setServerClock();
+function initServerClock(initTime) {
+  setServerClock(initTime);
   setInterval("serverClockTick()", 1000);
 }
 
 function serverClockTick()  {
-  serverClock.setSeconds(serverClock.getSeconds()+1); 
+  serverTime.setSeconds(serverTime.getSeconds()+1); 
   
   // print the time to the console every 5 sec
-  if (game_debug && serverClock.getSeconds() % 5 === 0 ) {
-    window.console.log("serverClockTick: " + prettyPrintServerTime());
+  if (game_debug && serverTime.getSeconds() % 10 === 0 ) {
+    window.console.log( "local serverClock Tick: " + prettyPrintServerTime() );
   }
 
 }
 
 function prettyPrintServerTime() {
-  var min = serverClock.getMinutes();
+  var min = serverTime.getMinutes();
   if (min<10) { min="0"+min; }
-  var sec = serverClock.getSeconds();
+  var sec = serverTime.getSeconds();
   if (sec<10) { sec="0"+sec; }
-  return serverClock.getHours() + ":" + min + ":" + sec;
+  return serverTime.getHours() + ":" + min + ":" + sec;
 }
+
 
 
 // -------------- Socket Logic -------------------
@@ -48,6 +49,7 @@ var socketLibRoot = document.location.host;
 // general socket
 var gSock = io.connect(socketLibRoot);
 
+  
 /////////////////////
 // State Changes
 /////////////////////
@@ -232,37 +234,47 @@ function resetVotes(){
 var hornSound;
 var endSound;
 
-$(function(){
+// initialize sound
+
+function initSound (callback) {
+
+  // initialization of sounds
   soundManager.debugMode = false;
   soundManager.url = '/scripts/';
-  soundManager.onready( function(){
-  hornExplode= soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion1.wav', autoLoad: true });
-  endSound = soundManager.createSound({id: 'winExplode', url: '/audio/effects/luger+explosion.wav', autoLoad: true });
-  lemonade = soundManager.createSound({id: 'lemonade', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
-	hornSound = soundManager.createSound({ id: 'airhorn', url: '/audio/effects/airorn.wav', autoLoad: true });
-	hornSound2 = soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
-	
-	beat1 = soundManager.createSound({id: 'beat1', url: '/audio/beats/6_foot_7_foot.mp3', autoLoad: true, volume: 50 });
-	beat2 = soundManager.createSound({id: 'beat2', url: '/audio/beats/black_and_yellow.mp3', autoLoad: true, volume: 50 });
-	beat3 = soundManager.createSound({id: 'beat3', url: '/audio/beats/bonfire.mp3', autoLoad: true, volume: 50 });
-	beat4 = soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: 50 });
-	
-  //beat5 = soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: 50 }); //lol this one is not instrumental
-	beat5 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
-	// temporarily using lemonade
-  
-  beat6 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
-	beat7 = soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: 50 });
-	
-  //beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: 50 }); //this one neither
-	beat8 = soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: 50 });
-	// temporarily using lemonade
-	
+  soundManager.onready( 
+    function () {
+      soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion1.wav', autoLoad: true, volume: sound_effects_volume });
+      soundManager.createSound({id: 'winExplode', url: '/audio/effects/luger+explosion.wav', autoLoad: true, volume: sound_effects_volume });
+      soundManager.createSound({ id: 'airhorn', url: '/audio/effects/airorn.wav', autoLoad: true, volume: sound_effects_volume });
+      soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
+      
+      soundManager.createSound({id: 'beat1', url: '/audio/beats/6_foot_7_foot.mp3', autoLoad: true, volume: sound_beat_volume });
+      soundManager.createSound({id: 'beat2', url: '/audio/beats/black_and_yellow.mp3', autoLoad: true, volume: sound_beat_volume });
+      soundManager.createSound({id: 'beat3', url: '/audio/beats/bonfire.mp3', autoLoad: true, volume: sound_beat_volume });
+      soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: sound_beat_volume });
+      
+      //soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: sound_beat_volume }); //lol this one is not instrumental
+      soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+      // temporarily using lemonade
+      
+      soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+      soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: sound_beat_volume });
+      
+      //beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: sound_beat_volume }); //this one neither
+      soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+      // temporarily using lemonade
+      
+      // this makes sure that the soundManager is live before calling sounds
+      callback(soundManager);
+
   });
-  
-  // Tell the server I've entered the room so I can sync the game state
-  gSock.emit("room.enter", "main_stage" );
-  
+
+} 
+
+// initialize click events
+
+function initEvents () {
+
   $("body").keypress(function(event) {
     if ( event.which == 106) {
       // j
@@ -291,17 +303,17 @@ $(function(){
 
   $('.getinline').click(function() {
 
-    // NOTE: this does not work because httpOnly is set for this cookie
+    // NOTE: accessing the cookie does not work because httpOnly is set
     //var sid = $.cookie('connect.sid');      
     
     // player logged in
-    model.Player.loggedin(null, function(err, player_loggedin) {
+    model.player.loggedin(null, function(err, player_loggedin) {
       
       // enter the queue
       if (typeof player_loggedin !== 'undefined' && player_loggedin) {
         
         // get the sid.... required to link express session to socket.io
-        model.Player.get_mysid(null, function(err, player_sid) {
+        model.player.get_mysid(null, function(err, player_sid) {
           gSock.emit('room.enterQueue', {room_id: 'main_stage', sid: player_sid} );
         });
 
@@ -316,6 +328,8 @@ $(function(){
     return false;
     
   });
+  
+
+} // end click events initialization
 
 
-});

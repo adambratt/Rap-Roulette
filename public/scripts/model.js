@@ -1,15 +1,23 @@
 // client model (interacts with the server-side model using XHR)
 
-var model = new Model();
+var model;
+
+// initialize model
+
+function initModel (callback) {
+  model = new Model();
+  callback(model);
+}
 
 // Model constructor
-function Model() {
-
-  this.Player = new Player();
-
+function Model () {
+  
   // Player constructor
-  function Player() {
-
+  this.Player = function (obj, callback) {
+    
+    this.sid = obj.sid;
+    callback(this);
+  
     // get myself
     this.get_myself = function (err, cb) {
     
@@ -64,10 +72,8 @@ function Model() {
   }
 
 
-  this.Room = new Room();
-
   // Room constructor
-  function Room() {
+  this.Room = function () {
 
     // get
     this.get = function (err, id, cb) {

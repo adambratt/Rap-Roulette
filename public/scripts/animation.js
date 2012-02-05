@@ -396,8 +396,6 @@ function crowdGoesWild(go) {
 }
 
 function crowdAction (action) {
-	// If go is true, start the "Crowd Goes Wild" state
-	// If false, go back to normal
 	
   if (action == 'wild') {
 		flashingID = setInterval(function(){flash(1);}, 1000);  //start interval for repeating the animation
