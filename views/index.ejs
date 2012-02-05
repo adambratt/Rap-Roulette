@@ -28,8 +28,6 @@
     var sound_effects_volume = 50;
     
     var room_id = "<%- room.id %>";
-    var room = <%- JSON.stringify(room) %>;
-    var battle = <%- JSON.stringify(battle) %>;
     var pageServedAt = <%= ( new Date().getTime() + 700) %>;
     
     // page init
@@ -44,9 +42,15 @@
             });
             
             // set up the room
-            
-            // set up the battle
+            model.room = new model.Room(<%- JSON.stringify(room) %>, function (room) {
+                //alert(room.battle_id);
+            });
 
+            // set up the battle
+            model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
+                //alert(battle.song_id);
+            });
+             
         });
 
         initEvents(function () {});

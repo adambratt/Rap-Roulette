@@ -102,6 +102,23 @@ exports.song = function(req, res){
 };
 
 
+// state
+// returns the battle state as stored in node
+// this will only exist while a battle is active
+
+exports.state = function(req, res){
+		
+	id = req.params.id;
+	
+    battleState = Battle.states[room.battle_id];
+    delete battle['_id']; // possible unintended consequences here
+    
+    res.json(battleState);
+
+};
+
+
+
 // view
 
 exports.view = function(req, res){

@@ -9,12 +9,15 @@ function initModel (callback) {
   callback(model);
 }
 
-// Model constructor
 function Model () {
   
-  // Player constructor
+
+  // Player
+  // ==========================================================================
+
   this.Player = function (obj, callback) {
     
+    // construction
     this.sid = obj.sid;
     callback(this);
   
@@ -72,8 +75,18 @@ function Model () {
   }
 
 
-  // Room constructor
-  this.Room = function () {
+  // Room
+  // ==========================================================================
+
+  this.Room = function (obj, callback) {
+    
+    // construction
+    this.id = obj.id;
+    this.battle_id = obj.battle_id;
+    this.name = obj.name;
+
+    callback(this);
+    
 
     // get
     this.get = function (err, id, cb) {
@@ -109,6 +122,32 @@ function Model () {
 
     }
 
+  }
+
+  // Battle
+  // ==========================================================================
+
+  this.Battle = function (obj, callback) {
+
+    // construction
+    this.id = obj.id;
+    this.name = obj.name;
+    this.players = obj.players;
+    this.current_player_id = obj.current_player_id;
+    this.current_state_id = obj.current_state_id;
+    this.song_id = obj.song_id;
+
+    callback(this);
+    
+  }
+
+  // Song
+  // ==========================================================================
+  
+  this.Song = function (obj, callback) {
+   
+    callback(song);
+    
   }
 
 }

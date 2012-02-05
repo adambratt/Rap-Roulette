@@ -66,8 +66,8 @@ gSock.on("statePreRap", function(data) {
   crowdAction('stop');
 
   soundManager.stopAll();;
-	//playSound('beat' + data.beatIndex); // no need to broadcast this
-  var sound = soundManager.getSoundById('beat'+data.beatIndex);
+	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
+  var sound = soundManager.getSoundById(data.song_id);
   sound.play();
 	
   setTimer(30);
