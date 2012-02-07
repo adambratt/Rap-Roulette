@@ -29,7 +29,14 @@ table tr th {
         <td>Song ID</td>
         <td><%= battleState.song_id %></td>
     </tr>
+    
+    <tr>
+        <td>Started At</td>
 
+        <% time = new Date(battleState.started_at); %>
+
+        <td><%= time.toDateString() %> @ <%= time.toLocaleTimeString() %></td>
+    </tr>
 
     <tr><th colspan="100%">State Info</td></tr>
 
@@ -63,6 +70,12 @@ table tr th {
 
 
     <tr><th colspan="100%">Round Info</td></tr>
+    <tr>
+        <td>Rounds</td>
+        <td>
+        <tt><%= JSON.stringify(battleState.rounds) %></tt>
+        </td>
+    </tr>
     <% for (var i = 0; i < battleState.rounds.length; i++) { 
         var round_id = battleState.rounds[i];
     %>
