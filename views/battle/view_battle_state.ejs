@@ -1,0 +1,72 @@
+
+<style>
+table {
+    padding:5px;
+}
+table tr td {
+    padding:3px;
+}
+table tr th {
+    background-color:#ccc; text-align:center;
+}
+</style>
+
+<table border="0">
+
+    <tr><th colspan="100%">Battle Info</td></tr>
+
+    <tr>
+        <td>ID</td>
+        <td><%= battleState.id %></td>
+    </tr>
+    
+    <tr>
+        <td>Current State ID</td>
+        <td><%= battleState.current_state_id %></td>
+    </tr>
+   
+    <tr>
+        <td>Room ID</td>
+        <td><%= battleState.room_id %></td>
+    </tr>
+    
+    <tr>
+        <td>Song ID</td>
+        <td><%= battleState.song_id %></td>
+    </tr>
+    
+    <tr><th colspan="100%">Player Info</td></tr>
+    <% for (var i = 0; i < battleState.players.length; i++) { 
+        var player_id = battleState.players[i];
+    %>
+        
+        <tr>
+            <td><%= player_id %></td>
+            <td>
+            <tt><%= JSON.stringify(battleState.player[player_id]) %></tt>
+            </td>
+        </tr>
+
+    <% } %>
+
+
+    <tr><th colspan="100%">Round Info</td></tr>
+    <% for (var i = 0; i < battleState.rounds.length; i++) { 
+        var round_id = battleState.rounds[i];
+    %>
+        
+        <tr>
+            <td><%= round_id %></td>
+            <td>
+            <tt><%= JSON.stringify(battleState.round[round_id]) %></tt>
+            </td>
+        </tr>
+
+    <% } %>
+
+
+
+
+</table>
+
+
