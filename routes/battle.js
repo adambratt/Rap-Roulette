@@ -68,10 +68,10 @@ exports.list = function(req, res){
 };
 
 
-// song
+// get_song
 // get info about the song for a given battle
 
-exports.song = function(req, res){
+exports.get_song = function(req, res){
 	Song = model.Song
 	
 	battle_id = req.params.id;
@@ -102,11 +102,11 @@ exports.song = function(req, res){
 };
 
 
-// state
+// get_state
 // returns the battle state as stored in node
 // this will only exist while a battle is active
 
-exports.state = function(req, res){
+exports.get_state = function(req, res){
 		
 	id = req.params.id;
 	

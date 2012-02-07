@@ -76,6 +76,7 @@ app.get('/room/create', room.create);
 app.get('/room/myroom', room.myroom);
 app.get('/room/myroom_redirect', room.myroom_redirect);
 app.get('/rooms/:id', room.view);
+app.get('/rooms/:id/get_battle_state', room.get_battle_state);
 app.get('/rooms/:id/get', room.get);
 app.get('/rooms/:id/get_queue', room.get_queue);
 app.get('/rooms/:id/enter', room.enter);
@@ -83,6 +84,7 @@ app.get('/rooms/:id/enter_queue', room.enter_queue);
 app.get('/rooms/:id/leave', room.leave);
 app.get('/rooms/:id/leave_queue', room.leave_queue);
 app.get('/rooms/:id/drop', room.drop);      // should not expose this except to admins
+app.get('/rooms/:id/view_battle_state', room.view_battle_state);
 
 // battles
 app.get('/battle', battle.index);
@@ -91,8 +93,8 @@ app.get('/battle/create', battle.create);
 app.get('/battle/mybattle', player.mybattle);
 app.get('/battles/:id', battle.view);
 app.get('/battles/:id/drop', battle.drop);  // should not expose this except to admins 
-app.get('/battles/:id/song', battle.song);
-app.get('/battles/:id/state', battle.state);
+app.get('/battles/:id/get_song', battle.get_song);
+app.get('/battles/:id/get_state', battle.get_state);
 
 // players
 app.get('/player', player.index);

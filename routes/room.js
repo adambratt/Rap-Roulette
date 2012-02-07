@@ -113,6 +113,25 @@ exports.get = function(req, res){
 };
 
 
+
+// get_battle_state
+// returns the battle state as stored in node
+// this will only exist while a battle is active
+
+exports.get_battle_state = function(req, res){
+		
+  id = req.params.id;
+  Room.get(null, id, function (err, room) {	  
+    battleState = Battle.states[room.battle_id];
+    
+    res.json(battleState);
+  });
+
+};
+
+
+
+
 // get queue
 
 exports.get_queue = function(req, res){
@@ -272,6 +291,36 @@ exports.list = function(req, res){
 };
 
 
+// view_battle_state
+// presents the battle state as stored in node
+// this will only exist while a battle is active
+
+exports.view_battle_state = function(req, res){
+		
+  id = req.params.id;
+  Room.get(null, id, function (err, room) {	  
+    battleState = Battle.states[room.battle_id];
+
+    if (typeof battleState !== 'undefined') {
+    
+      res.render('battle/view_battle_state', { 
+        layout: true,
+        title: room.name, 
+        room: room,
+        battleState: battleState,
+      });
+
+    } else {
+      res.json('New battle just now being created due to supervisor restart... just refresh.'); 
+    }
+
+  });
+
+};
+
+
+
+
 // view
 // this does not return JSON as it is a URI that is browsed to
 
@@ -292,7 +341,7 @@ exports.view = function(req, res){
       sid: req.sessionID, 
       room: room,
       battleState: battleState
-    })
+    });
 
   });
 

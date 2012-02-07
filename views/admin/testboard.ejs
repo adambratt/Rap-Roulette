@@ -17,6 +17,17 @@
         <a href="/player/mysid" target="output">My SID</a><br/>
         <a href="/room/myroom_redirect" target="_myroom_redirect">Redirect to My Room</a><br/>
         <a href="/player/logout" target="output">Logout</a><br/>
+        
+        <h3>Room-related actions...</h3>
+        <a href="/rooms/main_stage/enter" target="output">Enter the "Main Stage"</a><br/>
+        <a href="/room/myroom" target="output">My Room</a> (current location)<br/>
+        <a href="/rooms/main_stage/enter_queue" target="output">Enter the "Main Stage" queue</a><br/>
+        <a href="/rooms/main_stage/leave_queue" target="output">Leave the "Main Stage" queue</a><br/>
+        <a href="/rooms/main_stage/leave" target="output">Leave the "Main Stage"</a><br/>
+        
+
+
+
     </div>
 
 
@@ -47,17 +58,11 @@
         <a href="/rooms/main_stage/get_queue" target="output">Get "Main Stage" Queue</a><br/>
         <a href="/rooms/main_stage/drop" target="output">Drop "Main Stage"</a><br/>
         
+        <p>
         <a href="/room/create?name=Room%20X&players=1,2,3,4,5&player_queue=1,2" target="output">Create Room "X"</a><br/>
         <a href="/rooms/room_x" target="output">View Room "X"</a><br/>
         <a href="/rooms/room_x/drop" target="output">Drop Room "X"</a><br/>
-
-        <h3>Once you are logged in...</h3>
-        <a href="/rooms/main_stage/enter" target="output">Enter the "Main Stage"</a><br/>
-        <a href="/room/myroom" target="output">My Room</a> (current location)<br/>
-        <a href="/rooms/main_stage/enter_queue" target="output">Enter the "Main Stage" queue</a><br/>
-        <a href="/rooms/main_stage/leave_queue" target="output">Leave the "Main Stage" queue</a><br/>
-        <a href="/rooms/main_stage/leave" target="output">Leave the "Main Stage"</a><br/>
-        
+        </p>
 
     </div>
 
@@ -69,10 +74,15 @@
         
         <a href="/battle/create?room_id=main_stage&name=Battle%20Z&song_id=lemonade&players=" target="output">Create New Battle</a><br/>
         
+        <h3>Main Stage Battle</h3>
+        <a href="/rooms/main_stage/get_battle_state" target="output">Get Battle State</a><br/>
+        <a href="/rooms/main_stage/view_battle_state" target="output">View Battle State</a><br/>
+        
         <h3>Must specify battle id in the url...</h3>
         <a href="/battles/battle_z" target="_new">Battle Z</a><br/>
-        <a href="/battles/battle_z/song" target="_new">Battle Z's Song</a><br/>
-        <a href="/battles/battle_z/drop" target="_new">Drop Battle Z</a><br/>
+        <a href="/battles/battle_z/get_song" target="_new">Z's Song</a><br/>
+        <a href="/battles/battle_z/get_state" target="_new">Z's Battle State</a><br/>
+        <a href="/battles/battle_z/drop" target="_new">Z's Drop</a><br/>
         
     </div>
 
