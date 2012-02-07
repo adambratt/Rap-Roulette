@@ -19,11 +19,6 @@ table tr th {
         <td>ID</td>
         <td><%= battleState.id %></td>
     </tr>
-    
-    <tr>
-        <td>Current State ID</td>
-        <td><%= battleState.current_state_id %></td>
-    </tr>
    
     <tr>
         <td>Room ID</td>
@@ -34,7 +29,24 @@ table tr th {
         <td>Song ID</td>
         <td><%= battleState.song_id %></td>
     </tr>
-    
+
+
+    <tr><th colspan="100%">State Info</td></tr>
+
+    <tr>
+        <td>Curr State ID</td>
+        <td><%= battleState.current_state_id %></td>
+    </tr>
+    <tr>
+        <td>Script</td>
+        <td>
+        <tt><%= JSON.stringify(battleState.script) %></tt>
+        </td>
+    </tr>
+
+
+
+
     <tr><th colspan="100%">Player Info</td></tr>
     <% for (var i = 0; i < battleState.players.length; i++) { 
         var player_id = battleState.players[i];
