@@ -307,11 +307,11 @@ a {
 }
 
 .crowd {
-	display:none;
     position:relative;
 }
 
 .crowd > img {
+	display:none;
     position:absolute;
     top:0;
 }
