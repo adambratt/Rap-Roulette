@@ -143,10 +143,11 @@ a {
 }
 
 .gauge {
+	display:none;
     position:absolute;
     background-image:url(../images/dial.png);
     width:132px;
-    height:60px;
+    height:50px;
     top:306px;
     left:415px;
     z-index:20;
