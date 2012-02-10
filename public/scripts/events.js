@@ -364,7 +364,7 @@ function initEvents () {
       // login using facebook
       } else {
         //alert('http://' + document.location.host + '/auth/facebook');
-        window.location.href = '/auth/facebook';
+        window.location.href = '/player/login_and_enter_queue';
       }
 
     });

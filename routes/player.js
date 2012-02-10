@@ -1,5 +1,6 @@
 var model = require('../lib/model')
   , Player = model.Player
+  , Session = model.Session
   , util = require('util')
 ;
 
@@ -50,6 +51,25 @@ exports.myself = function(req, res){
   }
   
 };
+
+
+
+// mysession
+
+exports.mysession = function (req, res) {
+  var sid = req.sessionID;
+ 
+  Session.get(null, sid, function (err, session) { 
+      
+      if (typeof session !== 'undefined') {
+        res.json(session);
+      }
+
+  });
+
+}
+
+
 
 
 // mysid
@@ -115,6 +135,25 @@ exports.loggedin = function(req, res){
 };
 
 
+// login
+
+exports.login = function (req, res) {
+  res.redirect('/auth/facebook');
+}
+
+
+// login and enter queue
+
+exports.login_and_enter_queue = function (req, res) {
+  var sid = req.sessionID;
+ 
+  //Session.get(null, sid, function (err, session) { 
+  
+  req.session.enter_queue_after_login = true;
+
+  res.redirect('/auth/facebook');
+
+}
 
 
 // logout
