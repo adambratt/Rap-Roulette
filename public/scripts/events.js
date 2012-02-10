@@ -3,7 +3,7 @@
 /* requires socketLibRoot */
 
 // ------------------   UI Helpers  ---------------
-var maxBeats=8;
+var maxBeats=9;
 
 
 // --------------- Game Logic --------------------
@@ -197,8 +197,10 @@ gSock.on('setQueue', function(data) {
 });
 
 gSock.on('playSound', function(data) {
-  // data
-  // .id
+	//data
+	//.id
+	
+	
 
   var sound = soundManager.getSoundById(data);
   sound.play();
@@ -282,7 +284,7 @@ function initSound (config, callback) {
       soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: sound_beat_volume });
       
       //beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: sound_beat_volume }); //this one neither
-      soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+      soundManager.createSound({id: 'beat9', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
       // temporarily using lemonade
       
       // this makes sure that the soundManager is live before calling sounds

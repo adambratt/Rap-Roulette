@@ -324,6 +324,13 @@ function turnSpotlightOff() {
 	$(".spotlight").fadeTo(100,0);
 }
 
+function playSound(id, position) {
+	var sound = soundManager.getSoundById(id);
+	sound.setPosition(position);
+	sound.play();
+
+}
+
 //Setting queue from server
 function clearQueue()
 {
