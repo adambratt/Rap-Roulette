@@ -135,12 +135,16 @@ function Model () {
 
     // construction
     this.id = obj.id;
+    this.room_id = obj.room_id;
+    this.song_id = obj.song_id;
     this.name = obj.name;
     this.players = obj.players;
+    this.player = obj.player;
     this.current_player_id = obj.current_player_id;
     this.current_state_id = obj.current_state_id;
     this.song_id = obj.song_id;
-     
+    this.rounds = obj.rounds;
+    this.current_round = obj.current_round;
     callback(this);
     
   }
