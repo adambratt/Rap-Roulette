@@ -39,14 +39,53 @@
               //alert(room.battle_id);
             });
             
+            initServerClock(<%= ( new Date().getTime() + 700) %>);
+            
             <% if (typeof battleState !== 'undefined') { %>
             model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
-              //alert(battle.song_id);
+              ////////////////////
+              // Initial Game State Sync
+              ////////////////////
               
+              // Set current rappers
               $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.players[0] + '</span>');
               $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.players[1] + '</span>');
+              
+              // Figure out current spot in battle
+              var started_at = new Date(battle.started_at);
+              var now = new Date(serverTime);
+              var time_into_battle = now - started_at;
+              var state = -1;
+              var end_of_state = 0;
+              while ( end_of_state < time_into_battle ) {
+              	state++;
+              	end_of_state += battle.script[state];
+              }
+              var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - battle.script[state]);
+              var time_left_in_state = started_at.getTime()+end_of_state - now.getTime();
+              
+              //alert("You walked into the battle during state "+state+". Time into state: "+time_into_state);
+              
+              switch (state) {
+              case(2):
+              case(4):
+              case(6):
+              case(8):
+              	// Someone is rapping
+              	setTimerValue(time_left_in_state/1000);
+              	startCountdown();
+              	break;
+              case(1):
+              case(3):
+              case(5):
+              case(7):
+              	// Someone is about to rap
+              	setTimer(30);
+              	break;
+              }
             
-            });
+           
+           });
             <% } %>
              
         });
@@ -55,7 +94,6 @@
         
         initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
         
-        initServerClock(<%= ( new Date().getTime() + 700) %>);
         initOPENTOK(function () {});
         populateRoom();
         updateGraph();
