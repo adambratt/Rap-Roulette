@@ -137,6 +137,7 @@ function Model () {
     this.id = obj.id;
     this.room_id = obj.room_id;
     this.song_id = obj.song_id;
+    this.started_at = obj.started_at;
     this.name = obj.name;
     this.players = obj.players;
     this.player = obj.player;
