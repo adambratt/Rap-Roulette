@@ -328,23 +328,35 @@ exports.view = function(req, res){
     
   id = req.params.id;
   Room.get(null, id, function (err, room) {
-
+    
+    if (typeof room === 'undefined') { 
+      display_404(id, req, res); 
+      return;
+    } 
+    
     // set the room to be main_stage in case the user is not logged in
     req.session.room_id = room.id;
     
     delete room['_id'];
-
+    
     battleState = Battle.states[room.battle_id];
-
+    
     res.render('index', { 
       title: room.name, 
       sid: req.sessionID, 
       room: room,
       battleState: battleState
     });
-
+    
   });
 
 };
+
+function display_404(id, req, res) {
+  res.writeHead(404, {'Content-Type': 'text/html'});
+  res.write("<h1>404 Not Found</h1>");
+  res.end("The room '" + id  +"' cannot be found");
+}
+
 
 
