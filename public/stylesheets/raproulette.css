@@ -283,6 +283,7 @@ a {
 }
 
 .speaker {
+	display:none;
     position:absolute;
     bottom:10px;
     width:60px;
@@ -299,6 +300,7 @@ a {
 }
 
 .crowd {
+	display:none;
     position:relative;
 }
 
@@ -358,14 +360,14 @@ a {
 
 .bar.left {
     float:right;
-    margin-right:500px;
+    margin-right:400px;
     background-image:url(../images/newbar1.png);
     background-position: right;
 }
 
 .bar.right {
     float:left;
-    margin-left:500px;
+    margin-left:400px;
     background-image:url(../images/newbar.png);
 }
 
