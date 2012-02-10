@@ -299,6 +299,7 @@ a {
 }
 
 .crowd {
+	display:none;
     position:relative;
 }
 
