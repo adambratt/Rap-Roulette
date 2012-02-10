@@ -283,6 +283,7 @@ a {
 }
 
 .speaker {
+	display:none;
     position:absolute;
     bottom:10px;
     width:60px;
