@@ -299,10 +299,7 @@ function decrementTimer() {
 flashingID = 0;
 var numBling = 0;
 		
-function hideQueue() {
-	$(".getinline").hide();
-	$(".queue").hide();	
-}
+
 
 function moveSpotlight(left) {
 	// Flip and flash spotlight
@@ -325,6 +322,13 @@ function moveSpotlight(left) {
 
 function turnSpotlightOff() {
 	$(".spotlight").fadeTo(100,0);
+}
+
+function playSound(id, position) {
+	var sound = soundManager.getSoundById(id);
+	sound.setPosition(position);
+	sound.play();
+
 }
 
 //Setting queue from server

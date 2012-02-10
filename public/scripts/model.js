@@ -146,6 +146,7 @@ function Model () {
     this.song_id = obj.song_id;
     this.rounds = obj.rounds;
     this.current_round = obj.current_round;
+    this.script = obj.script;
     callback(this);
     
   }

@@ -3,7 +3,7 @@
 /* requires socketLibRoot */
 
 // ------------------   UI Helpers  ---------------
-var maxBeats=8;
+var maxBeats=9;
 
 
 // --------------- Game Logic --------------------
@@ -78,7 +78,7 @@ gSock.on("statePreRap", function(data) {
 	
   crowdAction('stop');
   
-  soundManager.stopAll();;
+  soundManager.stopAll();
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
   var sound = soundManager.getSoundById(model.battle.song_id);
   sound.play();
@@ -197,8 +197,10 @@ gSock.on('setQueue', function(data) {
 });
 
 gSock.on('playSound', function(data) {
-  // data
-  // .id
+	//data
+	//.id
+	
+	
 
   var sound = soundManager.getSoundById(data);
   sound.play();
@@ -240,7 +242,26 @@ gSock.on('playKey', function(data) {
 function resetVotes(){
 	setVoteBars(0,0);
 	gSock.emit('resetVotes', [0,0]);
+	$('.madprops.left').bind('click', function(){
+	
+		gSock.emit("vote", "left" );
+		alert('hey ok');
+		$('.madprops.left').unbind('click');
+		$('.madprops.right').unbind('click');
 
+    return false;
+	
+	
+	});
+	$('.madprops.right').bind('click', function(){
+	
+		gSock.emit("vote", "right" );
+		alert('hey ok');
+		$('.madprops.left').unbind('click');
+		$('.madprops.right').unbind('click');
+
+    return false;
+		});
 }
 
 // ------------------   Preloads and Triggers ---------------
@@ -282,7 +303,7 @@ function initSound (config, callback) {
       soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: sound_beat_volume });
       
       //beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: sound_beat_volume }); //this one neither
-      soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+      soundManager.createSound({id: 'beat9', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
       // temporarily using lemonade
       
       // this makes sure that the soundManager is live before calling sounds
@@ -311,15 +332,9 @@ function initEvents () {
      }
   });
   
-  $('.madprops.left').click(function(){
-    gSock.emit("vote", "left" );
-    return false;
-  });
+  resetVotes();
   
-  $('.madprops.right').click(function(){
-    gSock.emit("vote", "right" );
-    return false;
-  });
+  
 
 
   $('.getinline').click(function() {
