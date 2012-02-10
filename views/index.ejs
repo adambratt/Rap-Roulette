@@ -66,16 +66,18 @@
   <script src="/scripts/opentok.js"></script>
 </head>
 <body>
-  <div class="spotlight-wrapper">
+  <!---<div class="spotlight-wrapper">
     <img class="spotlight" src="images/spotlight.png" />
-  </div>
+  </div>--->
   <div id="navbar-wrapper">
     <div id="navbar">
       <a href="/"><img src="images/logo.png" /></a>
-      <!-- <a href="#logout">
+      <div id="logout">
+      <!--<a href="#logout">
         <img src="http://dummyimage.com/25x25" />
         Raj Vir
-      </a> -->
+      </a>--->
+      </div>
     </div>
   </div>
 
@@ -86,15 +88,9 @@
     
     <div class="subwoofer"></div>
     <div class="stage">
-    <div class="songinfo">
-  	    Lemonade
-  	    <br>
-  	    Gucci Mane
-  	    <br>
-  	    <a href="http://itunes.com">Buy on iTunes</a>
-    </div>
     <div class="lights">
     </div>
+    <div class="videoswrapper">
       <div class="winner rapper">
         <div class="video-wrapper video-wrapper0">
           <div class="video video0">
@@ -105,11 +101,18 @@
         </div>
         <div class="clear"></div>
       </div>
+      
+      
+        <div class="dashboard">
+        <div class="songinfo">Lemonade
+  	      <br>Gucci Mane
+  	      <br><a href="http://itunes.com">Buy on iTunes</a>
+        </div>
+        <div class="vs"></div>
+        <div id="timer" class="timer">:00</div>
+        </div>
 
-      <div class="vs"></div>
-      <div id="timer" class="timer">:00</div>
-
-      <div class="challenger rapper">
+       <div class="challenger rapper">
         <div class="video-wrapper video-wrapper1">
           <div class="video video1">
             <div id="pub1"></div>
@@ -118,7 +121,7 @@
           <button class="madprops right" rel='1'>Mad Props!</button>
         </div>
         <div class="clear"></div>
-
+    </div>
       </div>
       <div class="gauge">
         <div class="meter"></div>
