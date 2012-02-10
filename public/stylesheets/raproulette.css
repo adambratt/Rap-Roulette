@@ -150,6 +150,7 @@ a {
     top:306px;
     left:415px;
     z-index:20;
+	display:none;
 }
 
 .meter {

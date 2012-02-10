@@ -299,10 +299,7 @@ function decrementTimer() {
 flashingID = 0;
 var numBling = 0;
 		
-function hideQueue() {
-	$(".getinline").hide();
-	$(".queue").hide();	
-}
+
 
 function moveSpotlight(left) {
 	// Flip and flash spotlight
