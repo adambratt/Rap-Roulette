@@ -13,7 +13,12 @@ exports.index = function(req, res){
   //console.log(util.inspect(req.session));
  
   Room.get(null, 'main_stage', function (err, room) {
-      
+
+    if (typeof room === 'undefined') { 
+      display_404(id, req, res); 
+      return;
+    } 
+
     // set the room in case the user is not logged in
     req.session.room_id = room.id;
     
@@ -31,3 +36,11 @@ exports.index = function(req, res){
   });
 
 };
+
+function display_404(id, req, res) {
+  res.writeHead(404, {'Content-Type': 'text/html'});
+  res.write("<h1>404 Not Found</h1>");
+  res.end("The room 'main_stage' cannot be found");
+}
+
+
