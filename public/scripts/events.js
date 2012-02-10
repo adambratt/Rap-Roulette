@@ -78,7 +78,7 @@ gSock.on("statePreRap", function(data) {
 	
   crowdAction('stop');
   
-  soundManager.stopAll();;
+  soundManager.stopAll();
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
   var sound = soundManager.getSoundById(model.battle.song_id);
   sound.play();
@@ -242,7 +242,26 @@ gSock.on('playKey', function(data) {
 function resetVotes(){
 	setVoteBars(0,0);
 	gSock.emit('resetVotes', [0,0]);
+	$('.madprops.left').bind('click', function(){
+	
+		gSock.emit("vote", "left" );
+		alert('hey ok');
+		$('.madprops.left').unbind('click');
+		$('.madprops.right').unbind('click');
 
+    return false;
+	
+	
+	});
+	$('.madprops.right').bind('click', function(){
+	
+		gSock.emit("vote", "right" );
+		alert('hey ok');
+		$('.madprops.left').unbind('click');
+		$('.madprops.right').unbind('click');
+
+    return false;
+		});
 }
 
 // ------------------   Preloads and Triggers ---------------
@@ -313,15 +332,9 @@ function initEvents () {
      }
   });
   
-  $('.madprops.left').click(function(){
-    gSock.emit("vote", "left" );
-    return false;
-  });
+  resetVotes();
   
-  $('.madprops.right').click(function(){
-    gSock.emit("vote", "right" );
-    return false;
-  });
+  
 
 
   $('.getinline').click(function() {
