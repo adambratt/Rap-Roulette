@@ -367,6 +367,9 @@ function initEvents () {
     // NOTE: accessing the cookie does not work because httpOnly is set
     //var sid = $.cookie('connect.sid');      
     
+	$('.getinline').hide();
+	$('.leavequeue').show();
+	
     // player logged in
     model.player.loggedin(null, function(err, player_loggedin) {
       
@@ -388,6 +391,13 @@ function initEvents () {
     
     return false;
     
+  });
+  
+  $('.leavequeue').click(function() {
+	$('.leavequeue').hide();
+		$('.getinline').show();
+	
+  
   });
   
 
