@@ -82,14 +82,14 @@ gSock.on("stateNewBattle", function(battleState) {
 });
 
 var beatIndex;
-gSock.on("statePreRap", function(data) {
+gSock.on("statePreRap", function(song_id) {
   window.console.log('statePreRap');
 	
   crowdAction('stop');
   
   soundManager.stopAll();
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
-  var sound = soundManager.getSoundById(model.battle.song_id);
+  var sound = soundManager.getSoundById(song_id);
   sound.play();
 	
   setTimer(30);
