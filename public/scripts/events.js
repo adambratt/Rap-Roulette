@@ -82,14 +82,14 @@ gSock.on("stateNewBattle", function(battleState) {
 });
 
 var beatIndex;
-gSock.on("statePreRap", function(data) {
+gSock.on("statePreRap", function(song_id) {
   window.console.log('statePreRap');
 	
   crowdAction('stop');
   
   soundManager.stopAll();
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
-  var sound = soundManager.getSoundById(model.battle.song_id);
+  var sound = soundManager.getSoundById(song_id);
   sound.play();
 	
   setTimer(30);
@@ -112,6 +112,7 @@ gSock.on("statePlayer1Rap", function(data) {
 gSock.on("stateBeforePlayer2", function(data) {
   window.console.log('stateBeforePlayer2');
 
+	playSound("hornExplode");
 	setTimer(30);
 	moveSpotlight(false);
 	//TODO: mute player 1
@@ -131,6 +132,8 @@ gSock.on("statePlayer2Rap", function(data) {
 
 gSock.on("stateBeforePlayer1", function(data) {
   window.console.log('stateBeforePlayer1');
+  
+  playSound("hornExplode");
 
 	//TODO: notify player 1 that he is about to rap
 		//play airhorn
@@ -142,6 +145,8 @@ gSock.on("stateBeforePlayer1", function(data) {
 
 gSock.on("stateFinalVoting", function(data) {
   window.console.log('stateFinalVoting');
+  
+  playSound("hornExplode");
 
 	turnSpotlightOff();
 	//TODO: play hyphy airhorn

@@ -225,8 +225,6 @@ exports.leave_queue = function(req, res){
 };
 
 
-
-
 // myroom
 
 exports.myroom = function(req, res){

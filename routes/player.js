@@ -43,11 +43,13 @@ exports.myself = function(req, res){
 
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
     player = Player.get_myself(null, req.session.player_id, function (err, player) {
+      if (typeof player === 'undefined') { res.json({ error: { message: 'Player not found.' }}); return; }
+
       delete player['_id'];
       res.json(player);
     });
   } else {
-      res.json(undefined);
+      res.json({ error: { message: 'Player not in session.' }});
   }
   
 };
@@ -147,11 +149,25 @@ exports.login = function (req, res) {
 exports.login_and_enter_queue = function (req, res) {
   var sid = req.sessionID;
  
+  req.session.enter_queue_after_login = true;
+  
   //Session.get(null, sid, function (err, session) { 
   
-  req.session.enter_queue_after_login = true;
-
-  res.redirect('/auth/facebook');
+  Session.collection.findAndModify( {
+    query: {_id: sid}, 
+    update : { "$set": { enter_queue_after_login: true} }, 
+      'new': false
+    },
+    function (err, session_record) {
+      
+      //session = JSON.parse(session_record.session);
+      //if (typeof session !== 'undefined') {
+        // session not found
+      //}
+    
+    res.redirect('/auth/facebook');
+  
+  });
 
 }
 
