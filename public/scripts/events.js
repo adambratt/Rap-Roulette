@@ -307,22 +307,27 @@ function initSound (config, callback) {
       soundManager.createSound({ id: 'airhorn', url: '/audio/effects/airorn.wav', autoLoad: true, volume: sound_effects_volume });
       soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
       
-      soundManager.createSound({id: 'beat1', url: '/audio/beats/6_foot_7_foot.mp3', autoLoad: true, volume: sound_beat_volume });
-      soundManager.createSound({id: 'beat2', url: '/audio/beats/black_and_yellow.mp3', autoLoad: true, volume: sound_beat_volume });
-      soundManager.createSound({id: 'beat3', url: '/audio/beats/bonfire.mp3', autoLoad: true, volume: sound_beat_volume });
-      soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: sound_beat_volume });
+      //if ( config.id == 'beat1')
+      	soundManager.createSound({id: 'beat1', url: '/audio/beats/6_foot_7_foot.mp3', autoLoad: true, volume: sound_beat_volume });
+      //if ( config.id == 'beat2')
+      	soundManager.createSound({id: 'beat2', url: '/audio/beats/black_and_yellow.mp3', autoLoad: true, volume: sound_beat_volume });
+      //if ( config.id == 'beat3')
+      	soundManager.createSound({id: 'beat3', url: '/audio/beats/bonfire.mp3', autoLoad: true, volume: sound_beat_volume });
+      //if ( config.id == 'beat4')
+      	soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: sound_beat_volume });
       
-      //soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: sound_beat_volume }); //lol this one is not instrumental
-      soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
-      // temporarily using lemonade
+      //if ( config.id == 'beat5')
+      	soundManager.createSound({id: 'beat5', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+
+	  //if ( config.id == 'beat6' )   
+      	soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
       
-      soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
-      soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: sound_beat_volume });
+      //if ( config.id == 'beat7' )
+      	soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: sound_beat_volume });
       
-      //beat8 = soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: sound_beat_volume }); //this one neither
-      soundManager.createSound({id: 'beat9', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
-      // temporarily using lemonade
-      
+      //if ( config.id == 'beat8' )
+      	soundManager.createSound({id: 'beat8', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
+            
       // this makes sure that the soundManager is live before calling sounds
       callback(soundManager);
 
