@@ -6,6 +6,9 @@ numAvatars = 0;
 animations = new Array(); //stores interval # 
 original_positions = new Array(); //stores original position of avatar
 
+
+
+
 function startEnjoying(index) {
 	// Choose a random animation and start it
 	original_positions[index] = $("#avatar"+index).offset();
@@ -264,6 +267,16 @@ function stopCountdown() {
 	clearInterval(countdownInterval);
 }
 
+function setSongInfo(name, artist, url) {
+	//beatIndex should be number from 1 to maxBeats
+	//should correspond to the index of the beat in soundManager
+	
+	
+	$('.songinfo').html(name+'<br>'+artist+'<br><a href=\"'+url+'\"> Buy on Itunes </a>');
+
+
+}
+
 function setTimerValue( seconds ) {
 	// Set the timer to seconds
 	time = Math.floor(seconds);
@@ -325,6 +338,9 @@ function turnSpotlightOff() {
 }
 
 function playSound(id, position) {
+
+	
+
 	var sound = soundManager.getSoundById(id);
 	sound.setPosition(position);
 	sound.play();
