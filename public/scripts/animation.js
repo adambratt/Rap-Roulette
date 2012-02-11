@@ -325,10 +325,9 @@ function turnSpotlightOff() {
 }
 
 function playSound(id, position) {
-	var sound = soundManager.getSoundById(id);
-	sound.setPosition(position);
-	sound.play();
-
+		var sound = soundManager.getSoundById(id);
+		sound.setPosition(position);
+		sound.play();
 }
 
 //Setting queue from server

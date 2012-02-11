@@ -40,6 +40,7 @@
             });
             
             initServerClock(<%= ( new Date().getTime() + 700) %>);
+            initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
             
             <% if (typeof battleState !== 'undefined') { %>
             model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
@@ -66,6 +67,10 @@
               
               //alert("You walked into the battle during state "+state+". Time into state: "+time_into_state);
               
+              //alert(battle.song_id)
+              //alert(time_into_battle);
+              setTimeout("playSound( '"+battle.song_id+"', "+(time_into_battle+3000)+" )", 3000);
+              
               switch (state) {
               case(2):
               case(4):
@@ -91,8 +96,6 @@
         });
 
         initEvents(function () {});
-        
-        initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
         
         initOPENTOK(function () {});
         populateRoom();
