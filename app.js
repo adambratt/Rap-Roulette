@@ -50,6 +50,7 @@ app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
   GLOBAL.game_debug=1;
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
+  GLOBAL.battle_speed=1;
 });
 
 app.configure('production', function(){
@@ -57,7 +58,7 @@ app.configure('production', function(){
   GLOBAL.game_debug=0;
   GLOBAL.game_run_mode='production';
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
-
+  GLOBAL.battle_speed=1;
 });
 
 
