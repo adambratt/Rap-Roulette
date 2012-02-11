@@ -261,7 +261,6 @@ function resetVotes(){
 	$('.madprops.left').bind('click', function(){
 	
 		gSock.emit("vote", "left" );
-		alert('hey ok');
 		$('.madprops.left').unbind('click');
 		$('.madprops.right').unbind('click');
 
