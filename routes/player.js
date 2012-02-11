@@ -1,5 +1,6 @@
 var model = require('../lib/model')
   , Player = model.Player
+  , Room = model.Room
   , Session = model.Session
   , util = require('util')
 ;
@@ -149,13 +150,13 @@ exports.login = function (req, res) {
 exports.login_and_enter_queue = function (req, res) {
   var sid = req.sessionID;
  
-  req.session.enter_queue_after_login = true;
+  req.session.trigger_enter_queue_after_login = true;
   
   //Session.get(null, sid, function (err, session) { 
   
   Session.collection.findAndModify( {
     query: {_id: sid}, 
-    update : { "$set": { enter_queue_after_login: true} }, 
+    update : { "$set": { trigger_enter_queue_after_login: true} }, 
       'new': false
     },
     function (err, session_record) {
@@ -172,13 +173,36 @@ exports.login_and_enter_queue = function (req, res) {
 }
 
 
+// login_redirected
+// where the user is redirected after logging into the remote service
+
+exports.login_redirected = function(req, res){
+  
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+    
+    Room.get_myroom(null, req.session.player_id, function (err, room) {
+      
+      if (room.id == 'main_stage') {
+        res.redirect('/');
+      } else {
+        res.redirect('/rooms/' + room.id);
+      }
+      
+    });
+
+  } else {  
+    res.redirect('/');
+  }
+
+};
+
+
 // logout
 
 exports.logout = function (req, res) {
-  
+
   //if (typeof req.session !== 'undefined') {
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') { 
-    
 
     // store that the player is logged out
     Player.collection.findAndModify( {
@@ -192,7 +216,7 @@ exports.logout = function (req, res) {
         req.session.auth = null;
         res.clearCookie('auth');  
         req.session.destroy(function() {});
-    
+        delete req.sessionID;
         res.json({ success: { nessage: 'Player was logged out' } });
 
         }
@@ -221,5 +245,41 @@ exports.logout = function (req, res) {
 
   //res.partial('user/logout', {});
 };
+
+
+// update
+
+exports.update = function (req, res) {
+
+  if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+  
+  console.log(util.inspect(req.body));
+      
+  Player.collection.findAndModify( {
+    query: {id: req.session.player_id}, 
+    update : { "$set": { name: req.body.name} }, 
+      'new': false
+    },
+    function (err, player) {
+      res.json({ success: {message: 'Your profile was updated.'}});
+  });
+
+  } else {
+  
+      display_404( req, res); 
+      return;
+  }
+
+}
+
+
+function display_404(req, res) {
+  res.writeHead(404, {'Content-Type': 'text/html'});
+  res.write("<h1>404 Not Found</h1>");
+  res.end("That page cannot be found");
+}
+
+
+
 
 

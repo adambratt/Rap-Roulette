@@ -191,9 +191,6 @@ gSock.on('setQueue', function(data) {
     // ridiculousness
     //playSound("sounds/explosion.wav");
  
-    alert(data.success.message + ' (NOTE: queue UI still requires implementation)');
-    //alert(data.player.name);
-	
     model.room.get_queue(null, room_id, function (err, queue) {
       setQueue(queue);
     });
@@ -340,7 +337,20 @@ function initSound (config, callback) {
 
 // initialize click events
 
-function initEvents () {
+function initEvents (eventData, cb) {
+
+  /*
+  var exampleEventData = {
+    triggerEvents: ['uiEventPlayerSetup']
+  }
+  */
+
+  // call the triggered events (these are set in the user session)
+  if (typeof eventData.triggerEvents !== 'undefined') {
+    for (var i=0; i<eventData.triggerEvents.length; i++) {
+      window[eventData.triggerEvents[i]]();
+    }
+  }
 
   $("body").keypress(function(event) {
     if ( event.which == 106) {
@@ -359,9 +369,6 @@ function initEvents () {
   
   resetVotes();
   
-  
-
-
   $('.getinline').click(function() {
 
     // NOTE: accessing the cookie does not work because httpOnly is set
@@ -402,5 +409,7 @@ function initEvents () {
   
 
 } // end click events initialization
+
+
 
 
