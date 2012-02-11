@@ -100,9 +100,12 @@ app.get('/battles/:id/get_state', battle.get_state);
 app.get('/player', player.index);
 app.get('/player/list', player.list);
 app.get('/player/loggedin', player.loggedin);
+app.get('/player/login', player.login);
+app.get('/player/login_and_enter_queue', player.login_and_enter_queue);
 app.get('/player/logout', player.logout);
 app.get('/player/create', player.create);
 app.get('/player/myself', player.myself);
+app.get('/player/mysession', player.mysession);
 app.get('/player/mysid', player.mysid);
 app.get('/players/:id', player.view);
 
