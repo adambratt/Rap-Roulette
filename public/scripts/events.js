@@ -315,7 +315,7 @@ function initSound (config, callback) {
       	soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: sound_beat_volume });
       
       //if ( config.id == 'beat5')
-      	soundManager.createSound({id: 'beat5', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+      	soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: sound_beat_volume });
 
 	  //if ( config.id == 'beat6' )   
       	soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
@@ -324,7 +324,11 @@ function initSound (config, callback) {
       	soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: sound_beat_volume });
       
       //if ( config.id == 'beat8' )
-      	soundManager.createSound({id: 'beat8', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
+      	soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: sound_beat_volume });
+		
+		 //if ( config.id == 'beat9' )
+      	soundManager.createSound({id: 'beat9', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
+		
             
       // this makes sure that the soundManager is live before calling sounds
       callback(soundManager);
@@ -362,6 +366,9 @@ function initEvents () {
     // NOTE: accessing the cookie does not work because httpOnly is set
     //var sid = $.cookie('connect.sid');      
     
+	$('.getinline').hide();
+	$('.leavequeue').show();
+	
     // player logged in
     model.player.loggedin(null, function(err, player_loggedin) {
       
@@ -383,6 +390,13 @@ function initEvents () {
     
     return false;
     
+  });
+  
+  $('.leavequeue').click(function() {
+	$('.leavequeue').hide();
+		$('.getinline').show();
+	
+  
   });
   
 
