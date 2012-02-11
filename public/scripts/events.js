@@ -322,7 +322,7 @@ function initSound (config, callback) {
       	soundManager.createSound({id: 'beat4', url: '/audio/beats/drop_it_like_its_hot.mp3', autoLoad: true, volume: sound_beat_volume });
       
       //if ( config.id == 'beat5')
-      	soundManager.createSound({id: 'beat5', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
+      	soundManager.createSound({id: 'beat5', url: '/audio/beats/im_a_boss.mp3', autoLoad: true, volume: sound_beat_volume });
 
 	  //if ( config.id == 'beat6' )   
       	soundManager.createSound({id: 'beat6', url: '/audio/beats/lemonade.mp3', autoLoad: true, volume: sound_beat_volume });
