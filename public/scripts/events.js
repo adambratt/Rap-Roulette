@@ -194,9 +194,9 @@ gSock.on('setQueue', function(data) {
     alert(data.success.message + ' (NOTE: queue UI still requires implementation)');
     //alert(data.player.name);
 	
-    model.Room.get_queue(null, room_id, function (err, queue) {
-           setQueue(queue);
-        });
+    model.room.get_queue(null, room_id, function (err, queue) {
+      setQueue(queue);
+    });
 
   } else {
     alert(data);
