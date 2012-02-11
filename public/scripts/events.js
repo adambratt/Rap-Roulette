@@ -331,7 +331,11 @@ function initSound (config, callback) {
       	soundManager.createSound({id: 'beat7', url: '/audio/beats/rack_city.mp3', autoLoad: true, volume: sound_beat_volume });
       
       //if ( config.id == 'beat8' )
-      	soundManager.createSound({id: 'beat8', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
+      	soundManager.createSound({id: 'beat8', url: '/audio/beats/swate.mp3', autoLoad: true, volume: sound_beat_volume });
+		
+		 //if ( config.id == 'beat9' )
+      	soundManager.createSound({id: 'beat9', url: '/audio/beats/gucci_gucci.mp3', autoLoad: true, volume: sound_beat_volume });
+		
             
       // this makes sure that the soundManager is live before calling sounds
       callback(soundManager);
