@@ -338,19 +338,18 @@ function turnSpotlightOff() {
 }
 
 function playSound(id, position) {
-<<<<<<< HEAD
 
-	
 
-	var sound = soundManager.getSoundById(id);
-	sound.setPosition(position);
-	sound.play();
-
-=======
+		var beatIndex=id[4];
+		var song = songInfo[beatIndex];
+		
+		setSongInfo(song.name, song.artist, song.url);
+		
+		
 		var sound = soundManager.getSoundById(id);
 		sound.setPosition(position);
 		sound.play();
->>>>>>> a7e1e82a8aa3270ba2a108f95a39bb3699ffaa9d
+
 }
 
 //Setting queue from server
