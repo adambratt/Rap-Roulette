@@ -50,14 +50,15 @@ app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
   GLOBAL.game_debug=1;
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
+  GLOBAL.battle_speed=1;
 });
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
-  GLOBAL.game_debug=0;
+  GLOBAL.game_debug=1;
   GLOBAL.game_run_mode='production';
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
-
+  GLOBAL.battle_speed=1;
 });
 
 
@@ -102,11 +103,13 @@ app.get('/player/list', player.list);
 app.get('/player/loggedin', player.loggedin);
 app.get('/player/login', player.login);
 app.get('/player/login_and_enter_queue', player.login_and_enter_queue);
+app.get('/player/login_redirected', player.login_redirected);
 app.get('/player/logout', player.logout);
 app.get('/player/create', player.create);
 app.get('/player/myself', player.myself);
 app.get('/player/mysession', player.mysession);
 app.get('/player/mysid', player.mysid);
+app.post('/player/update', player.update);
 app.get('/players/:id', player.view);
 
 // songs
@@ -114,13 +117,10 @@ app.get('/song/list', song.list);
 app.get('/song/create', song.create);
 app.get('/songs/:id', song.view);
 
-// users (some are for testing only)
-//app.get('/user', user.index);
-//app.get('/user/session', user.session);
-//app.get('/user/myself', player.myself);
-
-// admin screens
+// admin
 app.get('/admin/testboard', admin.testboard);
+app.get('/admin/load_fixtures/:name', admin.load_fixtures);
+app.get('/admin/unload_fixtures/:name', admin.unload_fixtures);
 
 
 var port = process.env.NODE_PORT || 3000;

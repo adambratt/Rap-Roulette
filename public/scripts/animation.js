@@ -1,3 +1,14 @@
+
+
+// initAnimation
+// sets up the UI on page (called before the events are initialized)
+
+function initAnimation (animationData, cb) {
+  cb(null);
+}
+
+
+
 ////////////////////////////////
 // Avatars
 ////////////////////////////////
@@ -467,10 +478,47 @@ function crowdAction (action) {
 }
 
 
+////////////////////////////////
+// User Interface
+////////////////////////////////
 
 
-////////////////////////////////
-// Do this on page load
-//
-// NOTE: moved to index.js
-////////////////////////////////
+function uiPlayerSetup () {
+  var divName = "#floatPlayerSetup";
+  menuYloc = parseInt($(divName).css("top").substring(0,$(divName).css("top").indexOf("px")))
+
+  $(divName).show();
+
+  $(window).scroll(function () {
+    offset = menuYloc+$(document).scrollTop()+"px";
+    $(divName).animate({top:offset},{duration:350,queue:false});
+  });
+  
+  $(divName).html('<form id="playerSetup">Set your stage name: <br><input type="text" name="name" id="name"/><br/><button id="submitButton">Save</button></form>');
+  
+  // what to do when the player clicks on the button
+	$('#playerSetup #submitButton').bind('click', function(){
+    
+    //alert($('#playerSetup #name').val() ); 
+     
+    $.ajax('/player/update', {
+      type: "POST",
+      data: "name=" + $('#playerSetup #name').val(),
+      success: function () {
+        //alert("success");  
+        $(divName).fadeOut('slow', function() {
+        
+        });
+      },
+      fail: function (jqXHR, textStatus) {
+        alert(textStatus);  
+      },
+      //dataType: dataType
+    }); 
+	
+    return false;
+	
+	});
+
+}
+

@@ -1,165 +1,92 @@
 <!doctype html>
-
 <html lang="en">
-
 <head>
-
   <meta charset="utf-8" />
-
   <title>Rap Roulette | <%= title %></title>
-
   <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css" />
-
   <link rel="stylesheet" type="text/css" href="/stylesheets/text.css" />
-
   <link rel="stylesheet" type="text/css" href="/stylesheets/960.css" />
-
   <link rel="stylesheet" type="text/css" href="/stylesheets/raproulette.css" />
-
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-
   <script src="/scripts/jquery-animate-css-rotate-scale.js"></script>
-
   <script src="/scripts/jquery-css-transform.js"></script>
-
   <script src="/scripts/rotate3Di.js"></script>
-
   <script src="/scripts/animation.js"></script>
-
   <script src="/scripts/soundmanager2-jsmin.js" type="text/javascript"></script>
-
   <script src="http://staging.tokbox.com/v0.91/js/TB.min.js"></script>
-
   <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-
   <script src="/scripts/events.js" type="text/javascript"></script>
-
   <script src="/scripts/soundboard.js" type="text/javascript"></script>
-
   <script src="/scripts/model.js" type="text/javascript"></script>
-
   <script src="/scripts/jquery.simplemodal.1.4.2.min.js" type="text/javascript"></script>
-
   <script type="text/javascript">
 
-
-
     // globals set from the server
-
     var game_debug = <%= GLOBAL.game_debug %>;
-
     var room_id = "<%- room.id %>";
-
     
-
     // page init
-
     $(document).ready(function() {
-
-    
-
+        
+        // initialize the data model
         initModel(function (model) {
-
             
-
             model.player = new model.Player({sid: "<%= sid %>"}, function (player) { 
-
-                //alert(player.sid);
-
                 gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
-
             });
-
             
-
             model.room = new model.Room(<%- JSON.stringify(room) %>, function (room) {
-
-              //alert(room.battle_id);
-
             });
-
             
-
             initServerClock(<%= ( new Date().getTime() + 700) %>);
-
             initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
-
             
-
             <% if (typeof battleState !== 'undefined') { %>
-
             model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
 
               ////////////////////
-
               // Initial Game State Sync
-
               ////////////////////
-
               
-
               // Set current rappers
-
               $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.players[0] + '</span>');
-
               $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.players[1] + '</span>');
-
               
-
               // Figure out current spot in battle
-
               var started_at = new Date(battle.started_at);
-
               var now = new Date(serverTime);
-
               var time_into_battle = now - started_at;
-
               var state = -1;
-
               var end_of_state = 0;
 
               while ( end_of_state < time_into_battle ) {
-
               	state++;
-
               	end_of_state += battle.script[state];
-
               }
 
               var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - battle.script[state]);
 
               var time_left_in_state = started_at.getTime()+end_of_state - now.getTime();
 
-              
-
               //alert("You walked into the battle during state "+state+". Time into state: "+time_into_state);
 
-              
-
               //alert(battle.song_id)
-
               //alert(time_into_battle);
 
               setTimeout("playSound( '"+battle.song_id+"', "+(time_into_battle+3000)+" )", 3000);
-
-              
-
               switch (state) {
-
+                
               case(2):
 
               case(4):
-
+              
               case(6):
-
+              
               case(8):
 
               	// Someone is rapping
-
               	setTimerValue(time_left_in_state/1000);
-
               	startCountdown();
-
               	break;
 
               case(1):
@@ -171,38 +98,43 @@
               case(7):
 
               	// Someone is about to rap
-
               	setTimer(30);
-
               	break;
 
               }
 
-            
-
-           
 
            });
 
             <% } %>
 
-             
 
         });
-
-
-
-        initEvents(function () {});
-
         
+        // initialize the animation
+        initAnimation( {}, function (err) {  
 
-        initOPENTOK(function () {});
+            // hide the player setup
+          $('#floatPlayerSetup').hide(); 
+          
+          crowdAction('calm');
+          
+          initOPENTOK(function () {});
+          
+          populateRoom();
+          
+          updateGraph();
 
-        populateRoom();
+          model.room.get_queue(null, room_id, function (err, queue) { 
+            setQueue(queue);
+          });
 
-        updateGraph();
+          // initialize the events only after the default ui and animations are running
+          initEvents({ triggerEvents: <%- JSON.stringify(triggerEvents) %>}, function (err) {
+            
+          });    
 
-        crowdAction('calm');
+        });
 
     });
 
@@ -215,9 +147,9 @@
 </head>
 
 <body>
-  <div class="spotlight-wrapper">
+  <!---<div class="spotlight-wrapper">
     <img class="spotlight" src="images/spotlight.png" />
-  </div>
+  </div>--->
   <div id="navbar-wrapper">
     <div id="navbar">
       <a href="/"><img src="images/logo.png" /></a>
@@ -237,8 +169,8 @@
     
     <div class="subwoofer"></div>
     <div class="stage">
-    <div class="lights">
-    </div>
+    <!--<div class="lights">
+    </div>--->
     <div class="videoswrapper">
       <div class="winner rapper">
         <div class="video-wrapper video-wrapper0">
@@ -297,6 +229,12 @@
       </ul>
     </div>
   </div>  
+
+
+  <div id="floatPlayerSetup">
+    &nbsp;
+  </div>
+
 </body>
 
 </html>
