@@ -329,9 +329,9 @@ function moveSpotlight(left) {
 	// Change who the spotlight is on
 	turnSpotlightOff();
 	if ( left ) {
-		$(".video0").css("box-shadow", "0px 0px 20px #fff");
+		$(".video0").css("box-shadow", "0px 0px 40px #fff");
 	} else {
-		$(".video1").css("box-shadow", "0px 0px 20px #fff");
+		$(".video1").css("box-shadow", "0px 0px 40px #fff");
 	}
 }
 
