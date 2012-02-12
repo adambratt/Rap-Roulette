@@ -326,26 +326,17 @@ var numBling = 0;
 
 
 function moveSpotlight(left) {
-	// Flip and flash spotlight
-	for (var i=0; i<3; i++) {
-		$(".spotlight").fadeTo(100,0);
-		$(".spotlight").fadeTo(100,1);
-	}
-	$(".spotlight").fadeTo(100,0);
-	if (left) {
-		$(".spotlight").rotate3Di(0, 1000);
+	// Change who the spotlight is on
+	turnSpotlightOff();
+	if ( left ) {
+		$(".video0").css("box-shadow", "0px 0px 20px #fff");
 	} else {
-		$(".spotlight").rotate3Di(180, 1000);
-	}
-			
-	for (var i=0; i<3; i++) {
-		$(".spotlight").fadeTo(100,0);
-		$(".spotlight").fadeTo(100,1);
+		$(".video1").css("box-shadow", "0px 0px 20px #fff");
 	}
 }
 
 function turnSpotlightOff() {
-	$(".spotlight").fadeTo(100,0);
+	$(".video").css("box-shadow", "none");
 }
 
 function playSound(id, position) {
