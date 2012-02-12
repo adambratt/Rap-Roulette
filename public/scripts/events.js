@@ -17,6 +17,8 @@ var songInfo=new Array();
 	songInfo[9]={name: "Gucci Gucci", artist: "DJ Two Stacks", url: "itunes link"};
 // --------------- Game Logic --------------------
 
+var prevVote="";
+
 var serverTime;
 function setServerClock(startAtTime) { serverTime = new Date(startAtTime); }
 
@@ -252,13 +254,50 @@ gSock.on('playKey', function(data) {
   
 });
 
+
+function voteLeft() {
+
+	
+
+	if(prevVote=="left")
+		return;
+	else if (prevVote=="right") {
+		prevVote="left";
+		gSock.emit("vote", "switch left" );
+	
+	}
+	else {
+		prevVote="left";
+		gSock.emit("vote", "left" );
+	}
+}
+
+function voteRight() {
+
+
+	if(prevVote=="right")
+		return;
+	else if (prevVote=="left") {
+		prevVote="right";
+		gSock.emit("vote", "switch right" );
+	
+	}
+	else {
+		prevVote="right";
+		gSock.emit("vote", "right" );
+	}
+
+}
+
+
 function resetVotes(){
 	setVoteBars(0,0);
 	gSock.emit('resetVotes', [0,0]);
+	
+	/*
 	$('.madprops.left').bind('click', function(){
 	
 		gSock.emit("vote", "left" );
-		alert('hey ok');
 		$('.madprops.left').unbind('click');
 		$('.madprops.right').unbind('click');
 
@@ -268,13 +307,17 @@ function resetVotes(){
 	});
 	$('.madprops.right').bind('click', function(){
 	
+		if(!hasVoted)	 {
 		gSock.emit("vote", "right" );
-		alert('hey ok');
-		$('.madprops.left').unbind('click');
 		$('.madprops.right').unbind('click');
+		hasVoted=true;
+		}
+		else {
+		
+		}
 
     return false;
-		});
+		});*/
 }
 
 // ------------------   Preloads and Triggers ---------------
@@ -406,6 +449,16 @@ function initEvents (eventData, cb) {
 	
   
   });
+  
+	$('.madprops.right').click( function(){
+		voteRight();
+	
+	});
+	$('.madprops.left').click( function(){
+		voteLeft();
+	
+	});
+  
   
 
 } // end click events initialization
