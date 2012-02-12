@@ -55,7 +55,7 @@ app.configure('development', function(){
 
 app.configure('production', function(){
   app.use(express.errorHandler()); 
-  GLOBAL.game_debug=0;
+  GLOBAL.game_debug=1;
   GLOBAL.game_run_mode='production';
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
   GLOBAL.battle_speed=1;
@@ -117,13 +117,10 @@ app.get('/song/list', song.list);
 app.get('/song/create', song.create);
 app.get('/songs/:id', song.view);
 
-// users (some are for testing only)
-//app.get('/user', user.index);
-//app.get('/user/session', user.session);
-//app.get('/user/myself', player.myself);
-
-// admin screens
+// admin
 app.get('/admin/testboard', admin.testboard);
+app.get('/admin/load_fixtures/:name', admin.load_fixtures);
+app.get('/admin/unload_fixtures/:name', admin.unload_fixtures);
 
 
 var port = process.env.NODE_PORT || 3000;

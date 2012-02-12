@@ -34,8 +34,10 @@ exports.index = function(req, res){
       delete req.session.trigger_player_setup;
     }
     // testing the ui triggers
-    if (typeof req.query.trigger_events !== 'undefined') {
-      triggerEvents = (req.query.trigger_events.length > 0) ? req.query.trigger_events.split(',') : [];
+    if (GLOBAL.game_debug > 0) {
+      if (typeof req.query.trigger_events !== 'undefined') {
+        triggerEvents = (req.query.trigger_events.length > 0) ? req.query.trigger_events.split(',') : [];
+      }
     }
     
     // render the ejs template with these variables
