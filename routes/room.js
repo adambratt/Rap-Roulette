@@ -3,6 +3,7 @@ var model = require('../lib/model')
   , Battle = model.Battle
   , Player = model.Player
   , util = require('util')
+  , routes = require('../routes/index')
 ;
 
 
@@ -320,41 +321,10 @@ exports.view_battle_state = function(req, res){
 
 
 // view
-// this does not return JSON as it is a URI that is browsed to
 
 exports.view = function(req, res){
-    
-  id = req.params.id;
-  Room.get(null, id, function (err, room) {
-    
-    if (typeof room === 'undefined') { 
-      display_404(id, req, res); 
-      return;
-    } 
-    
-    // set the room to be main_stage in case the user is not logged in
-    req.session.room_id = room.id;
-    
-    delete room['_id'];
-    
-    battleState = Battle.states[room.battle_id];
-    
-    res.render('index', { 
-      title: room.name, 
-      sid: req.sessionID, 
-      room: room,
-      battleState: battleState
-    });
-    
-  });
-
+  routes.index(req, res);
 };
-
-function display_404(id, req, res) {
-  res.writeHead(404, {'Content-Type': 'text/html'});
-  res.write("<h1>404 Not Found</h1>");
-  res.end("The room '" + id  +"' cannot be found");
-}
 
 
 
