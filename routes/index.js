@@ -30,7 +30,7 @@ exports.index = function(req, res){
     // add ui triggers that may have been set in the session
     triggerEvents = [];
     if ((typeof req.session !== 'undefined' && typeof req.session.trigger_player_setup !== 'undefined') ) { 
-      triggerEvents.push('uiEventPlayerSetup');
+      triggerEvents.push('uiPlayerSetup');
       delete req.session.trigger_player_setup;
     }
     // testing the ui triggers

@@ -483,7 +483,7 @@ function crowdAction (action) {
 ////////////////////////////////
 
 
-function uiEventPlayerSetup () {
+function uiPlayerSetup () {
   var divName = "#floatPlayerSetup";
   menuYloc = parseInt($(divName).css("top").substring(0,$(divName).css("top").indexOf("px")))
 
