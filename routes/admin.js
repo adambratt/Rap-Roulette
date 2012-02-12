@@ -12,11 +12,13 @@ exports.load_fixtures = function(req, res){
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
   
     name = req.params.name;
-
+    
     Fixture.load(null, name, function (err, fixtureData) {
-      res.json(fixtureData);
+	    res.writeHead(200);
+	    res.write('Fixtures loaded for ' + name);
+	    res.end();
     });
-
+    
   } else {  
     res.json({ error: { message: "Player needs to be logged in in order to perform this action"} });
   
@@ -32,11 +34,13 @@ exports.unload_fixtures = function(req, res){
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
   
     name = req.params.name;
-
+    
     Fixture.unload(null, name, function (err, fixtureData) {
-      res.json(fixtureData);
+	    res.writeHead(200);
+	    res.write('Fixtures un-loaded for ' + name);
+	    res.end();
     });
-
+    
   } else {  
     res.json({ error: { message: "Player needs to be logged in in order to perform this action"} });
   
