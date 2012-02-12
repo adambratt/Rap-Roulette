@@ -76,31 +76,33 @@
               setTimeout("playSound( '"+battle.song_id+"', "+(time_into_battle+3000)+" )", 3000);
               switch (state) {
                 
+              case(1):
+              	// Pre-battle
+              case(5):
+              	// Before Player 1
+              	setTimer(30);
+              	moveSpotlight(true);
+              	break;
               case(2):
-
-              case(4):
-              
               case(6):
-              
-              case(8):
-
-              	// Someone is rapping
+              	// Player 1 Rap
               	setTimerValue(time_left_in_state/1000);
               	startCountdown();
+              	moveSpotlight(true);
               	break;
-
-              case(1):
-
               case(3):
-
-              case(5):
-
               case(7):
-
-              	// Someone is about to rap
+              	// Before Player 2
               	setTimer(30);
+              	moveSpotlight(false);
               	break;
-
+              case(4):
+              case(8):
+              	// Player 2 Rap
+              	setTimerValue(time_left_in_state/1000);
+              	startCountdown();
+              	moveSpotlight(false);
+              	break;
               }
 
 
