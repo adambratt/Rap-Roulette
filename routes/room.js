@@ -290,6 +290,19 @@ exports.list = function(req, res){
 };
 
 
+// pop_top_queue
+
+exports.pop_top_queue = function(req, res){
+  
+  id = req.params.id;
+  
+  Room.pop_top_queue(null, id, function (err, player_id) {
+    res.json(player_id);
+  });
+  
+};
+
+
 // view_battle_state
 // presents the battle state as stored in node
 // this will only exist while a battle is active

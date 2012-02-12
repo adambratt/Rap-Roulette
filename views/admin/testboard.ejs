@@ -12,7 +12,7 @@
         <a href="/players/jamie_pitts" target="output">Player X</a><br/>
         <a href="/auth/facebook" target="output">Login Using Facebook</a><br/>
         
-        <h3>Once you are logged in...</h3>
+        <h3>After login...</h3>
         <a href="/player/myself" target="output">Myself</a><br/>
         <a href="/player/mysid" target="output">My SID</a><br/>
         <a href="/room/myroom_redirect" target="_myroom_redirect">Redirect to My Room</a><br/>
@@ -25,6 +25,10 @@
         <a href="/rooms/main_stage/leave_queue" target="output">Leave the "Main Stage" queue</a><br/>
         <a href="/rooms/main_stage/leave" target="output">Leave the "Main Stage"</a><br/>
         
+        <h3>Generate Fixtures</h3>
+        Might have to restart node after this...<br/>
+        <a href="/admin/load_fixtures/many_players_and_queue" target="output">100 Players, 10 in Queue</a><br/>
+        &nbsp;&nbsp;[ <a href="/admin/unload_fixtures/many_players_and_queue" target="output">Delete this data</a> ]<br/>
 
 
 
@@ -52,16 +56,17 @@
     <div style="padding:10px 10px 10px 25px">
         <a href="/room/list" target="output">Room List</a><br/>
 
-        <a href="/room/create?name=Main%20Stage&players=1,2,3&player_queue=1" target="output">Create "Main Stage"</a><br/>
+        &nbsp;&nbsp;[ <a href="/room/create?name=Main%20Stage&players=1,2,3&player_queue=1" target="output">Create "Main Stage"</a> ]<br/>
         <a href="/rooms/main_stage" target="output">View "Main Stage"</a><br/>
         <a href="/rooms/main_stage/get" target="output">Get "Main Stage"</a><br/>
         <a href="/rooms/main_stage/get_queue" target="output">Get "Main Stage" Queue</a><br/>
-        <a href="/rooms/main_stage/drop" target="output">Drop "Main Stage"</a><br/>
+        <a href="/rooms/main_stage/pop_top_queue" target="output">Pop Top "Main Stage" Queue</a><br/>
+        &nbsp;&nbsp;[ <a href="/rooms/main_stage/drop" target="output">Drop "Main Stage"</a> ]<br/>
         
         <p>
-        <a href="/room/create?name=Room%20X&players=1,2,3,4,5&player_queue=1,2" target="output">Create Room "X"</a><br/>
+        &nbsp;&nbsp;[ <a href="/room/create?name=Room%20X&players=1,2,3,4,5&player_queue=1,2" target="output">Create Room "X"</a> ]<br/>
         <a href="/rooms/room_x" target="output">View Room "X"</a><br/>
-        <a href="/rooms/room_x/drop" target="output">Drop Room "X"</a><br/>
+        &nbsp;&nbsp;[ <a href="/rooms/room_x/drop" target="output">Drop Room "X"</a> ]<br/>
         </p>
 
     </div>
@@ -72,13 +77,13 @@
     <div style="padding:10px 10px 10px 25px">
         <a href="/battle/list" target="output">Battle List</a><br/>
         
-        <a href="/battle/create?room_id=main_stage&name=Battle%20Z&song_id=lemonade&players=" target="output">Create New Battle</a><br/>
+        &nbsp;&nbsp;[ <a href="/battle/create?room_id=main_stage&name=Battle%20Z&song_id=lemonade&players=" target="output">Create New Battle</a> ]<br/>
         
         <h3>Main Stage Battle</h3>
         <a href="/rooms/main_stage/get_battle_state" target="output">Get Battle State</a><br/>
         <a href="/rooms/main_stage/view_battle_state" target="output">View Battle State</a><br/>
         
-        <h3>Must specify battle id in the url...</h3>
+        <h3>Must specify battle id...</h3>
         <a href="/battles/battle_z" target="_new">Battle Z</a><br/>
         <a href="/battles/battle_z/get_song" target="_new">Z's Song</a><br/>
         <a href="/battles/battle_z/get_state" target="_new">Z's Battle State</a><br/>
@@ -89,7 +94,7 @@
 </td>
 
 <td>
-<iframe src="/" name="output" width="600" height="600"></iframe>
+<iframe src="/" name="output" width="500" height="500"></iframe>
 </td>
 
 </tr>

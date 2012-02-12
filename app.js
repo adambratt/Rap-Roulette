@@ -50,7 +50,7 @@ app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
   GLOBAL.game_debug=1;
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
-  GLOBAL.battle_speed=1;
+  GLOBAL.battle_speed=5;
 });
 
 app.configure('production', function(){
@@ -85,6 +85,7 @@ app.get('/rooms/:id/enter_queue', room.enter_queue);
 app.get('/rooms/:id/leave', room.leave);
 app.get('/rooms/:id/leave_queue', room.leave_queue);
 app.get('/rooms/:id/drop', room.drop);      // should not expose this except to admins
+app.get('/rooms/:id/pop_top_queue', room.pop_top_queue);
 app.get('/rooms/:id/view_battle_state', room.view_battle_state);
 
 // battles
