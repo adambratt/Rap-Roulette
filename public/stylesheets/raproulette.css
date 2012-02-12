@@ -479,3 +479,7 @@ a {
     cursor:pointer;
     text-decoration:none;
 }
+
+.avatars {
+	margin:0 auto;
+}
