@@ -406,3 +406,48 @@ a {
 .subwoofer {
     background-image:url(../images/subwoofer.png);
 }
+
+
+#floatPlayerSetup {
+    position:absolute;
+    top:20px; left:20px; right:20px; bottom:20px;
+    /* opacity:0.8; filter:alpha(opacity=80); */
+    z-index:100;
+    float:left;
+    width:95%;
+    height:85%;
+    border:10px solid #999;
+    background-color:#333;
+    color:#ccc;
+    padding:5px 5px 5px 5px;
+    text-align:center;
+    font-size: 2.0em;
+}
+
+#floatPlayerSetup form input {
+    padding:5px;
+    font-size: 1.4em;
+}
+
+#floatPlayerSetup form #submitButton {
+    padding:5px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:3px;
+    color:#fff;
+    position:relative;
+    width:200px;
+    background-color: #d2620d;
+    border:none;
+    background-repeat: repeat-x;
+    background-image: -khtml-gradient(linear, left top, left bottom, from(#ff8f3a), to(#d2620d));
+    background-image: -moz-linear-gradient(top, #ff8f3a, #d2620d);
+    background-image: -ms-linear-gradient(top, #ff8f3a, #d2620d);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ff8f3a), color-stop(100%, #d2620d));
+    background-image: -webkit-linear-gradient(top, #ff8f3a, #d2620d);
+    background-image: -o-linear-gradient(top, #ff8f3a, #d2620d);
+    background-image: linear-gradient(top, #ff8f3a, #d2620d);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff8f3a', endColorstr='#d2620d', GradientType=0);
+}
+
+
