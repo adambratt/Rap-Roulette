@@ -70,7 +70,7 @@ gSock.on("playerAlert", function(message) {
 });
 
 gSock.on("startOpenTok", function(player) {
-	alert("Starting Open Tok for player "+player);
+	startPublishing(player);
 });
 
   
