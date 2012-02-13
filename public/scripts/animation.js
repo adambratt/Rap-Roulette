@@ -368,6 +368,22 @@ function crowdAction (action) {
 ////////////////////////////////
 
 
+function uiLoadPlayerNav(player) {
+  var nav = '';
+  if (player.is_logged_in) {
+    nav += '<img src="' + player.facebook_image_url + '" width="50" height="50" />';
+    nav += '<span>' + player.name + '</span>';
+    nav += '<a href="/player/logout">Log Out</a>';
+    $('#playerNav').html(nav);
+
+  } else {
+    nav += '<a href="/player/login">Log In</a>';
+    $('#playerNav').html(nav);
+
+
+  }
+}
+
 function uiPlayerSetup () {
   var divName = "#floatPlayerSetup";
   menuYloc = parseInt($(divName).css("top").substring(0,$(divName).css("top").indexOf("px")))

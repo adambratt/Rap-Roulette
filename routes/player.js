@@ -203,7 +203,8 @@ exports.logout = function (req, res) {
 
   //if (typeof req.session !== 'undefined') {
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') { 
-
+    //var room_id = (typeof req.session.room_id !== 'undefined' ? req.session.room_id: 'main_stage';
+    
     // store that the player is logged out
     Player.collection.findAndModify( {
         query: {id: req.session.player_id}, 
@@ -217,29 +218,19 @@ exports.logout = function (req, res) {
         res.clearCookie('auth');  
         req.session.destroy(function() {});
         delete req.sessionID;
-        res.json({ success: { nessage: 'Player was logged out' } });
+        
+        
+        //res.json({ success: { nessage: 'Player was logged out' } });
+        res.redirect('/');
+        
 
         }
       )
 
-    /*
-    Player.collection.(null, req.session.user_id, function (err) {
-     
-      // clear the session
-      req.session.auth = null;
-      res.clearCookie('auth');  
-      req.session.destroy(function() {});
-    
-      res.writeHead(200, {"Content-Type": "application/json"});
-      res.write(util.inspect({ success: { nessage: 'Player was logged out' } }));
-      res.end();    
-  
-    });
-    */
-
   } else {
     
-    res.json({ success: { message: 'Player was not logged in.'} });
+    //res.json({ success: { message: 'Player was not logged in.'} });
+    res.redirect('/');
  
   }
 
