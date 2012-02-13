@@ -34,9 +34,16 @@ exports.index = function(req, res){
       
       // add ui triggers that may have been set in the session
       triggerEvents = [];
+      // player setup trigger
       if ((typeof req.session !== 'undefined' && typeof req.session.trigger_player_setup !== 'undefined') ) { 
         triggerEvents.push('uiPlayerSetup');
         delete req.session.trigger_player_setup;
+      } else {
+        // show dialog trigger
+        // session does not exist, or session does exist and player not logged in
+        if (typeof req.session === 'undefined' || (typeof req.session !== 'undefined' && typeof req.session.player_id === 'undefined')) {
+          triggerEvents.push('uiShowDialog');
+        }
       }
       // testing the ui triggers
       if (GLOBAL.game_debug > 0) {
@@ -54,7 +61,7 @@ exports.index = function(req, res){
           // render the ejs template with these variables
           res.render('index', { 
             title: room.name, 
-            player: { sid: req.sessionID, id: myself.id, service_username: myself.service_username }, 
+            player: { sid: req.sessionID, id: myself.id, is_logged_in: true, name: myself.name, service_username: myself.service_username }, 
             room: room,
             battleState: battleState,
             triggerEvents: triggerEvents
@@ -67,7 +74,7 @@ exports.index = function(req, res){
         // render the ejs template with these variables
         res.render('index', { 
           title: room.name, 
-          player: { sid: req.sessionID }, 
+          player: { sid: req.sessionID, is_logged_in: false }, 
           room: room,
           battleState: battleState,
           triggerEvents: triggerEvents

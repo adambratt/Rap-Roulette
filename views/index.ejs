@@ -32,7 +32,9 @@
         initModel(function (model) {
             
             model.player = new model.Player(<%- JSON.stringify(player) %>, function (player) { 
-                gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
+              uiLoadPlayerNav(player);
+              
+              gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
             });
             
             model.room = new model.Room(<%- JSON.stringify(room) %>, function (room) {
@@ -119,7 +121,7 @@
             // hide the player setup
           $('#floatPlayerSetup').hide(); 
           
-          crowdAction('calm');
+          //crowdAction('calm');
           
           initOPENTOK(function () {});
           
@@ -155,15 +157,7 @@
   <div id="navbar-wrapper">
     <div id="navbar">
       <a href="/"><img src="images/logo.png" /></a>
-      <div id="logout">
-      <a href="http://www.youtube.com/watch?v=ZZ5LpwO-An4">
-      <img src="../images/profile.png" />
-      </a>
-      <!--<a href="#logout">
-        <img src="http://dummyimage.com/25x25" />
-        Raj Vir
-      </a>--->
-      </div>
+      <div id="playerNav">&nbsp;</div>
     </div>
   </div>
 
@@ -224,7 +218,8 @@
 	<br><br>Whether you're a rapper looking to sharpen your craft, a fan looking to appreciate quality rap, or just looking to have some fun, come join the battle at Rap Roulette. 
 	<br><br>DJ, Spin Dat Shyt.
 	<br>
-	<div id="facebookbtn"><a href="#" class="simplemodal-close"></a></div>
+  <div id="facebookbtn"><a href="#" class="simplemodal-close"></a></div>
+  or hit ESC
 		</p>
 		
 </div>

@@ -120,8 +120,13 @@ function setVoteBars(numVotesLeft, numVotesRight) {
 // Popup stuff
 ////////////////////////////////
 
-function showDialog() {
+// display a welcome message for new users
+
+function uiShowDialog() {
 	$( "#enqueue-popup" ).modal({opacity:0});
+  $( "#facebookbtn" ).bind('click', function(){
+    window.location.href = '/player/login';
+  });
 }
 
 
@@ -367,6 +372,22 @@ function crowdAction (action) {
 // User Interface
 ////////////////////////////////
 
+
+function uiLoadPlayerNav(player) {
+  var nav = '';
+  if (player.is_logged_in) {
+    nav += '<img src="' + player.facebook_image_url + '" width="50" height="50" />';
+    nav += '<span>' + player.name + '</span>';
+    nav += '<a href="/player/logout">Log Out</a>';
+    $('#playerNav').html(nav);
+
+  } else {
+    nav += '<a href="/player/login">Log In</a>';
+    $('#playerNav').html(nav);
+
+
+  }
+}
 
 function uiPlayerSetup () {
   var divName = "#floatPlayerSetup";

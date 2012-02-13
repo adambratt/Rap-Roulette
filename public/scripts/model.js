@@ -19,6 +19,14 @@ function Model () {
     
     // construction
     this.sid = obj.sid;
+    this.is_logged_in = obj.is_logged_in;
+    if (obj.is_logged_in) {
+      this.service_username = obj.service_username;
+      this.id = obj.id;
+      this.name = obj.name;
+      this.facebook_image_url = 'https://graph.facebook.com/' + obj.service_username + '/picture';
+    }
+    
     callback(this);
   
     // get myself
