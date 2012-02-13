@@ -345,8 +345,8 @@ function setQueue(data) {
 }
 function dropBling(left) {
 	numBling += 1;
-	var margin = 95;
-	if (!left) margin = 550;
+	var margin = 70;
+	if (!left) margin = 570;
 	$(".stage").prepend('<img class="bling" id="bling'+numBling+'" style="left: '+margin+'px" src="images/bling.png">');
 	$("#bling"+numBling).animate({"top": "+=650px"}, 1000);
 }

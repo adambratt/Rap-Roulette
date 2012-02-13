@@ -302,7 +302,7 @@ function voteRight() {
 
 function resetVotes(){
 	setVoteBars(0,0);
-	gSock.emit('resetVotes', [0,0]);
+	prevVote="";
 	
 	/*
 	$('.madprops.left').bind('click', function(){
