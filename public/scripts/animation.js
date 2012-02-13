@@ -382,7 +382,7 @@ function uiLoadPlayerNav(player) {
     $('#playerNav').html(nav);
 
   } else {
-    nav += '<a href="/player/login">Log In</a>';
+    nav += '<div id="login"><a href="/player/login">Log In</a></div>';
     $('#playerNav').html(nav);
 
 
