@@ -115,62 +115,6 @@ function setVoteBars(numVotesLeft, numVotesRight) {
 	$(".bar.left").animate({width: p1+"%"}, 100);
 	$(".bar.right").animate({width: p2+"%"}, 100);
 }
-		
-		
-
-//spire moving functions
-function decrement() {
-	var angle=$("#spire").rotate(); //returns current angle in some bullshit form
-	var angleString=(""+angle).replace("deg",""); //send the bullshit to a string, get rid of 'deg'
-	var angleNum=parseFloat(angleString); //send string to int for comparison purposes
-			
-	if(angleNum<-80) { //if we're at -80 or below, just go to -90
-		$(".meter").animate({rotate: '-90deg'}, 500);	
-		return;
-	}
-	$(".meter").animate({rotate: '-=10deg'}, 500);	//if we're below 80, rotate 10 degrees counterclockwise
-			
-}
-
-function increment() {
-	var angle=$(".meter").rotate(); //returns current angle in some bullshit form
-	var angleString=(""+angle).replace("deg",""); //send the bullshit to a string, get rid of 'deg'
-	var angleNum=parseFloat(angleString); //send string to int for comparison purposes
-			
-	if(angleNum>80) { //if we're at 80 or above, just go to 90
-		$(".meter").animate({rotate: '90deg'}, 500);	
-		return;
-	}
-	$(".meter").animate({rotate: '+=10deg'}, 500);	 //if we're below 80, rotate 10 degrees clockwise
-			
-}
-		
-function setMeter(ratio) {
-	//REQUIRES: 0<=ratio<=1
-			
-	//ratio of 1 means all the way to the right,
-	//ratio of 0 means all the way to the left
-			
-	if((ratio-prevAverage)>0)
-		player2_vote();
-	else player1_vote();
-			
-	prevAverage=ratio;
-			
-	var angle=Math.asin(2*ratio-1); //will return a radian angle between -PI/2 to PI/2
-			
-	//convert to degrees
-	angle=(angle*180)/Math.PI; 
-
-	//animate
-	$(".meter").animate({rotate: angle+"deg"}, 500);	
-			
-}
-
-function resetMeter() {
-	//set meter to center
-	setMeter(0.5);
-}
 
 ////////////////////////////////
 // Popup stuff
