@@ -120,6 +120,7 @@ app.get('/songs/:id', song.view);
 
 // admin
 app.get('/admin/testboard', admin.testboard);
+app.post('/admin/emit_alert', admin.emit_alert);
 app.get('/admin/load_fixtures/:name', admin.load_fixtures);
 app.get('/admin/unload_fixtures/:name', admin.unload_fixtures);
 
