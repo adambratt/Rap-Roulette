@@ -115,73 +115,13 @@ function setVoteBars(numVotesLeft, numVotesRight) {
 	$(".bar.left").animate({width: p1+"%"}, 100);
 	$(".bar.right").animate({width: p2+"%"}, 100);
 }
-		
-		
-
-//spire moving functions
-function decrement() {
-	var angle=$("#spire").rotate(); //returns current angle in some bullshit form
-	var angleString=(""+angle).replace("deg",""); //send the bullshit to a string, get rid of 'deg'
-	var angleNum=parseFloat(angleString); //send string to int for comparison purposes
-			
-	if(angleNum<-80) { //if we're at -80 or below, just go to -90
-		$(".meter").animate({rotate: '-90deg'}, 500);	
-		return;
-	}
-	$(".meter").animate({rotate: '-=10deg'}, 500);	//if we're below 80, rotate 10 degrees counterclockwise
-			
-}
-
-function increment() {
-	var angle=$(".meter").rotate(); //returns current angle in some bullshit form
-	var angleString=(""+angle).replace("deg",""); //send the bullshit to a string, get rid of 'deg'
-	var angleNum=parseFloat(angleString); //send string to int for comparison purposes
-			
-	if(angleNum>80) { //if we're at 80 or above, just go to 90
-		$(".meter").animate({rotate: '90deg'}, 500);	
-		return;
-	}
-	$(".meter").animate({rotate: '+=10deg'}, 500);	 //if we're below 80, rotate 10 degrees clockwise
-			
-}
-		
-function setMeter(ratio) {
-	//REQUIRES: 0<=ratio<=1
-			
-	//ratio of 1 means all the way to the right,
-	//ratio of 0 means all the way to the left
-			
-	if((ratio-prevAverage)>0)
-		player2_vote();
-	else player1_vote();
-			
-	prevAverage=ratio;
-			
-	var angle=Math.asin(2*ratio-1); //will return a radian angle between -PI/2 to PI/2
-			
-	//convert to degrees
-	angle=(angle*180)/Math.PI; 
-
-	//animate
-	$(".meter").animate({rotate: angle+"deg"}, 500);	
-			
-}
-
-function resetMeter() {
-	//set meter to center
-	setMeter(0.5);
-}
 
 ////////////////////////////////
 // Popup stuff
 ////////////////////////////////
 
 function showDialog() {
-$( "#enqueue-popup" ).modal(
-	{opacity:0}
-);
-
-
+	$( "#enqueue-popup" ).modal({opacity:0});
 }
 
 
@@ -189,20 +129,26 @@ $( "#enqueue-popup" ).modal(
 // Sounds
 ////////////////////////////////
 
-function playSound(soundfile) {
-
-	gSock.emit('sendSound', soundfile);
-}
-function stopSound() {
-	gSock.emit('stopSound');
-
-}
+function playSound( id, position, isBeat ) {
+	// Play the sound starting a certain number of milliseconds in
+	position = (typeof position == "undefined") ? 0 : position;
+	isBeat = (typeof isBeat == "undefined") ? false : isBeat;
 	
-function playBeat(soundfile) {
-	document.getElementById("beatplayer").innerHTML=
-	"<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
+	if ( isBeat ) {
+		var beatIndex=id[4];
+		var song = songInfo[beatIndex];
+		setSongInfo(song.name, song.artist, song.url);
+	}
+	
+	var sound = soundManager.getSoundById(id);
+	sound.setPosition(position);
+	sound.play();
 }
 
+function stopSound() {
+	// Stop all sounds from playing
+	soundManager.stopAll();
+}
 
 
 ////////////////////////////////
@@ -229,15 +175,15 @@ function setTimer( value, time ) {
 }
 
 function startCountdown() {
+	// Begin counting down to zero
 	stopCountdown();
 	countdownInterval = setInterval("decrementTimer()", 1000);
 }
 
 function stopCountdown() {
+	// Freeze the clock
 	clearInterval(countdownInterval);
 }
-
-
 
 function setTimerValue( seconds ) {
 	// Set the timer to seconds
@@ -249,6 +195,7 @@ function setTimerValue( seconds ) {
 }
 
 function incrementTimer( limit ) {
+	// Increase the clock by a second
 	time += 1;
 	setTimerValue( time );
 	if ( time >= limit ) {
@@ -258,6 +205,7 @@ function incrementTimer( limit ) {
 }
 
 function decrementTimer() {
+	// Decrease the clock by a second
 	time -= 1;
 	
 	if ( time <= 0 ) {
@@ -298,21 +246,6 @@ function moveSpotlight(left) {
 
 function turnSpotlightOff() {
 	$(".video").css("box-shadow", "none");
-}
-
-function playSound(id, position) {
-
-
-		var beatIndex=id[4];
-		var song = songInfo[beatIndex];
-		
-		setSongInfo(song.name, song.artist, song.url);
-		
-		
-		var sound = soundManager.getSoundById(id);
-		sound.setPosition(position);
-		sound.play();
-
 }
 
 //Setting queue from server

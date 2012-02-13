@@ -1,8 +1,38 @@
 var model = require('../lib/model')
+  , Socket = model.Socket
   , testing = require('../lib/testing')
   , Fixture = testing.Fixture
   , util = require('util')
 ;
+
+
+// emit_alert
+
+exports.emit_alert = function(req, res){
+  
+  message = req.body.message;
+  player_id = req.body.player_id;
+  
+  
+  if (typeof Socket.players[player_id] !== 'undefined') {
+    
+    Socket.players[player_id].emit('playerAlert', message);
+
+	  res.writeHead(200);
+	  res.write('Emitted: ' + message + ' to ' + player_id);
+    res.end();
+  
+  } else {
+	  res.writeHead(200);
+	  res.write('Player not found: ' + message + ' to ' + player_id);
+    res.end();
+  
+  }
+
+
+};
+
+
 
 
 // load_fixtures
