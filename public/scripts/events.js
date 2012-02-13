@@ -69,8 +69,8 @@ gSock.on("playerAlert", function(message) {
   alert(message);
 });
 
-gSock.on("startOpenTok", function(message) {
-	alert("Starting Open Tok");
+gSock.on("startOpenTok", function(player) {
+	alert("Starting Open Tok for player "+player);
 });
 
   
