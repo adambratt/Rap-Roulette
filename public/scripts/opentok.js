@@ -34,7 +34,7 @@ OPENTOK.connectToSession = function(room) {
   OPENTOK.session.addEventListener('connectionDestroyed', OPENTOK.connectionDestroyedHandler);
   OPENTOK.session.addEventListener('streamCreated', OPENTOK.streamCreatedHandler);
   OPENTOK.session.addEventListener('streamDestroyed', OPENTOK.streamDestroyedHandler);
-  OPENTOK.session.addEventListener('signalReceived', OPENTOK.signalHandler);
+
   
   OPENTOK.session.connect(OPENTOK.apiKey, OPENTOK.token);
 }
@@ -44,8 +44,15 @@ function addStream(stream, div) {
 	if (stream.connection.connectionId == OPENTOK.session.connection.connectionId) {
 		return;
 	}
+	var elm = document.getElementById(div);
+	if(!elm)
+		return;
+		
 	OPENTOK.session.subscribe(stream, div,  { height: 240, width: 320 });
 	OPENTOK.nextStream++;
+	
+	if(OPENTOK.nextStream > 1) 
+		OPENTOK.nextStream=0;
 }
 
 OPENTOK.sessionConnectedHandler = function(event) {
@@ -53,10 +60,12 @@ OPENTOK.sessionConnectedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {
 		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
 	}
+	
+	
 
-  /*$('body').keypress(function(event) {
+ /* $('body').keypress(function(event) {
     if (!OPENTOK.publisher && event.which == 43) { // the + key
-    	OPENTOK.publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream], { height: 240, width: 320 });
+    	startPublishing(0);
     	OPENTOK.nextStream++;
     }
   });*/
@@ -105,11 +114,7 @@ OPENTOK.connectionDestroyedHandler = function(event) {
   
 }
 
-/* this was not present in the demo version of this script
-function forceUnpublishStream(streamId) {
-    session.forceUnpublish(subscribers[streamId].stream);
-}
-*/
+
 
 OPENTOK.streamCreatedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {
@@ -117,10 +122,7 @@ OPENTOK.streamCreatedHandler = function(event) {
 	}
 }
 
-OPENTOK.signalHandler = function(event) {
-	event.streams[0].publishAudio(false);
 
-}
 
 OPENTOK.streamDestroyedHandler = function(event) {
 
