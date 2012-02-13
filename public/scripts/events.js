@@ -77,6 +77,14 @@ gSock.on("stopOpenTok", function(message) {
 	stopPublishing();
 });
 
+gSock.on("mute", function(message) {
+	mute();
+});
+
+gSock.on("unmute", function(message) {
+	unmute();
+});
+
   
 /////////////////////
 // State Changes
