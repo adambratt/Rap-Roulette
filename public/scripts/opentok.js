@@ -65,7 +65,7 @@ OPENTOK.sessionConnectedHandler = function(event) {
 function startPublishing(num){
 
 
-	
+	var element="pub"+num;
 	var outer = document.getElementById("video_"+num);
 	var newDiv=document.createElement("div");
 	newDiv.setAttribute("id", element);
