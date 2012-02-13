@@ -121,11 +121,7 @@ function setVoteBars(numVotesLeft, numVotesRight) {
 ////////////////////////////////
 
 function showDialog() {
-$( "#enqueue-popup" ).modal(
-	{opacity:0}
-);
-
-
+	$( "#enqueue-popup" ).modal({opacity:0});
 }
 
 
@@ -133,20 +129,26 @@ $( "#enqueue-popup" ).modal(
 // Sounds
 ////////////////////////////////
 
-function playSound(soundfile) {
-
-	gSock.emit('sendSound', soundfile);
-}
-function stopSound() {
-	gSock.emit('stopSound');
-
-}
+function playSound( id, position, isBeat ) {
+	// Play the sound starting a certain number of milliseconds in
+	position = (typeof position == "undefined") ? 0 : position;
+	isBeat = (typeof isBeat == "undefined") ? false : isBeat;
 	
-function playBeat(soundfile) {
-	document.getElementById("beatplayer").innerHTML=
-	"<embed src=\""+soundfile+"\" hidden=\"true\" autostart=\"true\" loop=\"false\" />";
+	if ( isBeat ) {
+		var beatIndex=id[4];
+		var song = songInfo[beatIndex];
+		setSongInfo(song.name, song.artist, song.url);
+	}
+	
+	var sound = soundManager.getSoundById(id);
+	sound.setPosition(position);
+	sound.play();
 }
 
+function stopSound() {
+	// Stop all sounds from playing
+	soundManager.stopAll();
+}
 
 
 ////////////////////////////////
@@ -173,15 +175,15 @@ function setTimer( value, time ) {
 }
 
 function startCountdown() {
+	// Begin counting down to zero
 	stopCountdown();
 	countdownInterval = setInterval("decrementTimer()", 1000);
 }
 
 function stopCountdown() {
+	// Freeze the clock
 	clearInterval(countdownInterval);
 }
-
-
 
 function setTimerValue( seconds ) {
 	// Set the timer to seconds
@@ -193,6 +195,7 @@ function setTimerValue( seconds ) {
 }
 
 function incrementTimer( limit ) {
+	// Increase the clock by a second
 	time += 1;
 	setTimerValue( time );
 	if ( time >= limit ) {
@@ -202,6 +205,7 @@ function incrementTimer( limit ) {
 }
 
 function decrementTimer() {
+	// Decrease the clock by a second
 	time -= 1;
 	
 	if ( time <= 0 ) {
@@ -242,21 +246,6 @@ function moveSpotlight(left) {
 
 function turnSpotlightOff() {
 	$(".video").css("box-shadow", "none");
-}
-
-function playSound(id, position) {
-
-
-		var beatIndex=id[4];
-		var song = songInfo[beatIndex];
-		
-		setSongInfo(song.name, song.artist, song.url);
-		
-		
-		var sound = soundManager.getSoundById(id);
-		sound.setPosition(position);
-		sound.play();
-
 }
 
 //Setting queue from server

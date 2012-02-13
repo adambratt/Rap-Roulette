@@ -102,7 +102,7 @@ gSock.on("statePreRap", function(data) {
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
   	//var sound = soundManager.getSoundById(model.battle.song_id);
   	//sound.play();
-  	playSound(model.battle.song_id, 0); // play song from beginning
+  	playSound(model.battle.song_id, 0, true); // play song from beginning
 	
   setTimer(30);
 	moveSpotlight(true);
@@ -351,7 +351,7 @@ function initSound (config, callback) {
   soundManager.url = '/scripts/';
   soundManager.onready( 
     function () {
-      soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion1.wav', autoLoad: true, volume: sound_effects_volume });
+      soundManager.createSound({ id: 'hornExplode', url: '/audio/effects/airhorn+explosion.wav', autoLoad: true, volume: sound_effects_volume });
       soundManager.createSound({id: 'winExplode', url: '/audio/effects/luger+explosion.wav', autoLoad: true, volume: sound_effects_volume });
       soundManager.createSound({ id: 'airhorn', url: '/audio/effects/airorn.wav', autoLoad: true, volume: sound_effects_volume });
       soundManager.createSound({ id: 'hyphyairhorn2', url: '/audio/effects/hyphyairhorn2.wav', autoLoad: true });
