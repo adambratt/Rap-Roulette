@@ -91,8 +91,9 @@ gSock.on("statePreRap", function(data) {
   
   soundManager.stopAll();
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
-  var sound = soundManager.getSoundById(model.battle.song_id);
-  sound.play();
+  	//var sound = soundManager.getSoundById(model.battle.song_id);
+  	//sound.play();
+  	playSound(model.battle.song_id, 0); // play song from beginning
 	
   setTimer(30);
 	moveSpotlight(true);
