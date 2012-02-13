@@ -72,8 +72,8 @@ a {
     display:block;
     float:right;
     margin-right:130px;
-    background-image:url(../images/profile.png);
-    background-repeat:none;
+    /*background-image:url(../images/profile.png);
+    background-repeat:none;*/
     width:190px;
     height:40px;
     margin-top:8px;
@@ -391,14 +391,14 @@ a {
 .bar.left {
     float:right;
     margin-right:570px;
-    background-image:url(../images/newbar1.png);
+    background-image:url(../images/newbar.png);
     background-position: right;
 }
 
 .bar.right {
     float:left;
     margin-left:570px;
-    background-image:url(../images/newbar.png);
+    background-image:url(../images/newbar1.png);
 }
 
 .subwoofer {
