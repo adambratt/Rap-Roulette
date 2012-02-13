@@ -6,15 +6,15 @@
 var maxBeats=9;
 
 var songInfo=new Array();
-	songInfo[1]={name: "6 Foot 7 Foot", artist: "Bangladesh", url: "itunes link"}; 
-	songInfo[2]={name: "Black and Yellow", artist: "StarGate", url: "itunes link"}; 
-	songInfo[3]={name: "Bonfire", artist: "Childish Gambino", url: "itunes link"}; 
-	songInfo[4]={name: "Drop It Like It\'s Hot", artist: "The Neptunes", url: "itunes link"};
-	songInfo[5]={name: "I\'m A Boss ", artist: "Jahlil Beats", url: "itunes link"};
-	songInfo[6]={name: "Lemonade", artist: "Bangladesh", url: "itunes link"};
-	songInfo[7]={name: "Rack Cty", artist: "DJ Mustard", url: "itunes link"};
-	songInfo[8]={name: "Swate", artist: "Mike Finito", url: "itunes link"};
-	songInfo[9]={name: "Gucci Gucci", artist: "DJ Two Stacks", url: "itunes link"};
+	songInfo[1]={name: "6 Foot 7 Foot", artist: "Bangladesh", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"}; 
+	songInfo[2]={name: "Black and Yellow", artist: "StarGate", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"}; 
+	songInfo[3]={name: "Bonfire", artist: "Childish Gambino", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"}; 
+	songInfo[4]={name: "Drop It Like It\'s Hot", artist: "The Neptunes", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"};
+	songInfo[5]={name: "I\'m A Boss ", artist: "Jahlil Beats", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"};
+	songInfo[6]={name: "Lemonade", artist: "Bangladesh", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"};
+	songInfo[7]={name: "Rack Cty", artist: "DJ Mustard", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"};
+	songInfo[8]={name: "Swate", artist: "Mike Finito", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"};
+	songInfo[9]={name: "Gucci Gucci", artist: "DJ Two Stacks", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"};
 // --------------- Game Logic --------------------
 
 var prevVote="";
