@@ -31,11 +31,25 @@
         <a href="/admin/load_fixtures/some_enter_queue" target="output">Add to the Queue</a><br/>
 
         &nbsp;&nbsp;[ <a href="/admin/unload_fixtures/many_players_and_queue" target="output">Delete this data</a> ]<br/>
-
+        
 
 
     </div>
 
+    
+    <h2>Sockets</h2>
+
+    <div style="padding:10px 10px 10px 25px">
+    
+        <form action="/admin/emit_alert" id="sendAlert" target="output" method="POST">
+            say 
+            <input type="text" name="message" size="10"/>
+            to 
+            <input type="text" name="player_id" size="10"/>
+            <input type="submit" name="submit" value="Emit" />
+        </form>
+
+    </div>
 
     <h2>Songs</h2>
 
@@ -95,7 +109,7 @@
 
 </td>
 
-<td>
+<td valign="top">
 <iframe src="/" name="output" width="500" height="500"></iframe>
 </td>
 
