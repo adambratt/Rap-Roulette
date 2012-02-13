@@ -120,8 +120,13 @@ function setVoteBars(numVotesLeft, numVotesRight) {
 // Popup stuff
 ////////////////////////////////
 
-function showDialog() {
+// display a welcome message for new users
+
+function uiShowDialog() {
 	$( "#enqueue-popup" ).modal({opacity:0});
+  $( "#facebookbtn" ).bind('click', function(){
+    window.location.href = '/player/login';
+  });
 }
 
 
