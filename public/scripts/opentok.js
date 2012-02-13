@@ -62,26 +62,23 @@ OPENTOK.sessionConnectedHandler = function(event) {
   });*/
 }
 
-function startPublishing(element){
+function startPublishing(num){
 
+
+	
+	var outer = document.getElementById("video_"+num);
+	var newDiv=document.createElement("div");
+	newDiv.setAttribute("id", element);
+	outer.appendChild(newDiv);
 	OPENTOK.publisher = OPENTOK.session.publish(element, { height: 240, width: 320 });
 
 }
 
 function stopPublishing(){
-	/*var elm = OPENTOK.publisher.replaceElementId();
-	alert(elm);
-	var num = 0;
-	
-	var outer = document.getElementById("video_"+num);
-	
-	var newDiv=document.createElement("div");
-	newDiv.setAttribute("id", elm);
-	
-	*/
+
 	OPENTOK.session.unpublish(OPENTOK.publisher);
 	
-	//outer.appendChild(newDiv);
+	
 
 }
 
