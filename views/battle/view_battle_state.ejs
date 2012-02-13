@@ -76,6 +76,12 @@ table tr th {
         <tt><%= JSON.stringify(battleState.rounds) %></tt>
         </td>
     </tr>
+    <tr>
+        <td>Current Round</td>
+        <td>
+        <tt><%= JSON.stringify(battleState.current_round) %></tt>
+        </td>
+    </tr>
     <% for (var i = 0; i < battleState.rounds.length; i++) { 
         var round_id = battleState.rounds[i];
     %>
