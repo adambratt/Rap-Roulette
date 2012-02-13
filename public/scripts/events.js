@@ -69,6 +69,10 @@ gSock.on("playerAlert", function(message) {
   alert(message);
 });
 
+gSock.on("startOpenTok", function(player) {
+	startPublishing(player);
+});
+
   
 /////////////////////
 // State Changes
