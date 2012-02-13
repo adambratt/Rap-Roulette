@@ -51,7 +51,7 @@ a {
 	border-radius: 15px;
     /*box-shadow: 0px 0px 20px #d0600b;*/
 	width:650px;
-	height:400px;
+	height:410px;
 }
 
 
@@ -545,4 +545,10 @@ a {
 
 #profImage {
 	border-radius:6px;
+}
+
+.simplemodal-close {
+	font-size:10px;
+	color:white;
+	text-decoration:none;
 }
