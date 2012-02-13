@@ -199,9 +199,19 @@ a {
 }
 
 .songinfo {
-    color:white;
+    color:#FF8533;
     text-align:center;
     padding-top:30px;
+    font-size:16px;
+}
+
+.songinfo a {
+	color:white;
+	text-decoration:none;
+}
+
+.songinfo a:hover {
+	text-shadow:0px 0px 5px white;
 }
 
 .vs {
@@ -501,4 +511,38 @@ a {
   
 #facebookbtn:active {
   background-position: 0px -92px;
+}
+
+#playerNav {
+	position:relative;
+	margin:0 auto;
+	float:right;
+	margin-right:135px;
+}
+
+#playerText {
+	position:relative;
+	margin:0 auto;
+	float:left;
+	text-align:right;
+	padding-right:10px;
+	padding-top:3px;
+}
+
+#playerText a {
+	color:#fff;
+	text-decoration:none;
+}
+
+#playerText a:hover {
+	text-shadow:0px 0px 5px white;
+}
+
+#playerName {
+	font-size:22px;
+	color:#FF8533;
+}
+
+#profImage {
+	border-radius:6px;
 }

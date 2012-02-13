@@ -234,7 +234,7 @@ function setSongInfo(name, artist, url) {
 	//should correspond to the index of the beat in soundManager
 	
 	
-	$('.songinfo').html(name+'<br>'+artist+'<br><a href=\"'+url+'\"> Buy on Itunes </a>');
+	$('.songinfo').html(name+'<br>'+artist+'<br><a href=\"'+url+'\"> Buy on iTunes </a>');
 
 
 }
@@ -376,9 +376,9 @@ function crowdAction (action) {
 function uiLoadPlayerNav(player) {
   var nav = '';
   if (player.is_logged_in) {
-    nav += '<img src="' + player.facebook_image_url + '" width="50" height="50" />';
-    nav += '<span>' + player.name + '</span>';
-    nav += '<a href="/player/logout">Log Out</a>';
+    nav += '<div id="playerText"><div id="playerName"><span>' + player.name + '</span></div>';
+    nav += '<a href="/player/logout">Log Out</a></div>';
+    nav += '<img id="profImage" src="' + player.facebook_image_url + '" width="50" height="50" />';
     $('#playerNav').html(nav);
 
   } else {
