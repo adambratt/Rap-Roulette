@@ -57,8 +57,17 @@ var tokSession;
 // setup socket root
 var socketLibRoot = document.location.host;
 
-// general socket
+// set up the socket
 var gSock = io.connect(socketLibRoot);
+
+
+/////////////////////
+// player-specific
+/////////////////////
+
+gSock.on("playerAlert", function(message) {
+  alert(message);
+});
 
   
 /////////////////////
