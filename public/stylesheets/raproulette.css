@@ -42,7 +42,8 @@ a {
 }
 
 #simplemodal-container {
-	background-color:#363636;
+	/*background-color:#363636;*/
+	background-image:url('../images/broken_noise.png');
 	border:8px solid #d0600b;
 	padding:12px;
 	padding-left:40px;
