@@ -45,14 +45,37 @@ exports.index = function(req, res){
         }
       }
       
-      // render the ejs template with these variables
-      res.render('index', { 
-        title: room.name, 
-        sid: req.sessionID, 
-        room: room,
-        battleState: battleState,
-        triggerEvents: triggerEvents
-      });
+      // set up player
+      var player =  { sid: req.sessionID };
+      if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+        
+        Player.get_myself(null, req.session.player_id, function (err, myself) {
+
+          // render the ejs template with these variables
+          res.render('index', { 
+            title: room.name, 
+            player: { sid: req.sessionID, id: myself.id, service_username: myself.service_username }, 
+            room: room,
+            battleState: battleState,
+            triggerEvents: triggerEvents
+          });
+
+        });
+
+      } else {
+
+        // render the ejs template with these variables
+        res.render('index', { 
+          title: room.name, 
+          player: { sid: req.sessionID }, 
+          room: room,
+          battleState: battleState,
+          triggerEvents: triggerEvents
+        });
+      
+      }
+
+
 
 
     // room is not in the data store; create one and redirect to it

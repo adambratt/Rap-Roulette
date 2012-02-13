@@ -31,7 +31,7 @@
         // initialize the data model
         initModel(function (model) {
             
-            model.player = new model.Player({sid: "<%= sid %>"}, function (player) { 
+            model.player = new model.Player(<%- JSON.stringify(player) %>, function (player) { 
                 gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
             });
             
