@@ -445,6 +445,11 @@ function initEvents (eventData, cb) {
   });
   
   $('.leavequeue').click(function() {
+	
+	 model.player.get_mysid(null, function(err, player_sid) {
+          gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
+        });
+  
 	$('.leavequeue').hide();
 		$('.getinline').show();
 	

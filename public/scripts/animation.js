@@ -116,49 +116,8 @@ function setVoteBars(numVotesLeft, numVotesRight) {
 	$(".bar.right").animate({width: p2+"%"}, 100);
 }
 		
-function player1_vote(){
-	p1votes+=1;
-	updateGraph();
-}
-
-function player2_vote(){
-	p2votes+=1;
-	updateGraph();
-}
-
-function updateGraph() {
-    var constant = 2.4; //arbitrary scaling constant, change for pleasure
-	var p1=(p1votes*constant); 
-	var p2=(p2votes*constant);
-	$(".bar.left").animate({width: p1+"%"}, 100);
-	$(".bar.right").animate({width: p2+"%"}, 100);
-	if ( p1 >= 40 && !p1awesome) {
-		$(".speaker.left").hide("explode", 1000);
-		p1awesome = true;
-		crowdGoesWild(true);
-	}
-	if ( p2 >= 40 && !p2awesome ) {
-		$(".speaker.right").hide("explode", 1000);
-		p2awesome = true;
-		crowdGoesWild(true);
-	}
-}
 		
-function switch_vote(p1) {
-	//p1 is a bool
-	//true means user switched their vote from p2->p1,
-	//false means user switched their vote from p1->p2
-	
-	if(p1){
-		p2votes-=1;
-		player1_vote();
-	}
-	else{
-		p1_votes-=1;
-		player2_vote();
-	}
-	
-}
+
 //spire moving functions
 function decrement() {
 	var angle=$("#spire").rotate(); //returns current angle in some bullshit form
@@ -278,15 +237,7 @@ function stopCountdown() {
 	clearInterval(countdownInterval);
 }
 
-function setSongInfo(name, artist, url) {
-	//beatIndex should be number from 1 to maxBeats
-	//should correspond to the index of the beat in soundManager
-	
-	
-	$('.songinfo').html(name+'<br>'+artist+'<br><a href=\"'+url+'\"> Buy on Itunes </a>');
 
-
-}
 
 function setTimerValue( seconds ) {
 	// Set the timer to seconds
@@ -324,6 +275,16 @@ flashingID = 0;
 var numBling = 0;
 		
 
+
+function setSongInfo(name, artist, url) {
+	//beatIndex should be number from 1 to maxBeats
+	//should correspond to the index of the beat in soundManager
+	
+	
+	$('.songinfo').html(name+'<br>'+artist+'<br><a href=\"'+url+'\"> Buy on Itunes </a>');
+
+
+}
 
 function moveSpotlight(left) {
 	// Change who the spotlight is on
