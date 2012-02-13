@@ -212,7 +212,7 @@ gSock.on('setQueue', function(data) {
     });
 
   } else {
-    alert(data);
+    setQueue(queue);
   }
 	
 });
