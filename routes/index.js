@@ -61,7 +61,14 @@ exports.index = function(req, res){
           // render the ejs template with these variables
           res.render('index', { 
             title: room.name, 
-            player: { sid: req.sessionID, id: myself.id, is_logged_in: true, name: myself.name, service_username: myself.service_username }, 
+            player: { 
+              sid: req.sessionID, 
+              id: myself.id, 
+              is_logged_in: true, 
+              name: myself.name, 
+              service_username: myself.service_username, 
+              service_link: myself.service_link
+            }, 
             room: room,
             battleState: battleState,
             triggerEvents: triggerEvents

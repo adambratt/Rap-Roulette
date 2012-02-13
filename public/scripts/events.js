@@ -101,7 +101,10 @@ gSock.on("stateNewBattle", function(battleState) {
     
     //alert(battle.players[0]); 
     $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.players[0] + '</span>'); 
+    //uiLoadInfo0('Player info');
+
     $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.players[1] + '</span>'); 
+    //uiLoadInfo1('Player info');
      
   });
 

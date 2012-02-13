@@ -368,8 +368,25 @@ function crowdAction (action) {
 }
 
 
+
 ////////////////////////////////
-// User Interface
+// Info UI
+////////////////////////////////
+
+
+function uiLoadInfo0(content) {
+ $('#info0').html(content);
+}
+
+function uiLoadInfo1(content) {
+ $('#info1').html(content); 
+}
+
+
+
+
+////////////////////////////////
+// Player UI
 ////////////////////////////////
 
 
