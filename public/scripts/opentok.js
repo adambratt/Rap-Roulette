@@ -10,6 +10,8 @@ var OPENTOK = {
 };
 
 
+
+
 function initOPENTOK () {
 
   // http://www.tokbox.com/opentok/api/tools/js/documentation/api/TB.html
@@ -32,6 +34,7 @@ OPENTOK.connectToSession = function(room) {
   OPENTOK.session.addEventListener('connectionDestroyed', OPENTOK.connectionDestroyedHandler);
   OPENTOK.session.addEventListener('streamCreated', OPENTOK.streamCreatedHandler);
   OPENTOK.session.addEventListener('streamDestroyed', OPENTOK.streamDestroyedHandler);
+  OPENTOK.session.addEventListener('signalReceived', OPENTOK.signalHandler);
   
   OPENTOK.session.connect(OPENTOK.apiKey, OPENTOK.token);
 }
@@ -51,12 +54,46 @@ OPENTOK.sessionConnectedHandler = function(event) {
 		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
 	}
 
-  $('body').keypress(function(event) {
+  /*$('body').keypress(function(event) {
     if (!OPENTOK.publisher && event.which == 43) { // the + key
     	OPENTOK.publisher = OPENTOK.session.publish(OPENTOK.divs[OPENTOK.nextStream], { height: 240, width: 320 });
     	OPENTOK.nextStream++;
     }
-  });
+  });*/
+}
+
+function startPublishing(element){
+
+	OPENTOK.publisher = OPENTOK.session.publish(element, { height: 240, width: 320 });
+
+}
+
+function stopPublishing(){
+	/*var elm = OPENTOK.publisher.replaceElementId();
+	alert(elm);
+	var num = 0;
+	
+	var outer = document.getElementById("video_"+num);
+	
+	var newDiv=document.createElement("div");
+	newDiv.setAttribute("id", elm);
+	
+	*/
+	OPENTOK.session.unpublish(OPENTOK.publisher);
+	
+	//outer.appendChild(newDiv);
+
+}
+
+function mute(){
+
+	
+	OPENTOK.publisher.publishAudio(false);
+
+}
+function unmute(){
+	
+	OPENTOK.publisher.publishAudio(true);
 }
 
 OPENTOK.sessionDisconnectedHandler = function(event) {
@@ -83,7 +120,11 @@ OPENTOK.streamCreatedHandler = function(event) {
 	}
 }
 
-OPENTOK.streamDestroyedHandler = function(event) {
+OPENTOK.signalHandler = function(event) {
+	event.streams[0].publishAudio(false);
 
 }
 
+OPENTOK.streamDestroyedHandler = function(event) {
+
+}
