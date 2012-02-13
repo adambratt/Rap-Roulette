@@ -45,6 +45,8 @@ a {
 	background-color:#363636;
 	border:8px solid #d0600b;
 	padding:12px;
+	padding-left:40px;
+	padding-right:40px;
 	border-radius: 15px;
     /*box-shadow: 0px 0px 20px #d0600b;*/
 	width:650px;
