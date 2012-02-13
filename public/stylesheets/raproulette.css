@@ -393,14 +393,12 @@ a {
     margin-right:570px;
     background-image:url(../images/newbar1.png);
     background-position: right;
-    margin-top:0px;
 }
 
 .bar.right {
     float:left;
     margin-left:570px;
     background-image:url(../images/newbar.png);
-    margin-top:0px;
 }
 
 .subwoofer {
