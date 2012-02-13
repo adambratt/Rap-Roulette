@@ -78,12 +78,10 @@ gSock.on("stopOpenTok", function(message) {
 });
 
 gSock.on("mute", function(message) {
-	alert("mute");
 	mute();
 });
 
 gSock.on("unmute", function(message) {
-	alert("unmute");
 	unmute();
 });
 
