@@ -31,6 +31,7 @@ a {
 #enqueue-popup {
 	color:#FFF;
 	display:none;
+	text-align:center;
 }
 
 
@@ -41,10 +42,16 @@ a {
 }
 
 #simplemodal-container {
-	background-color:#333;
-	border:8px solid #444;
+	/*background-color:#363636;*/
+	background-image:url('../images/broken_noise.png');
+	border:8px solid #d0600b;
 	padding:12px;
+	padding-left:40px;
+	padding-right:40px;
 	border-radius: 15px;
+    /*box-shadow: 0px 0px 20px #d0600b;*/
+	width:650px;
+	height:400px;
 }
 
 
@@ -478,6 +485,20 @@ a {
     text-decoration:none;
 }
 
-.avatars {
-	margin:0 auto;
+#facebookbtn {
+  background: url('https://s3.amazonaws.com/static.turntable.fm/images/indexlogin/facebook_btn.png') 0px 0px no-repeat;
+  width: 218px;
+  height: 46px;
+  cursor: pointer;
+  position:relative;
+  margin:0 auto;
+  margin-bottom:5px;
+}
+
+#facebookbtn:hover {
+  background-position: 0px -46px;
+}
+  
+#facebookbtn:active {
+  background-position: 0px -92px;
 }
