@@ -99,6 +99,8 @@ gSock.on("unmute", function(message) {
 	unmute();
 });
 
+
+
   
 /////////////////////
 // State Changes
@@ -295,6 +297,19 @@ gSock.on('playKey', function(data) {
   }
   
 });
+
+function emitPublished(s, id) {
+
+
+	
+	var data= {
+		side: s,
+		stream_id: id,
+		player_id: model.player.id
+	}
+	
+	gSock.emit('published', data);
+}
 
 
 function voteLeft() {
