@@ -4,7 +4,7 @@ var OPENTOK = {
   apiKey : '11324312',
   sessionId : '1_MX4wfn4yMDEyLTAxLTIyIDE3OjA0OjAxLjU5ODY2NCswMDowMH4wLjAzMjIwNDA3MTY5Mzd-',
   token : 'devtoken',
-  divs : [ 'pub0', 'pub1' ],
+  divs : [ 'video_0', 'video_1' ],
   nextStream : 0,
   publisher: null  // http://www.tokbox.com/opentok/api/tools/js/documentation/api/Publisher.html
 };
@@ -55,11 +55,15 @@ function addStream(stream, div) {
 		OPENTOK.nextStream=0;
 }
 
+
 OPENTOK.sessionConnectedHandler = function(event) {
   // Subscribe to all streams currently in the Session
+  
+  
 	for (var i = 0; i < event.streams.length; i++) {
 		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
 	}
+	
 	
 	
 

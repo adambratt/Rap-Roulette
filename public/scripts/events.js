@@ -5,6 +5,8 @@
 // ------------------   UI Helpers  ---------------
 var maxBeats=9;
 
+var nowRapping=false;
+
 var songInfo=new Array();
 	songInfo[1]={name: "6 Foot 7 Foot", artist: "Bangladesh", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"}; 
 	songInfo[2]={name: "Black and Yellow", artist: "StarGate", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"}; 
@@ -71,10 +73,22 @@ gSock.on("playerAlert", function(message) {
 
 gSock.on("startOpenTok", function(player) {
 	startPublishing(player);
+	nowRapping=true;
+	
+	 model.player.get_mysid(null, function(err, player_sid) {
+          gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
+        });
+		
+	if($(".leavequeue").is(":visible")){
+		$('.leavequeue').hide();
+		$('.getinline').show();
+	}
+	
 });
 
 gSock.on("stopOpenTok", function(message) {
 	stopPublishing();
+	nowRapping=false;
 });
 
 gSock.on("mute", function(message) {
@@ -446,6 +460,9 @@ function initEvents (eventData, cb) {
     // NOTE: accessing the cookie does not work because httpOnly is set
     //var sid = $.cookie('connect.sid');      
     
+	if(nowRapping)
+		return;
+	
 	$('.getinline').hide();
 	$('.leavequeue').show();
 	
