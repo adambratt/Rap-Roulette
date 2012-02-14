@@ -118,10 +118,10 @@ gSock.on("stateNewBattle", function(data) {
     setQueue(data.queue);
     
     //alert(battle.players[0]); 
-    $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.players[0] + '</span>'); 
+    $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>'); 
     //uiLoadInfo0('Player info');
     
-    $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.players[1] + '</span>'); 
+    $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
     //uiLoadInfo1('Player info');
      
   });
@@ -145,7 +145,7 @@ gSock.on("statePreRap", function(data) {
   setTimerColor("red");
 	moveSpotlight(true);
   
-  crowdAction('calm');
+  //crowdAction('calm');
 	
 	//TODO: notify player 1 that he is about to rap
 	//		tell both rappers some pre-rap stuff?

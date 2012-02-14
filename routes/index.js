@@ -55,38 +55,46 @@ exports.index = function(req, res){
       // set up player
       var player =  { sid: req.sessionID };
       if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
+  
+        Room.get_queue_names(null, room.id, function (err, queue_names) {
         
-        Player.get_myself(null, req.session.player_id, function (err, myself) {
+          Player.get_myself(null, req.session.player_id, function (err, myself) {
+
+            // render the ejs template with these variables
+            res.render('index', { 
+              title: room.name, 
+              player: { 
+                sid: req.sessionID, 
+                id: myself.id, 
+                is_logged_in: true, 
+                name: myself.name, 
+                service_username: myself.service_username, 
+                service_link: myself.service_link
+              }, 
+              room: room,
+              queue_names: queue_names,
+              battleState: battleState,
+              triggerEvents: triggerEvents
+            });
+
+          });
+        });
+
+      } else {
+        
+        Room.get_queue_names(null, room.id, function (err, queue_names) {
 
           // render the ejs template with these variables
           res.render('index', { 
             title: room.name, 
-            player: { 
-              sid: req.sessionID, 
-              id: myself.id, 
-              is_logged_in: true, 
-              name: myself.name, 
-              service_username: myself.service_username, 
-              service_link: myself.service_link
-            }, 
+            player: { sid: req.sessionID, is_logged_in: false }, 
             room: room,
             battleState: battleState,
             triggerEvents: triggerEvents
           });
-
+        
         });
 
-      } else {
-
-        // render the ejs template with these variables
-        res.render('index', { 
-          title: room.name, 
-          player: { sid: req.sessionID, is_logged_in: false }, 
-          room: room,
-          battleState: battleState,
-          triggerEvents: triggerEvents
-        });
-      
       }
 
 

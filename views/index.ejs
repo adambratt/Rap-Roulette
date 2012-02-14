@@ -51,8 +51,8 @@
               ////////////////////
               
               // Set current rappers
-              $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.players[0] + '</span>');
-              $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.players[1] + '</span>');
+              $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>');
+              $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>');
               
               // Figure out current spot in battle
               var started_at = new Date(battle.started_at);
@@ -138,9 +138,7 @@
           
           setVoteBars(0,0);
 
-          model.room.get_queue(null, room_id, function (err, queue) { 
-            setQueue(queue);
-          });
+          setQueue(<%- JSON.stringify(queue_names) %>);
 
           // initialize the events only after the default ui and animations are running
           initEvents({ triggerEvents: <%- JSON.stringify(triggerEvents) %>}, function (err) {
