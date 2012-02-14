@@ -121,7 +121,7 @@ a {
 }
 
 .rapper span {
-    /*margin-bottom:30px;*/
+    margin-bottom:15px;
     display:block;
     color:#fff;
     font-weight:bold;
@@ -129,7 +129,6 @@ a {
     margin-top:5px;
     font-family:'Enriqueta';
     float:left;
-    margin-left:5px;
 }
 
 .winner span {
@@ -281,6 +280,18 @@ a {
 
 .info {
     padding:5px;
+    padding-left:0px;
+}
+
+#info1 {
+    /* border:3px solid black; */
+    margin:0 auto;
+    width:330px;
+    float:left;
+	padding-left:15px;
+    color:#eee;
+    font-weight:bold;
+    font-size:14px;
 }
 
 .queue-wrapper {
@@ -412,7 +423,6 @@ a {
     background-image: linear-gradient(top, #ff8f3a, #d2620d);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff8f3a', endColorstr='#d2620d', GradientType=0);
     margin-top:5px;
-    margin-right:5px;
     float:right;
 }
 
@@ -426,7 +436,7 @@ a {
     height:20px;
     position:relative;
     z-index:19;
-    margin-top:-40px;
+    margin-top:0px;
     border-radius:2px;
     background-repeat:no-repeat;
     background-color:transparent;
@@ -434,14 +444,15 @@ a {
 
 .bar.left {
     float:right;
-    margin-right:570px;
+    margin-right:635px;
     background-image:url(../images/newbar.png);
     background-position: right;
 }
 
 .bar.right {
     float:left;
-    margin-left:570px;
+    margin-top:-20px;
+    margin-left:500px;
     background-image:url(../images/newbar1.png);
 }
 
