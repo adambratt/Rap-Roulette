@@ -393,7 +393,7 @@ function uiLoadInfo1(content) {
 function uiLoadPlayerNav(player) {
   var nav = '';
   if (player.is_logged_in) {
-    nav += '<div id="playerText"><div id="playerName"><span>' + player.name + '</span></div>';
+    nav += '<div id="playerText"><div id="playerName" onclick="uiPlayerSetup();"><span>' + player.name + '</span></div>';
     nav += '<a href="/player/logout">Log Out</a></div>';
     nav += '<img id="profImage" src="' + player.facebook_image_url + '" width="50" height="50" />';
     $('#playerNav').html(nav);
@@ -405,6 +405,7 @@ function uiLoadPlayerNav(player) {
 
   }
 }
+
 
 function uiPlayerSetup () {
   var divName = "#floatPlayerSetup";
@@ -428,7 +429,11 @@ function uiPlayerSetup () {
       type: "POST",
       data: "name=" + $('#playerSetup #name').val(),
       success: function () {
-        //alert("success");  
+        
+		model.player.name = $('#playerSetup #name').val();
+		uiLoadPlayerNav(model.player);
+		
+		
         $(divName).fadeOut('slow', function() {
         
         });
