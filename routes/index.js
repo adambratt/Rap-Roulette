@@ -90,7 +90,8 @@ exports.index = function(req, res){
             player: { sid: req.sessionID, is_logged_in: false }, 
             room: room,
             battleState: battleState,
-            triggerEvents: triggerEvents
+            triggerEvents: triggerEvents,
+            queue_names: queue_names
           });
         
         });
