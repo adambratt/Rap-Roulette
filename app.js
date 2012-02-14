@@ -50,7 +50,7 @@ app.configure('development', function(){
   app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
   GLOBAL.game_debug=1;
   GLOBAL.game_start_time=10000; // if set to null, the game will not start
-  GLOBAL.battle_speed=1;
+  GLOBAL.battle_speed=5;
 });
 
 app.configure('production', function(){
