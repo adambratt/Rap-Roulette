@@ -122,7 +122,12 @@ gSock.on("stateNewBattle", function(data) {
     //uiLoadInfo0('Player info');
     
     $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
-    //uiLoadInfo1('Player info');
+	
+		if(typeof battle.left !== "undefined") //ignore my shitty if statements or fix them if you want
+					if(typeof battle.left.stream_id !== "undefined")
+						addStream(battle.left.stream_id, 0);
+				if(typeof battle.right !== "undefined" && typeof battle.right.stream_id !== "undefined")
+					addStream(battle.right.stream_id, 1);
      
   });
 
