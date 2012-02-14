@@ -199,6 +199,11 @@ function setTimerValue( seconds ) {
     $('#timer').text(":"+time);
 }
 
+function setTimerColor(value) {
+
+	$('#timer').css("color", value);
+}
+
 function incrementTimer( limit ) {
 	// Increase the clock by a second
 	time += 1;
