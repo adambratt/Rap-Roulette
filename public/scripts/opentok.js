@@ -89,6 +89,7 @@ function startPublishing(num){
 	OPENTOK.publisher = OPENTOK.session.publish(element, { height: 240, width: 320 });
 	
 	var id = OPENTOK.publisher.id;
+	console.log('emitted publish');
 	emitPublished(num, id);
 	
 }
@@ -135,5 +136,11 @@ OPENTOK.streamCreatedHandler = function(event) {
 
 
 OPENTOK.streamDestroyedHandler = function(event) {
+	for (var i = 0; i < event.streams.length; i++) {
+		subscribers = OPENTOK.session.getSubsribersforStream(event.streams[i]);
+		for(var i =0; i < subscribers.length; i++) {
+			OPENTOK.session.unsubscribe(subscribers[i]);
+		}
+	}
 
 }
