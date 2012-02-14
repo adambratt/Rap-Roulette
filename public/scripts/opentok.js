@@ -44,6 +44,9 @@ function addStream(stream, div) {
 	if (stream.connection.connectionId == OPENTOK.session.connection.connectionId) {
 		return;
 	}
+	
+	
+	
 	var element="pub"+div;
 	var outer = document.getElementById("video_"+div);
 	var newDiv=document.createElement("div");
@@ -61,13 +64,7 @@ function addStream(stream, div) {
 OPENTOK.sessionConnectedHandler = function(event) {
   // Subscribe to all streams currently in the Session
   
-  
-	
-	for (var i = 0; i < event.streams.length; i++) {
-		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
-	}
-	
-	
+ 
 	
 
  /* $('body').keypress(function(event) {

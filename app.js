@@ -58,7 +58,7 @@ app.configure('production', function(){
   GLOBAL.game_debug=1;
   GLOBAL.game_run_mode='production';
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
-  GLOBAL.battle_speed=4;
+  GLOBAL.battle_speed=6;
 });
 
 
