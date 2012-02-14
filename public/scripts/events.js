@@ -132,7 +132,7 @@ gSock.on("stateNewBattle", function(data) {
 var beatIndex;
 gSock.on("statePreRap", function(data) {
   window.console.log('statePreRap');
-	
+	resetVotes();	
   crowdAction('stop');
   
   soundManager.stopAll();
@@ -200,7 +200,7 @@ gSock.on("stateFinalVoting", function(data) {
 gSock.on("statePostRap", function(data) {
   window.console.log('statePostRap');
 
-	resetVotes();
+	
 	//stopSound('beat'+beatIndex); // no need to broadcast this
 	soundManager.stopAll();
   crowdAction('stop');

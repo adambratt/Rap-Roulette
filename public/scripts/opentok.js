@@ -87,6 +87,7 @@ function startPublishing(num){
 	newDiv.setAttribute("id", element);
 	outer.appendChild(newDiv);
 	OPENTOK.publisher = OPENTOK.session.publish(element, { height: 240, width: 320 });
+	
 	var id = OPENTOK.publisher.id;
 	emitPublished(num, id);
 	
