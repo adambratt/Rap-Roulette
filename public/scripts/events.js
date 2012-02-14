@@ -290,7 +290,7 @@ gSock.on('playKey', function(data) {
     case 70: //f
       dropBling(false);break;
     case 82: //r
-      removeBling();break;
+      clearBling();break;
       
     case 88: //x
       flash(); break;
