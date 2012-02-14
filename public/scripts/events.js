@@ -104,19 +104,21 @@ gSock.on("unmute", function(message) {
 // State Changes
 /////////////////////
 
-gSock.on("stateNewBattle", function(battleState) {
+gSock.on("stateNewBattle", function(data) {
 	//TODO: pop guy off queue
 	//		publish new stream
   
-  crowdAction('stop');
+  //crowdAction('stop');
   
-  model.battle = new model.Battle(battleState, function (battle) {
+  model.battle = new model.Battle(data.battleState, function (battle) {
     //console.log("stateNewBattle battle_id " + battle.id);
+    
+    setQueue(data.queue);
     
     //alert(battle.players[0]); 
     $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.players[0] + '</span>'); 
     //uiLoadInfo0('Player info');
-
+    
     $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.players[1] + '</span>'); 
     //uiLoadInfo1('Player info');
      
@@ -233,9 +235,6 @@ gSock.on('setQueue', function(data) {
   */
   if (data.success !== 'undefined') {
     
-    // ridiculousness
-    //playSound("sounds/explosion.wav");
- 
     model.room.get_queue(null, room_id, function (err, queue) {
       setQueue(queue);
     });
