@@ -125,9 +125,9 @@ OPENTOK.connectionDestroyedHandler = function(event) {
 
 
 OPENTOK.streamCreatedHandler = function(event) {
-	for (var i = 0; i < event.streams.length; i++) {
+	/*for (var i = 0; i < event.streams.length; i++) {
 		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
-	}
+	}*/
 }
 
 
