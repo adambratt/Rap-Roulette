@@ -142,6 +142,7 @@ gSock.on("statePreRap", function(data) {
   	playSound(model.battle.song_id, 0, true); // play song from beginning
 	
   setTimer(30);
+  setTimerColor("red");
 	moveSpotlight(true);
   
   crowdAction('calm');
@@ -152,7 +153,7 @@ gSock.on("statePreRap", function(data) {
 
 gSock.on("statePlayer1Rap", function(data) {
   window.console.log('statePlayer1Rap');
-
+	setTimerColor("white");
 	startCountdown();
 	//TODO: mute player 2
   crowdAction('dance');
@@ -161,6 +162,7 @@ gSock.on("statePlayer1Rap", function(data) {
 gSock.on("stateBeforePlayer2", function(data) {
   window.console.log('stateBeforePlayer2');
 	setTimer(30);
+	setTimerColor("red");
 	moveSpotlight(false);
 	//TODO: mute player 1
 	//play airhorn
@@ -173,6 +175,7 @@ gSock.on("statePlayer2Rap", function(data) {
   window.console.log('statePlayer2Rap');
 
 //TODO: unmute player 2
+	setTimerColor("white");
 	startCountdown();
   crowdAction('dance');
 });
@@ -183,6 +186,7 @@ gSock.on("stateBeforePlayer1", function(data) {
 	//TODO: notify player 1 that he is about to rap
 		//play airhorn
 	setTimer(30);
+	setTimerColor("red");
 	moveSpotlight(true);
   crowdAction('calm');
 
