@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title><%= title %></title>
+  <link rel="stylesheet" type="text/css" href="/stylesheets/reset.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/text.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/960.css" />
+  <link rel="stylesheet" type="text/css" href="/stylesheets/raproulette.css" />
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script src="/scripts/jquery-animate-css-rotate-scale.js"></script>
+  <script src="/scripts/jquery-css-transform.js"></script>
+  <script src="/scripts/rotate3Di.js"></script>
+  <script src="/scripts/animation.js"></script>
+  <script src="http://staging.tokbox.com/v0.91/js/TB.min.js"></script>
+  <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+  <script src="/scripts/model.js" type="text/javascript"></script>
+  <script type="text/javascript">
+
+
+
+var game_debug = <%= GLOBAL.game_debug %>; 
+var room_id = 'main_stage';
+
+// setup socket root
+var socketLibRoot = document.location.host;
+
+// set up the socket
+var gSock = io.connect(socketLibRoot);
+
+
+
+// INIT FUNCTION
+(function() {
+
+initModel(function (model) {
+
+    // load the player model
+    model.player = new model.Player(<%- JSON.stringify(player) %>, function (player) { 
+
+        initSockets();
+
+    });
+
+});
+
+
+})();
+// END INIT FUNCTION
+
+
+function initSockets () {
+
+gSock.on('connect', function() {
+    console.log('socket.on connect');
+    gSock.emit('opentok.init', { sid: model.player.sid, room_id: room_id });
+});
+
+gSock.on('opentok.init.reply', function (msg) {
+    console.log('socket.on opentok.init.reply');
+
+    console.log(msg.sessionId + ' - ' + msg.token);
+    
+    //RouletteApp.init(sessionId, token);
+
+});
+
+
+}
+
+
+  </script>
+
+<body>
+  <div id="navbar-wrapper">
+    <div id="navbar">
+      <a href="/"><img src="/images/logo.png" /></a>
+      <div id="playerNav">&nbsp;</div>
+    </div>
+  </div>
+
+  <div class="container_12">
+
+    
+	<span id="soundplayer"></span>
+    
+    <div class="subwoofer"></div>
+    <div class="stage">
+    <div class="videoswrapper">
+      <div class="rapper">
+        <div class="video-wrapper video-wrapper0">
+          <div class="video video0" id="video_0">
+            
+          </div>
+          <span>&nbsp;</span>
+          <button class="madprops left" rel='0'>Mad Props!</button>
+        </div>
+        <div class="clear"></div>
+      </div>
+      
+      
+        <div class="dashboard">
+        <div class="songinfo">
+        </div>
+        <div class="vs"></div>
+        <div id="timer" class="timer">:00</div>
+        </div>
+
+       <div class="rapper">
+        <div class="video-wrapper video-wrapper1">
+          <div class="video video1"  id="video_1">
+          
+          </div>
+          <span>&nbsp;</span>
+          <button class="madprops right" rel='1'>Mad Props!</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+      </div>
+      <div class="gauge">
+        <div class="meter"></div>
+      </div>
+      <div class="bar left"></div>
+      <div class="bar right"></div>
+      <div class="clear"></div>
+      <div class="speaker left"></div>
+      <div class="speaker right"></div>
+
+    </div>
+    <div class="clear"></div>
+
+
+  <div class="crowd">
+    
+    <div class="info-wrapper"><div class="info" id="info0">&nbsp;</div></div>
+    
+    <div class="queue-wrapper">
+      <button class="getinline">Get in Line</button>
+	    <button class="leavequeue" style="display:none">Leave Queue</button>
+      <ul class="queue" id="queue">
+        <h4 id="queue_lineup">Lineup</h4>
+      </ul>
+    </div>
+    
+    <div class="info" id="info1"><div class="info" id="info0">&nbsp;</div></div>
+    <div class="clear"></div>
+
+  </div>
+  
+
+</div>  
+
+</body>
+
+</html>
+

@@ -64,6 +64,25 @@ var gSock = io.connect(socketLibRoot);
 
 
 /////////////////////
+// core events
+/////////////////////
+
+
+gSock.on('connect', function(){
+  if (typeof game_debug !== 'undefined' && game_debug > 0) { 
+    console.log('socket.io connected');
+  }
+});
+
+
+gSock.on('disconnect', function(){
+  model.player.get_mysid(null, function(err, player_sid) {
+    gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
+  });
+});
+
+
+/////////////////////
 // player-specific
 /////////////////////
 
@@ -256,13 +275,6 @@ gSock.on('setQueue', function(data) {
 	
 });
 
-
-gSock.on('disconnect', function(){
-	 model.player.get_mysid(null, function(err, player_sid) {
-          gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
-        });
-
-});
 
 gSock.on('playSound', function(data) {
 	//data

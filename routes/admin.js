@@ -57,6 +57,25 @@ exports.load_fixtures = function(req, res){
 };
 
 
+
+// opentok
+// test opentok interaction
+
+
+exports.opentok = function(req, res){
+  
+  player = {
+    sid: req.sessionID
+  };
+
+  res.render('admin/opentok', { title: 'OpenTok Test', player: player })
+
+};
+
+
+
+
+
 // unload_fixtures
 
 exports.unload_fixtures = function(req, res){

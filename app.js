@@ -123,6 +123,7 @@ app.get('/admin/testboard', admin.testboard);
 app.post('/admin/emit_alert', admin.emit_alert);
 app.get('/admin/load_fixtures/:name', admin.load_fixtures);
 app.get('/admin/unload_fixtures/:name', admin.unload_fixtures);
+app.get('/admin/opentok', admin.opentok);
 
 
 var port = process.env.NODE_PORT || 3000;
