@@ -46,6 +46,8 @@ function addStream(stream, div) {
 	}
 	
 	
+	console.log('publish to video_'+div);
+	
 	
 	var element="pub"+div;
 	var outer = document.getElementById("video_"+div);
@@ -64,7 +66,20 @@ function addStream(stream, div) {
 OPENTOK.sessionConnectedHandler = function(event) {
   // Subscribe to all streams currently in the Session
   
- 
+  console.log('IN SESSON HANDLER');
+ for (var i = 0; i < event.streams.length; i++) {
+		console.log(event.streams[i].streamId);
+		if(	typeof model.battle.left!=="undefined"
+			&&typeof model.battle.left.stream_id!=="undefined"
+			&& event.streams[i].streamId==model.battle.left.stream_id)
+				addStream(events.streams[i], 0);
+				
+		if(	typeof model.battle.right!=="undefined"
+			&&typeof model.battle.right.stream_id!=="undefined"
+			&& event.streams[i].streamId==model.battle.right.stream_id)
+				addStream(events.streams[i], 1);
+		
+	}
 	
 
  /* $('body').keypress(function(event) {
@@ -125,9 +140,19 @@ OPENTOK.connectionDestroyedHandler = function(event) {
 
 
 OPENTOK.streamCreatedHandler = function(event) {
-	/*for (var i = 0; i < event.streams.length; i++) {
-		addStream(event.streams[i], OPENTOK.divs[OPENTOK.nextStream]);
-	}*/
+	for (var i = 0; i < event.streams.length; i++) {
+		console.log(event.streams[i].streamId);
+		if(	typeof model.battle.left!=="undefined"
+			&&typeof model.battle.left.stream_id!=="undefined"
+			&& event.streams[i].streamId==model.battle.left.stream_id)
+				addStream(events.streams[i], 0);
+				
+		if(	typeof model.battle.right!=="undefined"
+			&&typeof model.battle.right.stream_id!=="undefined"
+			&& event.streams[i].streamId==model.battle.right.stream_id)
+				addStream(events.streams[i], 1);
+		
+	}
 }
 
 
