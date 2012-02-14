@@ -276,7 +276,8 @@ gSock.on('stopSound', function(data) {
 gSock.on('playKey', function(data) {
   // data
   // .id
-  switch(parseInt(data)){
+  switch(parseInt(0)){
+  //switch(parseInt(data)){
     //case 103: //g
     //  startGame(); break;
 
@@ -452,6 +453,8 @@ function initEvents (eventData, cb) {
     }
   }
 
+  
+  /*
   $("body").keypress(function(event) {
     if ( event.which == 106) {
       // j
@@ -465,7 +468,7 @@ function initEvents (eventData, cb) {
      } else {
       gSock.emit('sendKey', event.which.toString());
      }
-  });
+  }); */
   
   resetVotes();
   
