@@ -331,7 +331,6 @@ function emitPublished(s, id) {
 	}
 	
 	gSock.emit('published', data);
-	console.log('emit publish 2');
 }
 
 
