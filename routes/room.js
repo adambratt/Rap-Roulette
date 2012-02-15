@@ -295,7 +295,7 @@ exports.view_battle_state = function(req, res){
       });
 
     } else {
-      res.json('New battle just now being created due to supervisor restart... just refresh.'); 
+      res.json('New battle just now being created due to supervisor restart... try again.'); 
     }
 
   });

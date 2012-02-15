@@ -1,0 +1,91 @@
+
+<style>
+
+    .admin {
+        margin:20px; padding:10px; text-align:center; color: #fff; 
+        height:500px;
+    }
+   
+    .admin table {
+        background-color: #000;
+    }
+    
+    .admin .controls {
+    }
+
+    .admin .display {
+        background-color:#fff;
+    }
+
+    .label {
+        font-size:1.3em;  clear:both;
+    }
+
+</style>
+
+<div class="admin">
+
+<table class="admin">
+<tr>
+
+<td valign="top" class="controls" width="200">
+
+
+    <div style="padding:10px 10px 10px 25px">
+        <span class="label">Player</span><br/>
+        <a href="/player/login" target="output">Login</a><br/>
+        <a href="/player/myself" target="output">Myself</a><br/>
+        <a href="/room/myroom_redirect" target="_myroom_redirect">Redirect to My Room</a><br/>
+        <a href="/player/logout" target="output">Logout</a><br/>
+    
+    </div>
+
+    <div style="padding:10px 10px 10px 25px">
+        
+        <span class="label">Room</span><br/>
+        <a href="/rooms/<%= room.id %>" target="output">View Room</a><br/>
+        <a href="/rooms/<%= room.id %>/enter" target="output">Enter Room</a><br/>
+        <a href="/rooms/<%= room.id %>/leave" target="output">Leave Room</a><br/>
+
+    </div>
+
+    <div style="padding:10px 10px 10px 25px">
+        <span class="label">Battle</span><br/>
+        <a href="/rooms/main_stage/view_battle_state" target="output">View Battle State</a><br/>
+        <a href="/rooms/main_stage/get_battle_state" target="output">Get Battle State</a><br/>
+    
+    </div>
+    
+    <div style="padding:10px 10px 10px 25px">
+        
+        <span class="label">Battle Clock Mode</span><br/>
+        <a href="/rooms/main_stage/control/clock_run_mode/pause" target="output">Pause the Clock</a><br/>
+        <a href="/rooms/main_stage/control/clock_run_mode/unpause" target="output">Un-pause the Clock</a><br/>
+        <a href="/rooms/main_stage/control/clock_run_mode/restart" target="output">Restart the Clock</a><br/>
+         
+    </div>
+
+    <div style="padding:10px 10px 10px 25px">
+        <span class="label">Sockets</span><br/>
+    
+        <form action="/admin/emit_alert" id="sendAlert" target="output" method="POST">
+            say 
+            <input type="text" name="message" size="10"/>
+            to 
+            <input type="text" name="player_id" size="10"/>
+            <input type="submit" name="submit" value="Emit" />
+        </form>
+
+    </div>
+
+</td>
+
+<td valign="top" class="display">
+<iframe src="/" scrolling="yes" name="output" width="1000" height="500"></iframe>
+</td>
+
+</tr>
+</table>
+
+</div>
+
