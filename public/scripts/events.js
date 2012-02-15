@@ -91,6 +91,8 @@ gSock.on("playerAlert", function(message) {
 });
 
 gSock.on("startOpenTok", function(player) {
+
+	console.log('got start tok');
 	startPublishing(player);
 	nowRapping=true;
 	

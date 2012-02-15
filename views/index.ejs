@@ -45,7 +45,7 @@
             initServerClock(<%= ( new Date().getTime() + 700) %>);
             initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
             
-            <% if (typeof battleState !== 'undefined') { %>
+            //<% if (typeof battleState !== 'undefined') { %>
             model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
 
               ////////////////////
