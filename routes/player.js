@@ -88,6 +88,34 @@ exports.mysid = function(req, res){
 
 
 
+// passcode
+
+exports.passcode = function(req, res){
+  
+  var passcode = req.params.passcode;
+
+  var pass = false;
+  if (typeof passcode !== 'undefined') {
+    if (typeof Player.passcodes[passcode] !== 'undefined') {
+      console.log('Someone with passcode ' + Player.passcodes[passcode] + ' entered the site.');
+      req.session.has_passcode = true;
+      res.redirect('/');
+    
+    } else if (passcode == 'reset') {
+      console.log('Someone reset their passcode.');
+      req.session.has_passcode = false;
+      res.redirect('/');
+
+    } 
+  }
+  
+  
+  res.render('player/passcode', { title: 'Special Access Passcode', layout: 'layout.ejs' })
+  
+
+};
+
+
 
 // view
 

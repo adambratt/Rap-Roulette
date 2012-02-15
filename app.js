@@ -112,6 +112,8 @@ app.get('/player/mysession', player.mysession);
 app.get('/player/mysid', player.mysid);
 app.post('/player/update', player.update);
 app.get('/players/:id', player.view);
+app.get('/passcode', player.passcode);
+app.get('/passcode/:passcode', player.passcode);
 
 // songs
 app.get('/song/list', song.list);
