@@ -87,7 +87,8 @@ app.get('/rooms/:id/leave_queue', room.leave_queue);
 app.get('/rooms/:id/drop', room.drop);      // should not expose this except to admins
 app.get('/rooms/:id/pop_top_queue', room.pop_top_queue);
 app.get('/rooms/:id/view_battle_state', room.view_battle_state);
-app.get('/rooms/:id/control', admin.room);  // should not expose this except to admins;
+app.get('/rooms/:room_id/control', admin.room);  // should not expose this except to admins;
+app.get('/rooms/:room_id/control/clock_run_mode/:command', admin.room_clock_run_mode);  // should not expose this except to admins;
 
 // battles
 app.get('/battle', battle.index);

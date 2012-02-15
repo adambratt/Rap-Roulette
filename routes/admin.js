@@ -96,6 +96,30 @@ exports.room = function(req, res){
   });
 };
 
+// room_clock_run_mode
+// sends 
+
+exports.room_clock_run_mode = function(req, res){
+  room_id = req.params.room_id;
+  command = req.params.command;
+  
+  Room.get(null, room_id, function (err, room) {
+    
+    delete room['_id'];
+    
+    var battleClock = Room.battle_clocks[room.id];
+    
+    if (typeof battleClock !== 'undefined') {
+      battleClock.changeRunMode(null, command, function (err, isSuccessful) {
+	      res.json({ success: { message: 'The ' + room.id + ' battle clock has been told to ' + command + '.'} });
+      });
+    } else {
+	    res.json({ error: { message: 'The ' + room_id + ' battle clock is not yet running. Try again soon, but it may be in a bad state.'} });
+    }
+    
+  });
+};
+
 
 
 
