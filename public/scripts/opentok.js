@@ -65,12 +65,23 @@ function addStream(stream, div) {
 
 OPENTOK.sessionConnectedHandler = function(event) {
   // Subscribe to all streams currently in the Session
-  console.log('sessionCreatedHandler');
+ console.log('sessionCreatedHandler');
+
+	if(	typeof model.battle!=="undefined" &&
+		typeof model.battle.left!=="undefined"
+			&&typeof model.battle.left.stream_id!=="undefined"
+			
+			&&typeof model.battle.right!=="undefined"
+			&& typeof model.battle.right.stream_id!=="undefined")
+			
+			{
+	
 	console.log('model' + model);
 	console.log('model.battle' + model.battle);
 	console.log('model.battle.left' + model.battle.left);
 	console.log('model.battle.right' + model.battle.right);
-	
+	}
+	else console.log('something undefined');
 	console.log('connections found:');
 
 	for (var i = 0; i < event.streams.length; i++) {
@@ -78,12 +89,12 @@ OPENTOK.sessionConnectedHandler = function(event) {
 		if(	typeof model.battle.left!=="undefined"
 			&&typeof model.battle.left.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.left.stream_id)
-				addStream(events.streams[i], 0);
+				addStream(event.streams[i], 0);
 				
 		if(	typeof model.battle.right!=="undefined"
 			&& typeof model.battle.right.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.right.stream_id)
-				addStream(events.streams[i], 1);
+				addStream(event.streams[i], 1);
 		
 	}
 	
@@ -99,7 +110,7 @@ OPENTOK.sessionConnectedHandler = function(event) {
 
 function startPublishing(num){
 
-
+	
 	var element="pub"+num;
 	var outer = document.getElementById("video_"+num);
 	var newDiv=document.createElement("div");
@@ -150,12 +161,22 @@ OPENTOK.connectionDestroyedHandler = function(event) {
 
 OPENTOK.streamCreatedHandler = function(event) {
 
-	console.log('StreamCreatedHandler');
+console.log('StreamCreatedHandler');
+
+	if(	typeof model.battle.left!=="undefined"
+			&&typeof model.battle.left.stream_id!=="undefined"
+			
+			&&typeof model.battle.right!=="undefined"
+			&& typeof model.battle.right.stream_id!=="undefined")
+			
+			{
+	
 	console.log('model' + model);
 	console.log('model.battle' + model.battle);
 	console.log('model.battle.left' + model.battle.left);
 	console.log('model.battle.right' + model.battle.right);
-	
+	}
+	else console.log('something undefined');
 	console.log('connections found:');
 
 	for (var i = 0; i < event.streams.length; i++) {
@@ -163,12 +184,12 @@ OPENTOK.streamCreatedHandler = function(event) {
 		if(	typeof model.battle.left!=="undefined"
 			&&typeof model.battle.left.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.left.stream_id)
-				addStream(events.streams[i], 0);
+				addStream(event.streams[i], 0);
 				
 		if(	typeof model.battle.right!=="undefined"
 			&& typeof model.battle.right.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.right.stream_id)
-				addStream(events.streams[i], 1);
+				addStream(event.streams[i], 1);
 		
 	}
 	
@@ -180,7 +201,7 @@ OPENTOK.streamCreatedHandler = function(event) {
 
 OPENTOK.streamDestroyedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {
-		subscribers = OPENTOK.session.getSubsribersforStream(event.streams[i]);
+		subscribers = OPENTOK.session.getSubscribersForStream(event.streams[i]);
 		for(var i =0; i < subscribers.length; i++) {
 			OPENTOK.session.unsubscribe(subscribers[i]);
 		}
