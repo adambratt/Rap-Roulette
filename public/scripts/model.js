@@ -149,6 +149,8 @@ function Model () {
     this.name = obj.name;
     this.players = obj.players;
     this.player = obj.player;
+    this.right = obj.right;
+    this.left = obj.left;
     this.current_player_id = obj.current_player_id;
     this.current_state_id = obj.current_state_id;
     this.song_id = obj.song_id;
