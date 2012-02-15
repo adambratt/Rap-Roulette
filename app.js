@@ -58,7 +58,7 @@ app.configure('production', function(){
   GLOBAL.game_debug=1;
   GLOBAL.game_run_mode='production';
   GLOBAL.game_start_time=2500; // if set to null, the game will not start
-  GLOBAL.battle_speed=6;
+  GLOBAL.battle_speed=1;
 });
 
 
@@ -112,6 +112,8 @@ app.get('/player/mysession', player.mysession);
 app.get('/player/mysid', player.mysid);
 app.post('/player/update', player.update);
 app.get('/players/:id', player.view);
+app.get('/passcode', player.passcode);
+app.get('/passcode/:passcode', player.passcode);
 
 // songs
 app.get('/song/list', song.list);

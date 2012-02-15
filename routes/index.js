@@ -11,7 +11,14 @@ var model = require('../lib/model')
 
 exports.index = function(req, res){
   //console.log(util.inspect(req.session));
-  
+
+  // temporary block for all users without a passcode
+  // ==========================================================================
+  if (typeof req.session === 'undefined' || typeof req.session.has_passcode === 'undefined' || (! req.session.has_passcode)) {
+      res.redirect('/passcode/');
+  }
+
+
 	id = req.params.id;
   if (typeof id === 'undefined') id = 'main_stage';
 
