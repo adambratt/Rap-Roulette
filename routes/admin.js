@@ -2,6 +2,9 @@ var model = require('../lib/model')
   , Socket = model.Socket
   , testing = require('../lib/testing')
   , Fixture = testing.Fixture
+  , Player = model.Player
+  , Room = model.Room
+  , Battle = model.Battle
   , util = require('util')
 ;
 
@@ -33,8 +36,6 @@ exports.emit_alert = function(req, res){
 };
 
 
-
-
 // load_fixtures
 
 exports.load_fixtures = function(req, res){
@@ -57,7 +58,6 @@ exports.load_fixtures = function(req, res){
 };
 
 
-
 // opentok
 // test opentok interaction
 
@@ -72,6 +72,29 @@ exports.opentok = function(req, res){
 
 };
 
+
+
+
+
+
+// room
+// returns a page for controlling what happens in a room
+
+exports.room = function(req, res){
+  room_id = req.params.room_id;
+  
+  Room.get(null, room_id, function (err, room) {
+    
+    delete room['_id'];
+      
+    res.render('admin/room', { 
+      title: 'Control Booth',
+      room: room,
+      battleState: Battle.states[room.battle_id]
+    });
+
+  });
+};
 
 
 

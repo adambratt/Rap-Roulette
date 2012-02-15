@@ -16,6 +16,7 @@ exports.index = function(req, res){
   // ==========================================================================
   if (typeof req.session === 'undefined' || typeof req.session.has_passcode === 'undefined' || (! req.session.has_passcode)) {
       res.redirect('/passcode/');
+      return;
   }
 
 

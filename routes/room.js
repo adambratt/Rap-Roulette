@@ -282,6 +282,7 @@ exports.view_battle_state = function(req, res){
   id = req.params.id;
   Room.get(null, id, function (err, room) {	  
     battleState = Battle.states[room.battle_id];
+    battleClock = Room.battle_clocks[room.id];
 
     if (typeof battleState !== 'undefined') {
     
@@ -290,6 +291,7 @@ exports.view_battle_state = function(req, res){
         title: room.name, 
         room: room,
         battleState: battleState,
+        battleClock: battleClock,
       });
 
     } else {

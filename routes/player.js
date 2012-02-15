@@ -100,11 +100,13 @@ exports.passcode = function(req, res){
       console.log('Someone with passcode ' + Player.passcodes[passcode] + ' entered the site.');
       req.session.has_passcode = true;
       res.redirect('/');
-    
+      return;
+
     } else if (passcode == 'reset') {
       console.log('Someone reset their passcode.');
       req.session.has_passcode = false;
       res.redirect('/');
+      return;
 
     } 
   }
