@@ -35,7 +35,7 @@
               uiLoadPlayerNav(player);
               
               gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
-              //gSock.emit('opentok.init', { sid: player.sid, room_id: room_id }); 
+              gSock.emit('opentok.init', { sid: player.sid, room_id: room_id }); 
 
             });
             
