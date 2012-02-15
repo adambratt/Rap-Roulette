@@ -44,7 +44,7 @@
     <div style="padding:10px 10px 10px 25px">
         
         <span class="label">Room</span><br/>
-        <a href="/rooms/<%= room.id %>" target="output">View Room</a><br/>
+        <a href="/rooms/<%= room.id %>" target="output">View Room</a> (new window)<br/>
         <a href="/rooms/<%= room.id %>/enter" target="output">Enter Room</a><br/>
         <a href="/rooms/<%= room.id %>/leave" target="output">Leave Room</a><br/>
 
@@ -82,7 +82,7 @@
 </td>
 
 <td valign="top" class="display" width="1000">
-<iframe src="/" scrolling="yes" name="output" width="1000" height="500"></iframe>
+<iframe src="/" scrolling="yes" name="room" width="1000" height="500"></iframe>
 </td>
 
 </tr>
