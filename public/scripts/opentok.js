@@ -89,12 +89,12 @@ OPENTOK.sessionConnectedHandler = function(event) {
 		if(	typeof model.battle.left!=="undefined"
 			&&typeof model.battle.left.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.left.stream_id)
-				addStream(events.streams[i], 0);
+				addStream(event.streams[i], 0);
 				
 		if(	typeof model.battle.right!=="undefined"
 			&& typeof model.battle.right.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.right.stream_id)
-				addStream(events.streams[i], 1);
+				addStream(event.streams[i], 1);
 		
 	}
 	
@@ -184,12 +184,12 @@ console.log('StreamCreatedHandler');
 		if(	typeof model.battle.left!=="undefined"
 			&&typeof model.battle.left.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.left.stream_id)
-				addStream(events.streams[i], 0);
+				addStream(event.streams[i], 0);
 				
 		if(	typeof model.battle.right!=="undefined"
 			&& typeof model.battle.right.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.right.stream_id)
-				addStream(events.streams[i], 1);
+				addStream(event.streams[i], 1);
 		
 	}
 	
@@ -201,7 +201,7 @@ console.log('StreamCreatedHandler');
 
 OPENTOK.streamDestroyedHandler = function(event) {
 	for (var i = 0; i < event.streams.length; i++) {
-		subscribers = OPENTOK.session.getSubsribersforStream(event.streams[i]);
+		subscribers = OPENTOK.session.getSubscribersForStream(event.streams[i]);
 		for(var i =0; i < subscribers.length; i++) {
 			OPENTOK.session.unsubscribe(subscribers[i]);
 		}
