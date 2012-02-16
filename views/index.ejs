@@ -78,10 +78,6 @@
               //alert(time_into_battle);
 
 			
-				
-				console.log('got dem streamz');
-				
-				
               setTimeout("playSound( '"+battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
               switch (state) {
                 
@@ -125,9 +121,6 @@
         // initialize the animation
         initAnimation( {}, function (err) {  
 
-            // hide the player setup
-          $('#floatPlayerSetup').hide(); 
-          
           //crowdAction('calm');
           
           initOPENTOK(function () {});

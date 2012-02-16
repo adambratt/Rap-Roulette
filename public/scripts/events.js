@@ -580,3 +580,45 @@ function initEvents (eventData, cb) {
 
 
 
+///////////////////
+// Utilities
+///////////////////
+
+
+// logging, with builtin quietude
+
+function logMessage (message) {
+  // message format (used for server XHR / AJAX as well): 
+  // { warn:    { message: 'Any message',         origin: 'class, method, etc.'}
+  // { success: { message: 'Successful message',  origin: 'class, method, etc.'}
+  // { error:   { message: 'Error message',       origin: 'class, method, etc.'}
+  
+  //console.log(util.inspect(message));  
+
+  var origin = 'logMessage ';
+
+  // log error
+  if (typeof message.error !== 'undefined') {
+    origin += (typeof message.error.origin !== 'undefined') ? message.error.origin : '';
+    console.log(origin + ' ERROR: ' + message.error.message);
+  }
+
+  // log successe
+  if (typeof message.success !== 'undefined' && typeof game_debug !== 'undefined' && game_debug > 0) {
+    origin += (typeof message.success.origin !== 'undefined') ? message.success.origin : '';
+    console.log(origin + ' SUCCESS: ' + message.success.message);
+  }
+
+  // log warn
+  if (typeof message.warn !== 'undefined' && typeof game_debug !== 'undefined' && game_debug > 0) {
+    origin += (typeof message.warn.origin !== 'undefined') ? message.warn.origin : '';
+    console.log(origin + ': ' + message.warn.message);
+  }
+
+}
+
+
+
+
+
+

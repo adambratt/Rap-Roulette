@@ -102,8 +102,8 @@ exports.passcode = function(req, res){
     if (typeof Player.passcodes[passcode] !== 'undefined') {
       console.log('Someone with passcode ' + Player.passcodes[passcode] + ' entered the site.');
       req.session.has_passcode = true;
-      console.log(util.inspect(req.session));
-      console.log(req.sessionID);
+      //console.log(util.inspect(req.session));
+      //console.log(req.sessionID);
 
       res.redirect('/');
       return;
@@ -288,7 +288,7 @@ exports.update = function (req, res) {
 
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
   
-  console.log(util.inspect(req.body));
+  //console.log(util.inspect(req.body));
       
   Player.collection.findAndModify( {
     query: {id: req.session.player_id}, 

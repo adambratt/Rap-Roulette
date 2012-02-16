@@ -4,6 +4,10 @@
 // sets up the UI on page (called before the events are initialized)
 
 function initAnimation (animationData, cb) {
+  
+  // hide the player setup
+  $('#floatPlayerSetup').hide();
+  
   cb(null);
 }
 
@@ -117,20 +121,6 @@ function setVoteBars(numVotesLeft, numVotesRight) {
 }
 
 ////////////////////////////////
-// Popup stuff
-////////////////////////////////
-
-// display a welcome message for new users
-
-function uiShowDialog() {
-	$( "#enqueue-popup" ).modal({opacity:0});
-  $( "#facebookbtn" ).bind('click', function(){
-    window.location.href = '/player/login';
-  });
-}
-
-
-////////////////////////////////
 // Sounds
 ////////////////////////////////
 
@@ -225,8 +215,9 @@ function decrementTimer() {
 	setTimerValue( time );
 }
 
+
 ////////////////////////////////
-// UI State Transitions
+// State Transitions
 ////////////////////////////////
 
 flashingID = 0;
@@ -395,6 +386,16 @@ function uiLoadInfo1(content) {
 ////////////////////////////////
 
 
+// display a welcome message for new users
+
+function uiShowDialog() {
+	$( "#enqueue-popup" ).modal({opacity:0});
+  $( "#facebookbtn" ).bind('click', function(){
+    window.location.href = '/player/login';
+  });
+}
+
+
 function uiLoadPlayerNav(player) {
   var nav = '';
   if (player.is_logged_in) {
@@ -414,13 +415,13 @@ function uiLoadPlayerNav(player) {
 
 function uiPlayerSetup () {
   var divName = "#floatPlayerSetup";
-  menuYloc = parseInt($(divName).css("top").substring(0,$(divName).css("top").indexOf("px")))
+  menuyloc = parseint($(divname).css("top").substring(0,$(divname).css("top").indexof("px")))
 
-  $(divName).show();
+  $(divname).show();
 
   $(window).scroll(function () {
-    offset = menuYloc+$(document).scrollTop()+"px";
-    $(divName).animate({top:offset},{duration:350,queue:false});
+    offset = menuyloc+$(document).scrolltop()+"px";
+    $(divname).animate({top:offset},{duration:350,queue:false});
   });
   
   $(divName).html('<form id="playerSetup">Set your stage name: <br><input type="text" name="name" id="name"/><br/><button id="submitButton">Save</button></form>');
