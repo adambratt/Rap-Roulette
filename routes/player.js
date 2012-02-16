@@ -213,11 +213,15 @@ exports.login_redirected = function(req, res){
     req.session.has_passcode = true;
 
     Room.get_myroom(null, req.session.player_id, function (err, room) {
-      
-      if (room.id == 'main_stage') {
+      if (typeof room === 'undefined') {
         res.redirect('/');
+        
       } else {
-        res.redirect('/rooms/' + room.id);
+        if (room.id == 'main_stage') {
+          res.redirect('/');
+        } else {
+          res.redirect('/rooms/' + room.id);
+        }
       }
       
     });
