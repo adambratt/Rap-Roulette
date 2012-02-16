@@ -181,7 +181,8 @@ exports.login_and_enter_queue = function (req, res) {
   var sid = req.sessionID;
  
   req.session.trigger_enter_queue_after_login = true;
-  
+  req.session.has_passcode = true;
+
   //Session.get(null, sid, function (err, session) { 
   
   Session.collection.findAndModify( {
@@ -209,7 +210,8 @@ exports.login_and_enter_queue = function (req, res) {
 exports.login_redirected = function(req, res){
   
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
-    
+    req.session.has_passcode = true;
+
     Room.get_myroom(null, req.session.player_id, function (err, room) {
       
       if (room.id == 'main_stage') {
@@ -271,6 +273,8 @@ exports.logout = function (req, res) {
 // update
 
 exports.update = function (req, res) {
+  
+  //console.log(req.session.player_id);
 
   if (typeof req.session !== 'undefined' && typeof req.session.player_id !== 'undefined') {
   
@@ -287,7 +291,9 @@ exports.update = function (req, res) {
 
   } else {
   
-      display_404( req, res); 
+      //display_404( req, res); 
+      res.json({ error: {message: 'Your session is in a bad state.'}});
+
       return;
   }
 
