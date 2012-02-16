@@ -218,8 +218,10 @@ OPENTOK.signalReceivedHandler = function(event){
 
 OPENTOK.streamCreatedHandler = function(event) {
 
+	console.log(curLeft.stream_id);
+	console.log(curRight.stream_id);
 
-	OPENTOK.session.signal();
+	
 
 console.log('StreamCreatedHandler');
 
@@ -241,16 +243,16 @@ console.log('StreamCreatedHandler');
 
 	for (var i = 0; i < event.streams.length; i++) {
 		console.log(event.streams[i].connection.connectionId);
-		if(	typeof model.battle.left!=="undefined"
-			&&typeof model.battle.left.stream_id!=="undefined"
-			&& event.streams[i].connection.connectionId==model.battle.left.stream_id)
+		if(	typeof curLeft!=="undefined"
+			&&typeof curLeft.stream_id!=="undefined"
+			&& event.streams[i].connection.connectionId==curLeft.stream_id)
 			{
 			console.log('adding stream to 0');
 				addStream(event.streams[i], 0);
 				}
-		if(	typeof model.battle.right!=="undefined"
-			&& typeof model.battle.right.stream_id!=="undefined"
-			&& event.streams[i].connection.connectionId==model.battle.right.stream_id)
+		if(	typeof curRight!=="undefined"
+			&& typeof curRight.stream_id!=="undefined"
+			&& event.streams[i].connection.connectionId==curRight.stream_id)
 			{
 				console.log('adding stream to 1');
 				addStream(event.streams[i], 1);

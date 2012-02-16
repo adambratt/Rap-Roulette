@@ -7,6 +7,9 @@ var maxBeats=9;
 
 var nowRapping=false;
 
+var curLeft={}; 
+var curRight={};
+
 var songInfo=new Array();
 	songInfo[1]={name: "6 Foot 7 Foot", artist: "Bangladesh", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"}; 
 	songInfo[2]={name: "Black and Yellow", artist: "StarGate", url: "http://www.youtube.com/watch?v=y6y_4_b6RS8&ob=av2e"}; 
@@ -337,6 +340,21 @@ function emitPublished(s, id) {
 	
 	gSock.emit('published', data);
 }
+
+
+gSock.on('setLeft', function(data) {
+
+	curLeft.stream_id = data.stream_id;
+	curLeft.player_id = data.player_id;
+	console.log('setLeft received');
+});
+
+gSock.on('setRight', function(data) {
+
+	curRight.stream_id = data.stream_id;
+	curRight.player_id = data.player_id;
+	console.log('setRight received');
+});
 
 
 function voteLeft() {
