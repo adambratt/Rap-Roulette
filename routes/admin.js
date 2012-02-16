@@ -88,6 +88,7 @@ exports.room = function(req, res){
     delete room['_id'];
       
     res.render('admin/room', { 
+      layout: 'admin/layout',
       title: 'Control Booth',
       room: room,
       battleState: Battle.states[room.battle_id]

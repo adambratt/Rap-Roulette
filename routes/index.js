@@ -11,10 +11,16 @@ var model = require('../lib/model')
 
 exports.index = function(req, res){
   //console.log(util.inspect(req.session));
-
+  
   // temporary block for all users without a passcode
   // ==========================================================================
+  //console.log('req.session ' + req.session);
+  //console.log('req.session.has_passcode ' + req.session.has_passcode);
+  //console.log(util.inspect(req.session));
+  //console.log(req.sessionID);
+
   if (typeof req.session === 'undefined' || typeof req.session.has_passcode === 'undefined' || (! req.session.has_passcode)) {
+      console.log('redirect to passcode');
       res.redirect('/passcode/');
       return;
   }

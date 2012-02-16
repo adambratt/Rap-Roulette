@@ -93,12 +93,18 @@ exports.mysid = function(req, res){
 exports.passcode = function(req, res){
   
   var passcode = req.params.passcode;
+  //console.log(util.inspect(req.session));
+  //console.log(req.sessionID);
+
 
   var pass = false;
   if (typeof passcode !== 'undefined') {
     if (typeof Player.passcodes[passcode] !== 'undefined') {
       console.log('Someone with passcode ' + Player.passcodes[passcode] + ' entered the site.');
       req.session.has_passcode = true;
+      console.log(util.inspect(req.session));
+      console.log(req.sessionID);
+
       res.redirect('/');
       return;
 
