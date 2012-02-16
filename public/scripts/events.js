@@ -328,6 +328,7 @@ gSock.on('playKey', function(data) {
   
 });
 
+//after we start publishing, emit what side we're on, our stream_id, and our player_id back to the server
 function emitPublished(s, id) {
 
 
@@ -341,7 +342,7 @@ function emitPublished(s, id) {
 	gSock.emit('published', data);
 }
 
-
+//gets left player from server, stores stream_id
 gSock.on('setLeft', function(data) {
 
 	curLeft.stream_id = data.stream_id;
@@ -349,6 +350,7 @@ gSock.on('setLeft', function(data) {
 	console.log('setLeft received');
 });
 
+//gets right player from server, stores stream_id
 gSock.on('setRight', function(data) {
 
 	curRight.stream_id = data.stream_id;

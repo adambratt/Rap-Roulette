@@ -148,13 +148,13 @@ function stopPublishing(){
 }
 
 function mute(){
-
+	//mute yourself
 	
 	OPENTOK.publisher.publishAudio(false);
 
 }
 function unmute(){
-	
+	//unmute yourself
 	OPENTOK.publisher.publishAudio(true);
 }
 
@@ -217,6 +217,9 @@ OPENTOK.signalReceivedHandler = function(event){
 
 
 OPENTOK.streamCreatedHandler = function(event) {
+//loops through all the active connections in the session, tries to find which connnection_id 
+//matches the stream_id we have stored in curLeft and curRight (our client-side record of who is rapping and where)
+//and subscribes to the proper stream
 
 	console.log(curLeft.stream_id);
 	console.log(curRight.stream_id);
@@ -267,6 +270,7 @@ console.log('StreamCreatedHandler');
 
 
 OPENTOK.streamDestroyedHandler = function(event) {
+//when a stream is destroyed, unsubscribe everyone from it
 	for (var i = 0; i < event.streams.length; i++) {
 		subscribers = OPENTOK.session.getSubscribersForStream(event.streams[i]);
 		for(var i =0; i < subscribers.length; i++) {
