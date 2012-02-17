@@ -214,7 +214,9 @@ gSock.on("stateBeforePlayer1", function(data) {
 	moveSpotlight(true);
   //crowdAction('calm');
   
-  uiLoadInfo0('Get ready for rap, ' + model.battle.player[model.battle.players[0]].name + '!');  
+  if (typeof model.battle.player[model.battle.players[0]] !== 'undefined') {
+    uiLoadInfo0('Get ready for rap, ' + model.battle.player[model.battle.players[0]].name + '!');  
+  }
   uiLoadInfo1('');
 
 });
@@ -243,8 +245,9 @@ gSock.on("stateBeforePlayer2", function(data) {
   //crowdAction('calm');
 
   uiLoadInfo0('');  
-  uiLoadInfo1('Get ready, ' + model.battle.player[model.battle.players[1]].name + ', you are up next!');
-
+  if (typeof model.battle.player[model.battle.players[1]] !== 'undefined') {
+    uiLoadInfo1('Get ready, ' + model.battle.player[model.battle.players[1]].name + ', you are up next!');
+  }
 });
 
 gSock.on("statePlayer2Rap", function(data) {
@@ -285,15 +288,17 @@ gSock.on("statePostRap", function(data) {
   window.console.log('statePostRap');
   
   //alert(data.winning_player_id);
-  var winning_side = model.battle.player[data.winning_player_id].side;
-  if (winning_side == 'left') { 
-    uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!'); 
-  } else {
-    uiLoadInfo1(model.battle.player[data.winning_player_id].name + ' won the battle!');
+  if (typeof model.battle.player[data.winning_player_id] !== 'undefined') {
+    var winning_side = model.battle.player[data.winning_player_id].side;
+    if (winning_side == 'left') { 
+      uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!'); 
+    } else {
+      uiLoadInfo1(model.battle.player[data.winning_player_id].name + ' won the battle!');
+    }
   }
-  
+
   //alert(data.dropped_player_id);
-  if (typeof data.dropped_player_id !== 'undefined') {
+  if (typeof data.dropped_player_id !== 'undefined' && typeof model.battle.player[data.dropped_player_id] !== 'undefined') {
     var dropped_side = model.battle.player[data.dropped_player_id].side;
     if (dropped_side == 'left') { 
       uiLoadInfo0(model.battle.player[data.dropped_player_id].name + ' dropped the mike!'); 
