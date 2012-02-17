@@ -137,6 +137,10 @@ gSock.on("unmute", function(message) {
 	unmute();
 });
 
+gSock.on("prepareToRap", function(message) {
+	setTimeout('tellPlayerToGo()', 3000);
+});
+
 
 
   
