@@ -286,7 +286,7 @@ gSock.on("statePostRap", function(data) {
   
   //alert(data.winning_player_id);
   var winning_side = model.battle.player[data.winning_player_id].side;
-  if (side == 'left') { 
+  if (winning_side == 'left') { 
     uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!'); 
   } else {
     uiLoadInfo1(model.battle.player[data.winning_player_id].name + ' won the battle!');
@@ -295,10 +295,10 @@ gSock.on("statePostRap", function(data) {
   //alert(data.dropped_player_id);
   if (typeof data.dropped_player_id !== 'undefined') {
     var dropped_side = model.battle.player[data.dropped_player_id].side;
-    if (side == 'left') { 
-      uiLoadInfo0(model.battle.player[data.dropped_player_id].side + ' dropped the mike!'); 
+    if (dropped_side == 'left') { 
+      uiLoadInfo0(model.battle.player[data.dropped_player_id].name + ' dropped the mike!'); 
     } else {
-      uiLoadInfo1(model.battle.player[data.dropped_player_id].side + ' dropped the mike!');
+      uiLoadInfo1(model.battle.player[data.dropped_player_id].name + ' dropped the mike!');
     }
   }
 
