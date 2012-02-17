@@ -42,7 +42,7 @@ OPENTOK.connectToSession = function(room) {
 
 function getStreamId() {
 
-	return OPENTOK.session.connection.connectionID;
+	return OPENTOK.session.connection.connectionId;
 
 }
 

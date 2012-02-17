@@ -97,13 +97,15 @@ gSock.on("startOpenTok", function(player) {
 
 	if(nowRapping)
 	{
+		var id = getStreamId();
 		var data = {
 			side: player,
-			player_id: model.player.id,
-			stream_id: getStreamId()
+			stream_id: id
 		};
 		
 		gSock.emit('published', data);
+		console.log('i was rapping but still emitted published');
+		console.log(data.stream_id);
 		return;
 	}
 		
