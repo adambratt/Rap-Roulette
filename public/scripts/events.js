@@ -284,6 +284,7 @@ gSock.on("statePostRap", function(data) {
     
   window.console.log('statePostRap');
   
+  //alert(data.winning_player_id);
   var winning_side = model.battle.player[data.winning_player_id].side;
   if (side == 'left') { 
     uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!'); 
@@ -291,6 +292,7 @@ gSock.on("statePostRap", function(data) {
     uiLoadInfo1(model.battle.player[data.winning_player_id].name + ' won the battle!');
   }
   
+  //alert(data.dropped_player_id);
   if (typeof data.dropped_player_id !== 'undefined') {
     var dropped_side = model.battle.player[data.dropped_player_id].side;
     if (side == 'left') { 

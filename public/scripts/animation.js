@@ -373,10 +373,14 @@ function tellPlayerToGo() {
 // Info UI
 ////////////////////////////////
 
+// left info panel
 
 function uiLoadInfo0(content) {
  $('#info0').html(content);
 }
+
+
+// right info panel
 
 function uiLoadInfo1(content) {
  $('#info1').html(content); 
