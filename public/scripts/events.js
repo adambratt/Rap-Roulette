@@ -108,7 +108,8 @@ gSock.on("startOpenTok", function(player) {
 		
 	if($(".leavequeue").is(":visible")){
 		$('.leavequeue').hide();
-		$('.getinline').show();
+		$('.leavebattle').show();
+		//$('.getinline').show();
 	}
 	
 });
@@ -282,6 +283,55 @@ gSock.on('setQueue', function(data) {
   }
 	
 });
+
+
+
+
+gSock.on('endBattleByDrop', function(data) {
+  
+  /*
+  var example_data = {
+    success: { message: ... }
+    player: { id: ... name: ...}
+    room: {id: ...
+  };
+  */
+  
+  if (data.success !== 'undefined') {
+    //alert(data.player.name + ' Dropped the Mike!'); 
+    var side = model.battle.player[data.player.id].side;
+    if (side == 'left') { 
+      uiLoadInfo0(data.player.name + ' dropped the mike!'); 
+    } else {
+      uiLoadInfo1(data.player.name + ' dropped the mike!');
+    }
+  
+  }
+	
+});
+
+
+
+
+gSock.on('XendBattleByDrop', function(data) {
+  
+  /*
+  var example_data = {
+    success: { message: ... }
+    player: { id: ... name: ...}
+    room: {id: ...
+  };
+  */
+  
+  if (data.success !== 'undefined') {
+    
+   alert(data.player.name + ' ' ); 
+  } else {
+    setQueue(queue);
+  }
+	
+});
+
 
 
 gSock.on('playSound', function(data) {
@@ -554,13 +604,24 @@ function initEvents (eventData, cb) {
   
   $('.leavequeue').click(function() {
 	
-	 model.player.get_mysid(null, function(err, player_sid) {
-          gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
-        });
+	  model.player.get_mysid(null, function(err, player_sid) {
+        gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
+      });
   
-	$('.leavequeue').hide();
+	  $('.leavequeue').hide();
 		$('.getinline').show();
 	
+  
+  });
+
+  $('.leavebattle').click(function() {
+	
+	  model.player.get_mysid(null, function(err, player_sid) {
+      gSock.emit('room.leaveBattle', {room_id: 'main_stage', sid: player_sid} );
+    });
+     
+	  $('.leavebattle').hide();
+	  $('.getinline').show();
   
   });
   

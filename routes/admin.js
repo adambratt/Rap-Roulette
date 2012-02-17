@@ -97,6 +97,7 @@ exports.room = function(req, res){
   });
 };
 
+
 // room_clock_run_mode
 // sends 
 
@@ -120,8 +121,6 @@ exports.room_clock_run_mode = function(req, res){
     
   });
 };
-
-
 
 
 // unload_fixtures

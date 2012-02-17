@@ -503,7 +503,7 @@ a {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff8f3a', endColorstr='#d2620d', GradientType=0);
 }
 
-.leavequeue {
+.leavequeue, .leavebattle  {
 	width:160px;
     margin:0 auto;
     margin-bottom:10px;
