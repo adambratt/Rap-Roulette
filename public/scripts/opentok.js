@@ -40,6 +40,12 @@ OPENTOK.connectToSession = function(room) {
   OPENTOK.session.connect(OPENTOK.apiKey, OPENTOK.token);
 }
 
+function getStreamId() {
+
+	return OPENTOK.session.connection.connectionID;
+
+}
+
 function addStream(stream, div) {
 	// Check if this is the stream that I am publishing, and if so do not publish.
 	if (stream.connection.connectionId == OPENTOK.session.connection.connectionId) {

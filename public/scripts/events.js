@@ -96,7 +96,16 @@ gSock.on("playerAlert", function(message) {
 gSock.on("startOpenTok", function(player) {
 
 	if(nowRapping)
+	{
+		var data = {
+			side: player,
+			player_id: model.player.id,
+			stream_id: getStreamId()
+		};
+		
+		gSock.emit('published', data);
 		return;
+	}
 		
 	console.log('got start tok');
 	startPublishing(player);
@@ -108,6 +117,7 @@ gSock.on("startOpenTok", function(player) {
 		
 	if($(".leavequeue").is(":visible")){
 		$('.leavequeue').hide();
+
 		$('.leavebattle').show();
 		//$('.getinline').show();
 	}
@@ -305,7 +315,7 @@ gSock.on('endBattleByDrop', function(data) {
     } else {
       uiLoadInfo1(data.player.name + ' dropped the mike!');
     }
-  
+  f
   }
 	
 });
