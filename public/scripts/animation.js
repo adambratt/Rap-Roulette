@@ -363,6 +363,10 @@ function crowdAction (action) {
   
 }
 
+function tellPlayerToGo() {
+	alert("GO!!");
+}
+
 
 
 ////////////////////////////////

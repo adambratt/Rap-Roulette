@@ -45,6 +45,14 @@ a {
 	background-color:#000;
 }
 
+#go-popup {
+	display: none;
+	color: white;
+	text-align: center;
+	font-size: 100px;
+	padding: 50px;
+}
+
 #simplemodal-container {
 	/*background-color:#363636;*/
 	background-image:url('../images/broken_noise.png');
