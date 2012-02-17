@@ -170,13 +170,13 @@ var beatIndex;
 gSock.on("statePreRap", function(data) {
   window.console.log('statePreRap');
 	resetVotes();	
-  crowdAction('stop');
+  //crowdAction('stop');
   
   soundManager.stopAll();
 	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
   	//var sound = soundManager.getSoundById(model.battle.song_id);
   	//sound.play();
-  	playSound(model.battle.song_id, 0, true); // play song from beginning
+  playSound(model.battle.song_id, 0, true); // play song from beginning
 	
   setTimer(30);
   setTimerColor("red");
@@ -186,35 +186,10 @@ gSock.on("statePreRap", function(data) {
 	
 	//TODO: notify player 1 that he is about to rap
 	//		tell both rappers some pre-rap stuff?
-});
-
-gSock.on("statePlayer1Rap", function(data) {
-  window.console.log('statePlayer1Rap');
-	setTimerColor("white");
-	startCountdown();
-	//TODO: mute player 2
-  crowdAction('dance');
-});
-
-gSock.on("stateBeforePlayer2", function(data) {
-  window.console.log('stateBeforePlayer2');
-	setTimer(30);
-	setTimerColor("red");
-	moveSpotlight(false);
-	//TODO: mute player 1
-	//play airhorn
-	//notify player 2 that he is about to rap
-  crowdAction('calm');
-	
-});
-
-gSock.on("statePlayer2Rap", function(data) {
-  window.console.log('statePlayer2Rap');
-
-//TODO: unmute player 2
-	setTimerColor("white");
-	startCountdown();
-  crowdAction('dance');
+  
+  uiLoadInfo0('<p style="text-align:center;">Get<br/>Ready</p>');  
+  uiLoadInfo1('<p style="text-align:center;">To<br/>Rap!</p>');  
+  
 });
 
 gSock.on("stateBeforePlayer1", function(data) {
@@ -225,9 +200,54 @@ gSock.on("stateBeforePlayer1", function(data) {
 	setTimer(30);
 	setTimerColor("red");
 	moveSpotlight(true);
-  crowdAction('calm');
+  //crowdAction('calm');
+  
+  uiLoadInfo0('Get ready for rap, ' + model.battle.player[model.battle.players[0]].name + '!');  
+  uiLoadInfo1('');
 
 });
+
+
+gSock.on("statePlayer1Rap", function(data) {
+  window.console.log('statePlayer1Rap');
+	setTimerColor("white");
+	startCountdown();
+  //crowdAction('dance');
+  
+  uiLoadInfo0('You are on!');  
+  uiLoadInfo1('');
+ 
+
+});
+
+gSock.on("stateBeforePlayer2", function(data) {
+  window.console.log('stateBeforePlayer2');
+	setTimer(30);
+	setTimerColor("red");
+	moveSpotlight(false);
+	//TODO: mute player 1
+	//play airhorn
+	//notify player 2 that he is about to rap
+  //crowdAction('calm');
+
+  uiLoadInfo0('');  
+  uiLoadInfo1('Get ready, ' + model.battle.player[model.battle.players[1]].name + ', you are up next!');
+
+});
+
+gSock.on("statePlayer2Rap", function(data) {
+  window.console.log('statePlayer2Rap');
+
+//TODO: unmute player 2
+	setTimerColor("white");
+	startCountdown();
+  //crowdAction('dance');
+  
+  uiLoadInfo0('');  
+  uiLoadInfo1('You are on!');
+
+});
+
 
 gSock.on("stateFinalVoting", function(data) {
   window.console.log('stateFinalVoting');
@@ -235,16 +255,49 @@ gSock.on("stateFinalVoting", function(data) {
 	turnSpotlightOff();
 	//TODO: play hyphy airhorn
   crowdAction('stop');
+  
+  uiLoadInfo0('Last chance to give props!');  
+  uiLoadInfo1('Last chance to give props!');  
 
 });
 
 gSock.on("statePostRap", function(data) {
+  /*
+  var sampleData = {
+    winning_player_id: abc,
+    losing_player_id: def
+  };
+   
+  */
+    
   window.console.log('statePostRap');
+  
+  var winning_side = model.battle.player[data.winning_player_id].side;
+  if (side == 'left') { 
+    uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!'); 
+  } else {
+    uiLoadInfo1(model.battle.player[data.winning_player_id].name + ' won the battle!');
+  }
+  
+  if (typeof data.dropped_player_id !== 'undefined') {
+    var dropped_side = model.battle.player[data.dropped_player_id].side;
+    if (side == 'left') { 
+      uiLoadInfo0(model.battle.player[data.dropped_player_id].side + ' dropped the mike!'); 
+    } else {
+      uiLoadInfo1(model.battle.player[data.dropped_player_id].side + ' dropped the mike!');
+    }
+  }
+
+
 
 	
 	//stopSound('beat'+beatIndex); // no need to broadcast this
 	soundManager.stopAll();
   crowdAction('stop');
+
+  uiLoadInfo0('');  
+  uiLoadInfo1('');  
+
 
 	//TODO: calculate/announce winner
 	//		boot off loser
