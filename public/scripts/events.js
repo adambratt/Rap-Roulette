@@ -132,10 +132,12 @@ gSock.on("stopOpenTok", function(message) {
 });
 
 gSock.on("mute", function(message) {
+  console.log('socket command: mute');
 	mute();
 });
 
 gSock.on("unmute", function(message) {
+  console.log('socket command: unmute');
 	unmute();
 });
 
