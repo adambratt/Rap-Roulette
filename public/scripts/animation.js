@@ -7,7 +7,20 @@ function initAnimation (animationData, cb) {
   
   // hide the player setup
   $('#floatPlayerSetup').hide();
-  
+ 
+
+	if(nowRapping) {
+		
+	  $('.getinline').hide();
+	  $('.leavequeue').hide();
+	  $('.leavebattle').hide();
+	  	
+  } else {
+	  $('.getinline').show();
+	  $('.leavequeue').hide();
+	  $('.leavebattle').hide();
+  }
+
   cb(null);
 }
 

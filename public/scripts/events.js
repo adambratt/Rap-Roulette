@@ -152,6 +152,21 @@ gSock.on("prepareToRap", function(message) {
 // State Changes
 /////////////////////
 
+gSock.on("stateWaitingForPlayers", function(data) {
+  window.console.log('stateWaitingForPlayers');
+	//resetVotes();	
+   
+  //setTimer(30);
+  //setTimerColor("red");
+	//moveSpotlight(true);
+  
+  uiLoadInfo0('<p style="text-align:center;">Waiting for someone to step up.</p>');  
+  uiLoadInfo1('<p style="text-align:center;">Get in line!</p>');  
+  
+});
+
+
+
 gSock.on("stateNewBattle", function(data) {
 	//TODO: pop guy off queue
 	//		publish new stream
@@ -653,9 +668,6 @@ function initEvents (eventData, cb) {
     
 	if(nowRapping)
 		return;
-	
-	$('.getinline').hide();
-	$('.leavequeue').show();
 	
     // player logged in
     model.player.loggedin(null, function(err, player_loggedin) {
