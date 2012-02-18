@@ -53,8 +53,12 @@
               ////////////////////
               
               // Set current rappers
-              $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>');
-              $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>');
+              if (typeof battle.player[battle.players[0]] !== 'undefined') {
+                $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>');
+              }
+              if (typeof battle.player[battle.players[1]] !== 'undefined') {
+                $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>');
+              }
               
               // Figure out current spot in battle
               var started_at = new Date(battle.started_at);
