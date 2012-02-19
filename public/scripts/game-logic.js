@@ -31,26 +31,20 @@ scripts: [
     //console.log('battle state: ' + data.battleState);
 
     model.battle = new model.Battle(data.battleState, function (battle) {
-      //console.log("stateNewBattle battle_id " + battle.id);
       
       setQueue(data.queue);
+    
+      // init ui  
+      battleScripts['2PlayerBattle'].named_scripts['initBattle'](data); 
       
-      //alert(battle.players[0]); 
-      if (typeof battle.player[battle.players[0]] !== 'undefined') {
-        $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>'); 
-      }
-
-      //uiLoadInfo0('Player info');
-      if (typeof battle.player[battle.players[1]] !== 'undefined') {
-        $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
-      }
-
+      // left stream
       if (typeof battle.left !== "undefined" && typeof battle.left.stream_id !== "undefined")
         addStream(battle.left.stream_id, 0);
-
+      
+      // right stream
       if(typeof battle.right !== "undefined" && typeof battle.right.stream_id !== "undefined")
         addStream(battle.right.stream_id, 1);
-       
+ 
     });
 
       
@@ -252,7 +246,7 @@ scripts: [
     if (typeof model.battle.player[data.winning_player_id] !== 'undefined') {
       var winning_side = model.battle.player[data.winning_player_id].side;
       if (winning_side == 'left') { 
-        uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!'); 
+        uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!');
       } else {
         uiLoadInfo1(model.battle.player[data.winning_player_id].name + ' won the battle!');
       }
@@ -286,10 +280,67 @@ named_scripts: { // for things that repeat, and for special scripts
   
   waitingForPlayers: function (data) {
     console.log('client game-logic 2PlayerBattle: waitingForPlayers()'); 
+    
     uiLoadInfo0('<p style="text-align:center;">Waiting for someone to step up.</p>');  
     uiLoadInfo1('<p style="text-align:center;">Get in line!</p>');  
+    
+    $('div.video-wrapper0').find('span').replaceWith(''); 
+    $('div.video-wrapper1').find('span').replaceWith(''); 
+    
+    resetVotes() 
+
   }, 
   
+
+  // basic UI changes that would apply to any state, but are typically loaded in 0
+  initBattle: function(data) {
+     battle = data.battleState;
+    
+     if (typeof battle !== 'undefined') {
+
+      // player 0 name
+      if (typeof battle.player[battle.players[0]] !== 'undefined') {
+        $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>'); 
+      } else {
+        $('div.video-wrapper0').find('span').replaceWith(''); 
+      }
+      
+      // player 1 name
+      if (typeof battle.player[battle.players[1]] !== 'undefined') {
+        $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
+      } else {
+        $('div.video-wrapper1').find('span').replaceWith(''); 
+      }
+      
+      // player left queue buttons
+      if (model.battle.left.player_id == model.player.id) {
+        //console.log('This is the publishing player (left)');
+     	  
+        $('.getinline').hide();
+	      $('.leavequeue').hide();
+	      $('.leavebattle').show();
+	  	   
+      // player right queue buttons
+      } else if (model.battle.right.player_id == model.player.id) {
+        //console.log('This is the publishing player (right)');
+	      
+        $('.getinline').hide();
+	      $('.leavequeue').hide();
+	      $('.leavebattle').show();
+	  	       
+      // spectator queue buttons
+      } else {
+    
+	      $('.getinline').show();
+	      $('.leavequeue').hide();
+	      $('.leavebattle').hide();
+	  	    
+      }
+    
+    }
+     
+  },
+
 }
 
 } // end 2PlayerBattle script

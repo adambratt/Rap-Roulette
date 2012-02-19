@@ -48,7 +48,7 @@
             
             //<% if (typeof battleState !== 'undefined') { %>
             model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
-
+              
               ////////////////////
               // Initial Game State Sync
               ////////////////////
@@ -84,6 +84,13 @@
 
 			
               setTimeout("playSound( '"+battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
+
+
+              // NOT QUITE READY FOR THIS YET...
+              //battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: battle });   // load whatever is generally first loaded
+              //battleScripts['2PlayerBattle'].scripts[state].script({});   // for whatever state is happening at the moment
+              
+              
               switch (state) {
                 
               case(1):
@@ -113,7 +120,8 @@
               	startCountdown();
               	moveSpotlight(false);
               	break;
-              }
+                }
+                
 
 
            });
