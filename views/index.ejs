@@ -32,37 +32,34 @@
         // initialize the data model
         initModel(function (model) {
             
-            model.player = new model.Player(<%- JSON.stringify(player) %>, function (player) { 
-              uiLoadPlayerNav(player);
+            model.player = new model.Player(<%- JSON.stringify(player) %>);
+            uiLoadPlayerNav(model.player);
               
-              gSock.emit("room.enter", { sid: player.sid, room_id: room_id });
-              //gSock.emit('opentok.init', { sid: player.sid, room_id: room_id }); 
-
-            });
+            gSock.emit("room.enter", { sid: model.player.sid, room_id: room_id });
+            //gSock.emit('opentok.init', { sid: player.sid, room_id: room_id }); 
             
-            model.room = new model.Room(<%- JSON.stringify(room) %>, function (room) {
-            });
+            model.room = new model.Room(<%- JSON.stringify(room) %>);
             
             initServerClock(<%= ( new Date().getTime() + 700) %>);
             initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
             
             //<% if (typeof battleState !== 'undefined') { %>
-            model.battle = new model.Battle(<%- JSON.stringify(battleState) %>, function (battle) {
+            model.battle = new model.Battle(<%- JSON.stringify(battleState) %>);
               
               ////////////////////
               // Initial Game State Sync
               ////////////////////
               
               // Set current rappers
-              if (typeof battle.player[battle.players[0]] !== 'undefined') {
-                $("div.video-wrapper0").find("span").replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>');
+              if (typeof model.battle.player[model.battle.players[0]] !== 'undefined') {
+                $("div.video-wrapper0").find("span").replaceWith('<span>' + model.battle.player[model.battle.players[0]].name + '</span>');
               }
-              if (typeof battle.player[battle.players[1]] !== 'undefined') {
-                $("div.video-wrapper1").find("span").replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>');
+              if (typeof model.battle.player[model.battle.players[1]] !== 'undefined') {
+                $("div.video-wrapper1").find("span").replaceWith('<span>' + model.battle.player[model.battle.players[1]].name + '</span>');
               }
               
               // Figure out current spot in battle
-              var started_at = new Date(battle.started_at);
+              var started_at = new Date(model.battle.started_at);
               var now = new Date(serverTime);
               var time_into_battle = now - started_at;
               var state = -1;
@@ -70,10 +67,10 @@
 
               while ( end_of_state < time_into_battle ) {
               	state++;
-              	end_of_state += battle.script[state];
+              	end_of_state += model.battle.script[state];
               }
 
-              var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - battle.script[state]);
+              var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - model.battle.script[state]);
 
               var time_left_in_state = started_at.getTime()+end_of_state - now.getTime();
 
@@ -83,14 +80,14 @@
               //alert(time_into_battle);
 
 			
-              setTimeout("playSound( '"+battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
+              setTimeout("playSound( '"+model.battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
 
 
               // NOT QUITE READY FOR THIS YET...
-              //battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: battle });   // load whatever is generally first loaded
-              //battleScripts['2PlayerBattle'].scripts[state].script({});   // for whatever state is happening at the moment
+              battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: model.battle });   // load whatever is generally first loaded
+              battleScripts['2PlayerBattle'].scripts[state].script({});   // for whatever state is happening at the moment
               
-              
+              /* 
               switch (state) {
                 
               case(1):
@@ -121,10 +118,9 @@
               	moveSpotlight(false);
               	break;
                 }
-                
+                */
 
 
-           });
 
             <% } %>
 

@@ -27,8 +27,6 @@ function Model () {
       this.facebook_image_url = 'https://graph.facebook.com/' + obj.service_username + '/picture';
     }
     
-    callback(this);
-  
     // get myself
     this.get_myself = function (err, cb) {
     
@@ -86,7 +84,7 @@ function Model () {
   // Room
   // ==========================================================================
 
-  this.Room = function (obj, callback) {
+  this.Room = function (obj) {
     
     // construction
     this.id = obj.id;
@@ -97,8 +95,6 @@ function Model () {
     // full player information may be added or deleted later
     this.players = {};
      
-    callback(this);
-        
 
     // get
     this.get = function (err, id, cb) {
@@ -139,7 +135,8 @@ function Model () {
   // Battle
   // ==========================================================================
 
-  this.Battle = function (obj, callback) {
+  this.Battle = function (obj) {
+    //console.log('construct battle');
 
     // construction
     this.id = obj.id;
@@ -157,17 +154,16 @@ function Model () {
     this.rounds = obj.rounds;
     this.current_round = obj.current_round;
     this.script = obj.script;
-    callback(this);
     
   }
 
   // Song
   // ==========================================================================
   
-  this.Song = function (obj, callback) {
-   
-    callback(song);
-    
+  this.Song = function (obj) {
+   this.id = obj.id;
+   this.name = obj.name;
+   this.url = obj.url;
   }
 
 }

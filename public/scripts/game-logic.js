@@ -30,24 +30,27 @@ scripts: [
     
     //console.log('battle state: ' + data.battleState);
 
-    model.battle = new model.Battle(data.battleState, function (battle) {
+    model.battle = new model.Battle(data.battleState);
       
       setQueue(data.queue);
     
       // init ui  
-      battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: battle }); 
+      battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: model.battle }); 
       
       // left stream
-      if (typeof battle.left !== "undefined" && typeof battle.left.stream_id !== "undefined")
-        addStream(battle.left.stream_id, 0);
+      if (model.battle.left.player_id == model.player.id) {
+        if (typeof model.battle.left !== "undefined" && typeof model.battle.left.stream_id !== "undefined") {
+          addStream(model.battle.left.stream_id, 0);
+        }
+      }
       
       // right stream
-      if(typeof battle.right !== "undefined" && typeof battle.right.stream_id !== "undefined")
-        addStream(battle.right.stream_id, 1);
- 
-    });
+      if (model.battle.right.player_id == model.player.id) {
+        if (typeof model.battle.right !== "undefined" && typeof model.battle.right.stream_id !== "undefined") {
+          addStream(model.battle.right.stream_id, 1);
+        }
+      }
 
-      
   },
   time: 5000,
 },

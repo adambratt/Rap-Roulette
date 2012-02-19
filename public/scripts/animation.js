@@ -141,8 +141,12 @@ function playSound( id, position, isBeat ) {
 	}
 	
 	var sound = soundManager.getSoundById(id);
-	sound.setPosition(position);
-	sound.play();
+	if (typeof sound !== 'undefined') {
+    sound.setPosition(position);
+	  sound.play();
+  } else {
+    console.error('playSound() song id ' + id + ' could not be loaded!');
+  }
 }
 
 function stopSound() {
