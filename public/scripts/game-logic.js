@@ -27,19 +27,21 @@ scripts: [
 // new battle
 { descr:  'stateNewBattle',
   script:   function (data) {
-     
+    
+    //console.log('battle state: ' + data.battleState);
+
     model.battle = new model.Battle(data.battleState, function (battle) {
       //console.log("stateNewBattle battle_id " + battle.id);
       
       setQueue(data.queue);
       
       //alert(battle.players[0]); 
-      if (typeof battle.player[battle.players[0] !== 'undefined') {
+      if (typeof battle.player[battle.players[0]] !== 'undefined') {
         $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>'); 
       }
 
       //uiLoadInfo0('Player info');
-      if (typeof battle.player[battle.players[1] !== 'undefined') {
+      if (typeof battle.player[battle.players[1]] !== 'undefined') {
         $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
       }
 
