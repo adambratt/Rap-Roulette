@@ -225,7 +225,7 @@ scripts: [
 // final voting
 { descr:  'stateFinalVoting',
   script:    function (data) {
-    console.log('game-logic stateFinalVoting');
+    console.log('battleScript: stateFinalVoting');
 
 	  turnSpotlightOff();
 	  //TODO: play hyphy airhorn
@@ -284,10 +284,12 @@ named_scripts: { // for things that repeat, and for special scripts
   // waiting for players
 
   waitingForPlayers: function (data) {
-    console.log('client game-logic 2PlayerBattle: waitingForPlayers()'); 
+    console.log('battleScript: waitingForPlayers()'); 
     
     uiLoadInfo0('<p style="text-align:center;">Waiting for someone to step up.</p>');  
     uiLoadInfo1('<p style="text-align:center;">Get in line!</p>');  
+    
+    console.log('clearing video labels...');
     
     $('div.video-wrapper0').find('span').replaceWith(''); 
     $('div.video-wrapper1').find('span').replaceWith(''); 
@@ -301,51 +303,73 @@ named_scripts: { // for things that repeat, and for special scripts
   
   initBattle: function(data) {
     var battle = data.battle;
-     
-    if (typeof battle !== 'undefined') {
-
-      // player 0 name
-      if (typeof battle.player[battle.players[0]] !== 'undefined') {
-        $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>'); 
-      } else {
-        $('div.video-wrapper0').find('span').replaceWith(''); 
-      }
-      
-      // player 1 name
-      if (typeof battle.player[battle.players[1]] !== 'undefined') {
-        $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
-      } else {
-        $('div.video-wrapper1').find('span').replaceWith(''); 
-      }
-      
-      // player left queue buttons
-      if (model.battle.left.player_id == model.player.id) {
-        //console.log('This is the publishing player (left)');
-     	  
-        $('.getinline').hide();
-	      $('.leavequeue').hide();
-	      $('.leavebattle').show();
-	  	   
-      // player right queue buttons
-      } else if (model.battle.right.player_id == model.player.id) {
-        //console.log('This is the publishing player (right)');
-	      
-        $('.getinline').hide();
-	      $('.leavequeue').hide();
-	      $('.leavebattle').show();
-	  	       
-      // spectator queue buttons
-      } else {
     
-	      $('.getinline').show();
-	      $('.leavequeue').hide();
-	      $('.leavebattle').hide();
-	  	    
-      }
-    
+    // present waiting for battle if the battle is undefined
+    if (typeof battle === 'undefined' || battle.missing) {
+      console.log('will init  without battle');
+      battleScripts['2PlayerBattle'].named_scripts['initWithoutBattle']();
+      return;
     }
+
+    // player 0 name
+    if (typeof battle.player[battle.players[0]] !== 'undefined') {
+      $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>'); 
+    } else {
+      $('div.video-wrapper0').find('span').replaceWith(''); 
+    }
+    
+    // player 1 name
+    if (typeof battle.player[battle.players[1]] !== 'undefined') {
+      $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
+    } else {
+      $('div.video-wrapper1').find('span').replaceWith(''); 
+    }
+    
+    // player left queue buttons
+    if (model.battle.left.player_id == model.player.id) {
+      //console.log('This is the publishing player (left)');
+      
+      $('.getinline').hide();
+      $('.leavequeue').hide();
+      $('.leavebattle').show();
+       
+    // player right queue buttons
+    } else if (model.battle.right.player_id == model.player.id) {
+      //console.log('This is the publishing player (right)');
+      
+      $('.getinline').hide();
+      $('.leavequeue').hide();
+      $('.leavebattle').show();
+           
+    // spectator queue buttons
+    } else {
+  
+      $('.getinline').show();
+      $('.leavequeue').hide();
+      $('.leavebattle').hide();
+        
+    }
+  
      
   },
+
+
+  // wait for battle
+  // basic UI changes that would apply if a battle was not available
+  
+  initWithoutBattle: function(data) {
+    
+    console.log('battleScript initWithoutBattle()');
+
+    $('div.video-wrapper0').find('span').replaceWith('Wait a moment while a new battle gets loaded...'); 
+    $('div.video-wrapper1').find('span').replaceWith(''); 
+    
+    $('.getinline').show();
+    $('.leavequeue').hide();
+    $('.leavebattle').hide();
+    
+  },
+
 
 }
 

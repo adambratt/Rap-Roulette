@@ -266,6 +266,11 @@ function clearQueue()
 }
 function setQueue(data) {
 // data should contain list of player names in order of queue
+  if (typeof data === 'undefined') {
+    console.error('setQueue(): no data to set the queue with');
+    return;
+  }
+
 	clearQueue();
 	var list=document.getElementById("queue");
 	

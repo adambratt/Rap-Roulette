@@ -43,84 +43,29 @@
             initServerClock(<%= ( new Date().getTime() + 700) %>);
             initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
             
-            //<% if (typeof battleState !== 'undefined') { %>
+            <% if (typeof battleState !== 'undefined') { %>
             model.battle = new model.Battle(<%- JSON.stringify(battleState) %>);
               
-              ////////////////////
-              // Initial Game State Sync
-              ////////////////////
-              
-              // Set current rappers
-              if (typeof model.battle.player[model.battle.players[0]] !== 'undefined') {
-                $("div.video-wrapper0").find("span").replaceWith('<span>' + model.battle.player[model.battle.players[0]].name + '</span>');
-              }
-              if (typeof model.battle.player[model.battle.players[1]] !== 'undefined') {
-                $("div.video-wrapper1").find("span").replaceWith('<span>' + model.battle.player[model.battle.players[1]].name + '</span>');
-              }
-              
-              // Figure out current spot in battle
+              // figure out the current spot in battle
               var started_at = new Date(model.battle.started_at);
               var now = new Date(serverTime);
               var time_into_battle = now - started_at;
               var state = -1;
               var end_of_state = 0;
-
               while ( end_of_state < time_into_battle ) {
               	state++;
               	end_of_state += model.battle.script[state];
               }
-
-              var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - model.battle.script[state]);
-
-              var time_left_in_state = started_at.getTime()+end_of_state - now.getTime();
-
-              //alert("You walked into the battle during state "+state+". Time into state: "+time_into_state);
-
-              //alert(battle.song_id)
-              //alert(time_into_battle);
-
-			
-              setTimeout("playSound( '"+model.battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
-
-
-              // NOT QUITE READY FOR THIS YET...
-              battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: model.battle });   // load whatever is generally first loaded
-              battleScripts['2PlayerBattle'].scripts[state].script({});   // for whatever state is happening at the moment
               
-              /* 
-              switch (state) {
-                
-              case(1):
-              	// Pre-battle
-              case(5):
-              	// Before Player 1
-              	setTimer(30);
-              	moveSpotlight(true);
-              	break;
-              case(2):
-              case(6):
-              	// Player 1 Rap
-              	setTimerValue(time_left_in_state/1000);
-              	startCountdown();
-              	moveSpotlight(true);
-              	break;
-              case(3):
-              case(7):
-              	// Before Player 2
-              	setTimer(30);
-              	moveSpotlight(false);
-              	break;
-              case(4):
-              case(8):
-              	// Player 2 Rap
-              	setTimerValue(time_left_in_state/1000);
-              	startCountdown();
-              	moveSpotlight(false);
-              	break;
-                }
-                */
-
-
+              // play the battle sound
+              var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - model.battle.script[state]);
+              var time_left_in_state = started_at.getTime()+end_of_state - now.getTime();
+              setTimeout("playSound( '"+model.battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
+              
+              // this replaces the redundant state-driven switch statement 
+              battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: model.battle });   // load whatever is generally first loaded
+              battleScripts['2PlayerBattle'].scripts[ state ].script({});   // call script for the state is happening at the moment
+              
 
             <% } %>
 

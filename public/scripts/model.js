@@ -137,6 +137,12 @@ function Model () {
 
   this.Battle = function (obj) {
     //console.log('construct battle');
+  
+    if (typeof obj === 'undefined') {
+      console.error('battle object is undefined... probably this called is before the battle has been created on the server.');
+      this.missing = true;
+      return;
+    }
 
     // construction
     this.id = obj.id;

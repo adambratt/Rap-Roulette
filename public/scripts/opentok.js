@@ -13,9 +13,13 @@ var OPENTOK = {
 
 
 function initOPENTOK () {
+  
+  if (typeof game_debug !== 'undefined' && game_debug > 1) {
+    
+    // http://www.tokbox.com/opentok/api/tools/js/documentation/api/TB.html
+    TB.setLogLevel(TB.DEBUG);
 
-  // http://www.tokbox.com/opentok/api/tools/js/documentation/api/TB.html
-  TB.setLogLevel(TB.DEBUG);
+  }
 
   OPENTOK.connectToSession();
 
@@ -42,8 +46,12 @@ OPENTOK.connectToSession = function(room) {
 
 function getStreamId() {
 
-	return OPENTOK.session.connection.connectionId;
-
+  if (typeof OPENTOK.session.connection !== 'undefined') {
+	  return OPENTOK.session.connection.connectionId;
+  } else {
+    console.error('getStreamId(): there is no connectionId in the OPENTOK.session.connection.');
+    return undefined;
+  }
 }
 
 
@@ -158,9 +166,19 @@ function startPublishing(num){
 	var newDiv=document.createElement("div");
 	newDiv.setAttribute("id", element);
 	outer.appendChild(newDiv);
-	OPENTOK.publisher = OPENTOK.session.publish(element, { height: 240, width: 320 });
-	
-	var id = OPENTOK.session.connection.connectionId;	
+
+  try {
+	  OPENTOK.publisher = OPENTOK.session.publish(element, { height: 240, width: 320 });
+  } catch (err) {
+    console.error('startPublishing(' + num + ') failed: ' + err);
+  }
+  
+  // ...this unfinished work (below) probably should be removed...
+	var id;
+  if (typeof OPENTOK.session.connection !== 'undefined') {
+    id = OPENTOK.session.connection.connectionId;	
+  }
+
 }
 
 
@@ -180,13 +198,20 @@ function stopPublishing(){
 
 function mute(){
 	//mute yourself
-	
-	OPENTOK.publisher.publishAudio(false);
-
+  if (typeof OPENTOK.publisher !== 'undefined' && OPENTOK.publisher) {
+	  OPENTOK.publisher.publishAudio(false);
+  } else {
+    console.error('mute(): no publisher is available to mute.');
+  }
 }
 function unmute(){
 	//unmute yourself
-	OPENTOK.publisher.publishAudio(true);
+	
+  if (typeof OPENTOK.publisher !== 'undefined' && OPENTOK.publisher) {
+    OPENTOK.publisher.publishAudio(true);
+  } else {
+    console.error('unmute(): no publisher is available to unmute.');
+  }
 }
 
 OPENTOK.sessionDisconnectedHandler = function(event) {
