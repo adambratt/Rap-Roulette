@@ -35,7 +35,7 @@ scripts: [
       setQueue(data.queue);
     
       // init ui  
-      battleScripts['2PlayerBattle'].named_scripts['initBattle'](data); 
+      battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: battle }); 
       
       // left stream
       if (typeof battle.left !== "undefined" && typeof battle.left.stream_id !== "undefined")
@@ -278,6 +278,8 @@ scripts: [
 
 named_scripts: { // for things that repeat, and for special scripts
   
+  // waiting for players
+
   waitingForPlayers: function (data) {
     console.log('client game-logic 2PlayerBattle: waitingForPlayers()'); 
     
@@ -291,12 +293,13 @@ named_scripts: { // for things that repeat, and for special scripts
 
   }, 
   
-
+  // init battle
   // basic UI changes that would apply to any state, but are typically loaded in 0
+  
   initBattle: function(data) {
-     battle = data.battleState;
-    
-     if (typeof battle !== 'undefined') {
+    var battle = data.battle;
+     
+    if (typeof battle !== 'undefined') {
 
       // player 0 name
       if (typeof battle.player[battle.players[0]] !== 'undefined') {
