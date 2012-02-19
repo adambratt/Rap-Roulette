@@ -38,18 +38,18 @@ scripts: [
       battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: model.battle }); 
       
       // left stream
-      if (model.battle.left.player_id == model.player.id) {
+      //if (model.battle.left.player_id == model.player.id) {
         if (typeof model.battle.left !== "undefined" && typeof model.battle.left.stream_id !== "undefined") {
           addStream(model.battle.left.stream_id, 0);
         }
-      }
+      //}
       
       // right stream
-      if (model.battle.right.player_id == model.player.id) {
+      //if (model.battle.right.player_id == model.player.id) {
         if (typeof model.battle.right !== "undefined" && typeof model.battle.right.stream_id !== "undefined") {
           addStream(model.battle.right.stream_id, 1);
         }
-      }
+      //}
 
   },
   time: 5000,
