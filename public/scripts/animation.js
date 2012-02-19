@@ -8,7 +8,6 @@ function initAnimation (animationData, cb) {
   // hide the player setup
   $('#floatPlayerSetup').hide();
  
-
 	if(nowRapping) {
 		
 	  $('.getinline').hide();

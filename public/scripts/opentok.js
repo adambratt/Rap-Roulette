@@ -46,15 +46,17 @@ function getStreamId() {
 
 }
 
+
+// add stream
+
 function addStream(stream, div) {
-	// Check if this is the stream that I am publishing, and if so do not publish.
+	
+  // Check if this is the stream that I am publishing, and if so do not publish.
 	if (stream.connection.connectionId == OPENTOK.session.connection.connectionId) {
 		return;
 	}
-	
-	
+		
 	console.log('publish to video_'+div);
-	
 	
 	var element="pub"+div;
 	var outer = document.getElementById("video_"+div);
@@ -73,44 +75,72 @@ function addStream(stream, div) {
 OPENTOK.sessionConnectedHandler = function(event) {
   // Subscribe to all streams currently in the Session
  console.log('sessionCreatedHandler');
+  
+	if(	typeof model.battle!=="undefined" ) {
+	  console.log('model.battle: ' + model.battle);
 
-	if(	typeof model.battle!=="undefined" &&
-		typeof model.battle.left!=="undefined"
-			&&typeof model.battle.left.stream_id!=="undefined"
+      if ( typeof model.battle.left!=="undefined" && typeof model.battle.left.stream_id!=="undefined" ) {
+	      console.log('model.battle.left' + model.battle.left);
+        console.log('sessionConnectedHandler: left stream_id ' + model.battle.left.stream_id);
+      }
 			
-			&&typeof model.battle.right!=="undefined"
-			&& typeof model.battle.right.stream_id!=="undefined")
-			
-			{
+		  if ( typeof model.battle.right!=="undefined" && typeof model.battle.right.stream_id!=="undefined" ) {
+	      console.log('model.battle.right' + model.battle.right);
+        console.log('sessionConnectedHandler: right stream_id ' + model.battle.right.stream_id);
+      }
 	
-	console.log('model' + model);
-	console.log('model.battle' + model.battle);
-	console.log('model.battle.left' + model.battle.left);
-	console.log('model.battle.right' + model.battle.right);
-	}
-	else console.log('something undefined');
-	console.log('connections found:');
+  } else {
+    console.log('there is no battle going on in this room');
+    return;
+  }
+ 
+
+  // deal with the publishing of streams
+  if (model.battle.left.player_id == model.player.id) {
+    console.log('This is the publishing player (left)');
+    startPublishing(0);
+  }
+  
+  if (model.battle.right.player_id == model.player.id) {
+    console.log('This is the publishing player (right)');
+    startPublishing(1);
+  }
+  
+  
+  // deal with the consumption of streams
+
+  console.log(event.streams.length + ' connections found:');
 
 	for (var i = 0; i < event.streams.length; i++) {
 		console.log(event.streams[i].connection.connectionId);
-		if(	typeof model.battle.left!=="undefined"
-			&&typeof model.battle.left.stream_id!=="undefined"
+		
+    if(	typeof model.battle.left!=="undefined"
+			&& typeof model.battle.left.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.left.stream_id)
-			{
-			console.log('adding stream to 0');
-				addStream(event.streams[i], 0);
-				}
-		if(	typeof model.battle.right!=="undefined"
+		{
+			console.log('adding stream to 0 for player_id ' + model.battle.left.player_id);
+		  if (model.battle.left.player_id != model.player.id) {	
+        addStream(event.streams[i], 0);
+      } else {
+        console.log('This is the publishing player... do not add stream!');
+      }
+		}
+		
+    if(	typeof model.battle.right!=="undefined"
 			&& typeof model.battle.right.stream_id!=="undefined"
 			&& event.streams[i].connection.connectionId==model.battle.right.stream_id)
-			{
-				console.log('adding stream to 1');
-				addStream(event.streams[i], 1);
-				}
+		{
+			console.log('adding stream to 1 for player_id ' + model.battle.right.player_id);
+		  if (model.battle.right.player_id != model.player.id) {	
+			  addStream(event.streams[i], 1);
+      } else {
+        console.log('This is the publishing player... do not add stream!');
+      }
+		}
 		
 	}
 	
-	console.log('end handler');
+	console.log('end sessionConnectedHandler');
 
  /* $('body').keypress(function(event) {
     if (!OPENTOK.publisher && event.which == 43) { // the + key
@@ -121,7 +151,7 @@ OPENTOK.sessionConnectedHandler = function(event) {
 }
 
 function startPublishing(num){
-
+  console.log('opentok.startPublishing ' + num);
 	
 	var element="pub"+num;
 	var outer = document.getElementById("video_"+num);
@@ -130,12 +160,7 @@ function startPublishing(num){
 	outer.appendChild(newDiv);
 	OPENTOK.publisher = OPENTOK.session.publish(element, { height: 240, width: 320 });
 	
-	var id = OPENTOK.session.connection.connectionId;
-
-	emitPublished(num, id);
-	
-	
-	
+	var id = OPENTOK.session.connection.connectionId;	
 }
 
 
@@ -227,8 +252,8 @@ OPENTOK.streamCreatedHandler = function(event) {
 //matches the stream_id we have stored in curLeft and curRight (our client-side record of who is rapping and where)
 //and subscribes to the proper stream
 
-	console.log(curLeft.stream_id);
-	console.log(curRight.stream_id);
+	console.log('left stream id: ' + curLeft.stream_id);
+	console.log('right stream id: ' + curRight.stream_id);
 
 	
 

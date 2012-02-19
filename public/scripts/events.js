@@ -89,40 +89,49 @@ gSock.on('disconnect', function(){
 // player-specific
 /////////////////////
 
+
+
+
 gSock.on("playerAlert", function(message) {
   alert(message);
 });
 
-gSock.on("startOpenTok", function(player) {
 
-	if(nowRapping)
-	{
-		var id = getStreamId();
-		var data = {
-			side: player,
-			stream_id: id
-		};
+// start Open Tok
+
+gSock.on("startOpenTok", function(playerSide) {
+	console.log('on startOpenTok');
+  console.log('nowRapping ' + nowRapping);
+  console.log('player: ' + playerSide);
+  
+  console.log('start publishing ' + playerSide);
+
+  if (nowRapping) {
+    console.log('error: startOpenTok called more than once per battle');
+    return;
+  }
+
+  startPublishing(playerSide);
+
+  //after we start publishing, emit what side we're on, our stream_id, and our player_id back to the server
+  gSock.emit('published', {
+		side: playerSide,
+		stream_id: getStreamId(),
+		player_id: model.player.id
+  });	
+  
+  nowRapping=true;
+  	
+	model.player.get_mysid(null, function(err, player_sid) {
+    gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
+  });
 		
-		gSock.emit('published', data);
-		console.log('i was rapping but still emitted published');
-		console.log(data.stream_id);
-		return;
-	}
-		
-	console.log('got start tok');
-	startPublishing(player);
-	nowRapping=true;
-	
-	 model.player.get_mysid(null, function(err, player_sid) {
-          gSock.emit('room.leaveQueue', {room_id: 'main_stage', sid: player_sid} );
-        });
-		
-	if($(".leavequeue").is(":visible")){
+	//if($(".leavequeue").is(":visible")){
 		$('.leavequeue').hide();
-
+	  $('.getinline').hide();
 		$('.leavebattle').show();
 		//$('.getinline').show();
-	}
+	//}
 	
 });
 
@@ -152,145 +161,82 @@ gSock.on("prepareToRap", function(message) {
 // State Changes
 /////////////////////
 
+
 gSock.on("stateWaitingForPlayers", function(data) {
   window.console.log('stateWaitingForPlayers');
-	//resetVotes();	
-   
-  //setTimer(30);
-  //setTimerColor("red");
-	//moveSpotlight(true);
-  
-  uiLoadInfo0('<p style="text-align:center;">Waiting for someone to step up.</p>');  
-  uiLoadInfo1('<p style="text-align:center;">Get in line!</p>');  
-  
+  battleScripts['2PlayerBattle'].named_scripts['waitingForPlayers'](data);   
 });
-
 
 
 gSock.on("stateNewBattle", function(data) {
-	//TODO: pop guy off queue
-	//		publish new stream
-  
-  //crowdAction('stop');
-  
-  model.battle = new model.Battle(data.battleState, function (battle) {
-    //console.log("stateNewBattle battle_id " + battle.id);
-    
-    setQueue(data.queue);
-    
-    //alert(battle.players[0]); 
-    $('div.video-wrapper0').find('span').replaceWith('<span>' + battle.player[battle.players[0]].name + '</span>'); 
-    //uiLoadInfo0('Player info');
-    
-    $('div.video-wrapper1').find('span').replaceWith('<span>' + battle.player[battle.players[1]].name + '</span>'); 
-	
-		if(typeof battle.left !== "undefined") //ignore my shitty if statements or fix them if you want
-					if(typeof battle.left.stream_id !== "undefined")
-						addStream(battle.left.stream_id, 0);
-				if(typeof battle.right !== "undefined" && typeof battle.right.stream_id !== "undefined")
-					addStream(battle.right.stream_id, 1);
-     
-  });
-
-
+  window.console.log('stateNewBattle');
+  battleScripts['2PlayerBattle'].scripts[0].script(data);
 });
+
 
 var beatIndex;
+
 gSock.on("statePreRap", function(data) {
   window.console.log('statePreRap');
-	resetVotes();	
-  //crowdAction('stop');
-  
-  soundManager.stopAll();
-	//playSound('beat' + data.beatIndex); // no need to broadcast this to everyone
-  	//var sound = soundManager.getSoundById(model.battle.song_id);
-  	//sound.play();
-  playSound(model.battle.song_id, 0, true); // play song from beginning
-	
-  setTimer(30);
-  setTimerColor("red");
-	moveSpotlight(true);
-  
-  //crowdAction('calm');
-	
-	//TODO: notify player 1 that he is about to rap
-	//		tell both rappers some pre-rap stuff?
-  
-  uiLoadInfo0('<p style="text-align:center;">Get<br/>Ready</p>');  
-  uiLoadInfo1('<p style="text-align:center;">To<br/>Rap!</p>');  
-  
+  battleScripts['2PlayerBattle'].scripts[1].script(data);
 });
 
-gSock.on("stateBeforePlayer1", function(data) {
+
+// round 1
+
+/*
+gSock.on("stateBeforePlayer1Round0", function(data) {
   window.console.log('stateBeforePlayer1');
-  
-	//TODO: notify player 1 that he is about to rap
-		//play airhorn
-	setTimer(30);
-	setTimerColor("red");
-	moveSpotlight(true);
-  //crowdAction('calm');
-  
-  if (typeof model.battle.player[model.battle.players[0]] !== 'undefined') {
-    uiLoadInfo0('Get ready for rap, ' + model.battle.player[model.battle.players[0]].name + '!');  
-  }
-  uiLoadInfo1('');
-
+  battleScripts['2PlayerBattle'].scripts[2].script(data);  
 });
+*/
 
-
-gSock.on("statePlayer1Rap", function(data) {
+gSock.on("statePlayer1RapRound0", function(data) {
   window.console.log('statePlayer1Rap');
-	setTimerColor("white");
-	startCountdown();
-  //crowdAction('dance');
-  
-  uiLoadInfo0('You are on!');  
-  uiLoadInfo1('');
- 
-
+  battleScripts['2PlayerBattle'].scripts[2].script(data);  
 });
 
-gSock.on("stateBeforePlayer2", function(data) {
+
+gSock.on("stateBeforePlayer2Round0", function(data) {
   window.console.log('stateBeforePlayer2');
-	setTimer(30);
-	setTimerColor("red");
-	moveSpotlight(false);
-	//TODO: mute player 1
-	//play airhorn
-	//notify player 2 that he is about to rap
-  //crowdAction('calm');
-
-  uiLoadInfo0('');  
-  if (typeof model.battle.player[model.battle.players[1]] !== 'undefined') {
-    uiLoadInfo1('Get ready, ' + model.battle.player[model.battle.players[1]].name + ', you are up next!');
-  }
+  battleScripts['2PlayerBattle'].scripts[3].script(data);  
 });
 
-gSock.on("statePlayer2Rap", function(data) {
+gSock.on("statePlayer2RapRound0", function(data) {
   window.console.log('statePlayer2Rap');
+  battleScripts['2PlayerBattle'].scripts[4].script(data);  
+});
 
-//TODO: unmute player 2
-	setTimerColor("white");
-	startCountdown();
-  //crowdAction('dance');
-  
-  uiLoadInfo0('');  
-  uiLoadInfo1('You are on!');
 
+// round 2
+
+gSock.on("stateBeforePlayer1Round1", function(data) {
+  window.console.log('stateBeforePlayer1');
+  battleScripts['2PlayerBattle'].scripts[5].script(data);  
+});
+
+
+gSock.on("statePlayer1RapRound1", function(data) {
+  window.console.log('statePlayer1Rap');
+  battleScripts['2PlayerBattle'].scripts[6].script(data);  
+});
+
+
+gSock.on("stateBeforePlayer2Round1", function(data) {
+  window.console.log('stateBeforePlayer2');
+  battleScripts['2PlayerBattle'].scripts[7].script(data);  
+});
+
+gSock.on("statePlayer2RapRound1", function(data) {
+  window.console.log('statePlayer2Rap');
+  battleScripts['2PlayerBattle'].scripts[8].script(data);  
 });
 
 
 gSock.on("stateFinalVoting", function(data) {
   window.console.log('stateFinalVoting');
+  battleScripts['2PlayerBattle'].scripts[9].script(data);  
   
-	turnSpotlightOff();
-	//TODO: play hyphy airhorn
-  crowdAction('stop');
-  
-  uiLoadInfo0('Last chance to give props!');  
-  uiLoadInfo1('Last chance to give props!');  
-
 });
 
 gSock.on("statePostRap", function(data) {
@@ -303,41 +249,8 @@ gSock.on("statePostRap", function(data) {
   */
     
   window.console.log('statePostRap');
+  battleScripts['2PlayerBattle'].scripts[10].script(data);  
   
-  //alert(data.winning_player_id);
-  if (typeof model.battle.player[data.winning_player_id] !== 'undefined') {
-    var winning_side = model.battle.player[data.winning_player_id].side;
-    if (winning_side == 'left') { 
-      uiLoadInfo0(model.battle.player[data.winning_player_id].name + ' won the battle!'); 
-    } else {
-      uiLoadInfo1(model.battle.player[data.winning_player_id].name + ' won the battle!');
-    }
-  }
-
-  //alert(data.dropped_player_id);
-  if (typeof data.dropped_player_id !== 'undefined' && typeof model.battle.player[data.dropped_player_id] !== 'undefined') {
-    var dropped_side = model.battle.player[data.dropped_player_id].side;
-    if (dropped_side == 'left') { 
-      uiLoadInfo0(model.battle.player[data.dropped_player_id].name + ' dropped the mike!'); 
-    } else {
-      uiLoadInfo1(model.battle.player[data.dropped_player_id].name + ' dropped the mike!');
-    }
-  }
-
-
-
-	
-	//stopSound('beat'+beatIndex); // no need to broadcast this
-	soundManager.stopAll();
-  crowdAction('stop');
-
-  uiLoadInfo0('');  
-  uiLoadInfo1('');  
-
-
-	//TODO: calculate/announce winner
-	//		boot off loser
-	//		
 });
 
 ///////////////////
@@ -406,7 +319,7 @@ gSock.on('endBattleByDrop', function(data) {
 
 
 
-gSock.on('XendBattleByDrop', function(data) {
+gSock.on('endBattleByDrop', function(data) {
   
   /*
   var example_data = {
@@ -418,7 +331,7 @@ gSock.on('XendBattleByDrop', function(data) {
   
   if (data.success !== 'undefined') {
     
-   alert(data.player.name + ' ' ); 
+    console.log(data.player.name + ' dropped'); 
   } else {
     setQueue(queue);
   }
@@ -471,19 +384,6 @@ gSock.on('playKey', function(data) {
   
 });
 
-//after we start publishing, emit what side we're on, our stream_id, and our player_id back to the server
-function emitPublished(s, id) {
-
-
-	
-	var data= {
-		side: s,
-		stream_id: id,
-		player_id: model.player.id
-	}
-	
-	gSock.emit('published', data);
-}
 
 //gets left player from server, stores stream_id
 gSock.on('setLeft', function(data) {
