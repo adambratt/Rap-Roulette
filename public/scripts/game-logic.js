@@ -246,7 +246,9 @@ scripts: [
   script: function (data) {
     console.log('game-logic statePostRap');
 
-    //alert(data.winning_player_id);
+    uiLoadInfo0('');  
+    uiLoadInfo1('');  
+    
     if (typeof model.battle.player[data.winning_player_id] !== 'undefined') {
       var winning_side = model.battle.player[data.winning_player_id].side;
       if (winning_side == 'left') { 
@@ -269,9 +271,6 @@ scripts: [
     //stopSound('beat'+beatIndex); // no need to broadcast this
     soundManager.stopAll();
     crowdAction('stop');
-
-    uiLoadInfo0('');  
-    uiLoadInfo1('');  
 
   },
   time: 10000,
