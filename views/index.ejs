@@ -47,24 +47,33 @@
         
         // battle model
         model.battle = new model.Battle(<%- JSON.stringify(battleState) %>);
+        
+        if (model.battle.loaded) {
+
+          // figure out the current spot in battle
+          var started_at = new Date(model.battle.started_at);
+          var now = new Date(serverTime);
+          var time_into_battle = now - started_at;
+          var state = -1;
+          var end_of_state = 0;
+          while ( end_of_state < time_into_battle ) {
+            state++;
+            end_of_state += model.battle.script[state];
+          }
           
-        // figure out the current spot in battle
-        var started_at = new Date(model.battle.started_at);
-        var now = new Date(serverTime);
-        var time_into_battle = now - started_at;
-        var state = -1;
-        var end_of_state = 0;
-        while ( end_of_state < time_into_battle ) {
-          state++;
-          end_of_state += model.battle.script[state];
+          // play the battle music
+          initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
+          var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - model.battle.script[state]);
+          var time_left_in_state = started_at.getTime()+end_of_state - now.getTime();
+          setTimeout("playSound( '"+model.battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
+        } else {
+          
+          // play the waiting for battle music
+          initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
+          setTimeout("playSound( 'beat1', 0)", 3000);
+          state=0; 
         }
-        
-        // play the battle music
-        initSound({ beat_volume: 5, effects_volume: 50 }, function (soundManager) {});
-        var time_into_state = now.getTime() - (end_of_state + started_at.getTime() - model.battle.script[state]);
-        var time_left_in_state = started_at.getTime()+end_of_state - now.getTime();
-        setTimeout("playSound( '"+model.battle.song_id+"', "+(time_into_battle+3000)+", true )", 3000);
-        
+
         // this replaces the redundant state-driven switch statement 
         battleScripts['2PlayerBattle'].named_scripts['initBattle']({ battle: model.battle });   // load whatever is generally first loaded
         battleScripts['2PlayerBattle'].scripts[ state ].script({});   // call script for the state is happening at the moment

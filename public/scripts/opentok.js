@@ -104,16 +104,19 @@ OPENTOK.sessionConnectedHandler = function(event) {
  
 
   // deal with the publishing of streams
-  if (model.battle.left.player_id == model.player.id) {
-    console.log('This is the publishing player (left)');
-    startPublishing(0);
+  if (model.battle.loaded) {
+    
+    if (model.battle.left.player_id == model.player.id) {
+      console.log('This is the publishing player (left)');
+      startPublishing(0);
+    }
+
+    if (model.battle.right.player_id == model.player.id) {
+      console.log('This is the publishing player (right)');
+      startPublishing(1);
+    }
+
   }
-  
-  if (model.battle.right.player_id == model.player.id) {
-    console.log('This is the publishing player (right)');
-    startPublishing(1);
-  }
-  
   
   // deal with the consumption of streams
 
@@ -189,9 +192,10 @@ function startSubscribing(num, id) {
 }
 
 function stopPublishing(){
-
-	OPENTOK.session.unpublish(OPENTOK.publisher);
-	
+  
+  if (typeof OPENTOK.publisher !== 'undefined') { 
+	  OPENTOK.session.unpublish(OPENTOK.publisher);
+  }
 	
 
 }

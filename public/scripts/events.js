@@ -162,6 +162,12 @@ gSock.on("prepareToRap", function(message) {
 /////////////////////
 
 
+gSock.on("stateWaitingForBattle", function(data) {
+  window.console.log('stateWaitingForBattle');
+  battleScripts['2PlayerBattle'].named_scripts['waitingForBattle'](data);   
+});
+
+
 gSock.on("stateWaitingForPlayers", function(data) {
   window.console.log('stateWaitingForPlayers');
   battleScripts['2PlayerBattle'].named_scripts['waitingForPlayers'](data);   
@@ -311,7 +317,7 @@ gSock.on('endBattleByDrop', function(data) {
     } else {
       uiLoadInfo1(data.player.name + ' dropped the mike!');
     }
-  f
+  
   }
 	
 });

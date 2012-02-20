@@ -280,7 +280,28 @@ scripts: [
 
 
 named_scripts: { // for things that repeat, and for special scripts
-  
+
+  // waiting for battle
+
+  waitingForBattle: function (data) {
+    console.log('battleScript: waitingForBattle()'); 
+    
+    uiLoadInfo0('<p style="text-align:center;"></p>');  
+    uiLoadInfo1('<p style="text-align:center;"></p>');  
+    
+    console.log('waiting for a battle to load... server probably restarted');
+    
+    $('div.video-wrapper0').find('span').replaceWith(''); 
+    $('div.video-wrapper1').find('span').replaceWith(''); 
+   
+    $('.getinline').hide();
+    $('.leavequeue').hide();
+    $('.leavebattle').hide();    
+    
+    resetVotes() 
+
+  }, 
+
   // waiting for players
 
   waitingForPlayers: function (data) {
@@ -289,11 +310,13 @@ named_scripts: { // for things that repeat, and for special scripts
     uiLoadInfo0('<p style="text-align:center;">Waiting for someone to step up.</p>');  
     uiLoadInfo1('<p style="text-align:center;">Get in line!</p>');  
     
-    console.log('clearing video labels...');
-    
     $('div.video-wrapper0').find('span').replaceWith(''); 
     $('div.video-wrapper1').find('span').replaceWith(''); 
     
+    $('.getinline').show();
+    $('.leavequeue').hide();
+    $('.leavebattle').hide();
+
     resetVotes() 
 
   }, 
@@ -305,7 +328,7 @@ named_scripts: { // for things that repeat, and for special scripts
     var battle = data.battle;
     
     // present waiting for battle if the battle is undefined
-    if (typeof battle === 'undefined' || battle.missing) {
+    if (typeof battle === 'undefined' || !battle.loaded) {
       console.log('will init  without battle');
       battleScripts['2PlayerBattle'].named_scripts['initWithoutBattle']();
       return;

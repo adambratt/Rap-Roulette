@@ -140,8 +140,10 @@ function Model () {
   
     if (typeof obj === 'undefined') {
       console.error('battle object is undefined... probably this called is before the battle has been created on the server.');
-      this.missing = true;
+      this.loaded = false;
       return;
+    } else {
+      this.loaded = true;
     }
 
     // construction
